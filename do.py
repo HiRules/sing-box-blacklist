@@ -23,9 +23,9 @@ def convert_proxylist(url: str) -> str:
         lines = r.text.splitlines()
         for line in lines:
             if not line.startswith("."):
-                domain_list.append(line.group(1))
+                domain_list.append(line)
             else:
-                domain_suffix_list.append(line.group(1))
+                domain_suffix_list.append(line)
                     
     result = domain_suffix_list
     filename = url.split("/")[-1]
