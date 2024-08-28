@@ -1,7 +1,7 @@
 import requests
 import os
 
-gfwlist = [
+proxylist = [
     "https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/proxy.txt",
     "https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/gfw.txt"
 ]
@@ -13,8 +13,30 @@ excludelist = [
 ]
 
 output_dir = "./release"
-
 files = []
+
+
+def convert_proxylist(url: str) -> str:
+    r = requests.get(url)
+    domain_list = domain_suffix_list = []
+    if r.status_code == 200:
+        lines = r.text.splitlines()
+        for line in lines:
+            if not line.startswith("."):
+                domain_list.append(line.group(1))
+            else:
+                domain_suffix_list.append(line.group(1))
+                    
+    result = domain_suffix_list
+    filename = url.split("/")[-1]
+    if "-" in filename:
+        prefix = filename.split("-")[0]
+    else:
+        prefix = filename.split(".")[0]
+    filepath = os.path.join(output_dir, "cn_" + prefix + ".txt")
+    with open(filepath, "w") as f:
+        f.write("\n".join(result))
+    return filepath
 
 
 def merge_domains(filename, *lists):
@@ -52,6 +74,15 @@ def convert_site(tmp: str) -> str:
     with open(filepath, "w") as f:
         f.write(json.dumps(result, indent=4))
     return filepath
+
+
+CNSITE_ALL = merge_domains("CNSITE_ALL", *[files[0], files[1], files[2]])
+files.append(CNSITE_ALL)
+
+os.mkdir(output_dir)
+for url in proxylist:
+    filepath = convert_dnsmasq(url)
+    files.append(filepath)
 
 
 def convert_gfwlist(url: str) -> str:
