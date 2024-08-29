@@ -53,7 +53,7 @@ def set_default(obj):
 
 # 分类汇总
 def classify_content(new_list, url):
-    data = []
+    data = {}
     DOMAIN = []
     DOMAIN_SUFFIX = []
     for item in new_list:
@@ -62,9 +62,9 @@ def classify_content(new_list, url):
         else:
             DOMAIN.append(item)
     if DOMAIN:
-        data['DOMAIN'] = DOMAIN
+        data["DOMAIN"] = DOMAIN
     if DOMAIN_SUFFIX:
-        data['DOMAIN_SUFFIX'] = DOMAIN_SUFFIX
+        data["DOMAIN_SUFFIX"] = DOMAIN_SUFFIX
     result = {
         "version": 1,
         "rules": data
