@@ -7,6 +7,7 @@ def read_urls_from_file(filepath):
     with open(filepath, 'r') as file:
         urls = file.read().splitlines()
     return urls
+print(urls)
 
 # 获取 URL 内容，并返回去重结果
 def fetch_and_deduplicate_content(urls):
@@ -19,6 +20,7 @@ def fetch_and_deduplicate_content(urls):
         except Exception as e:
             print(f"Error fetching {url}: {e}")
     return list(content_set)
+    print(list(content_set))
 
 # 处理去重内容，并与域名对比
 def process_and_filter_content(content_list, domain_list):
