@@ -97,7 +97,8 @@ def main():
     print(f"Output successfully saved to '{output_file_JSON}'.")
     
     # 转换 JSON 到 SRS 文件
-    convert_json_to_srs(output_file_SRS, output_file_JSON)
+    output_file_SRS = output_file_JSON.replace(".json", ".srs")
+    os.system("sing-box rule-set compile --output " + output_file_SRS + " " + output_file_JSON)
     print(f"Output successfully saved to '{output_file_SRS}'.")
 
 if __name__ == "__main__":
