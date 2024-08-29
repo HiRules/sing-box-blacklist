@@ -1,184 +1,87 @@
-import requests
 import os
+import requests
+import json
 
-proxylist = [
-    "https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/proxy.txt",
-    "https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/gfw.txt"
-]
+# 读取文本文件，返回 URL 列表
+def read_urls_from_file(filepath):
+    with open(filepath, 'r') as file:
+        urls = file.read().splitlines()
+    return urls
 
-excludelist = [
-    "https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/apple.txt",
-    "https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/icloud.txt",
-    "https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/google.txt"
-]
+# 获取 URL 内容，并返回去重结果
+def fetch_and_deduplicate_content(urls):
+    content_set = set()
+    for url in urls:
+        try:
+            response = requests.get(url)
+            content_set.add(response.text.strip())
+        except Exception as e:
+            print(f"Error fetching {url}: {e}")
+    return list(content_set)
 
-output_dir = "./release"
-files = []
+# 处理去重内容，并与域名对比
+def process_and_filter_content(content_list, domain_list):
+    new_list = []
+    for content in content_list:
+        if not any(content.startswith(domain) for domain in domain_list):
+            new_list.append(content)
+    return new_list
 
+# 分类汇总
+def classify_content(new_list):
+    DOMAIN = []
+    DOMAIN_SUFFIX = []
+    for item in new_list:
+        if item.startswith('.'):
+            DOMAIN_SUFFIX.append(item)
+        else:
+            DOMAIN.append(item)
+    return DOMAIN, DOMAIN_SUFFIX
 
-def convert_proxylist(url: str) -> str:
-    r = requests.get(url)
-    domain_list = domain_suffix_list = []
-    if r.status_code == 200:
-        lines = r.text.splitlines()
-        for line in lines:
-            if not line.startswith("."):
-                domain_list.append(line)
-            else:
-                domain_suffix_list.append(line)
-                    
-    result = domain_suffix_list
-    filename = url.split("/")[-1]
-    if "-" in filename:
-        prefix = filename.split("-")[0]
-    else:
-        prefix = filename.split(".")[0]
-    filepath = os.path.join(output_dir, "cn_" + prefix + ".txt")
-    with open(filepath, "w") as f:
-        f.write("\n".join(result))
-    return filepath
-
-
-def merge_domains(filename, *lists):
-    result = set()
-    for i in range(len(lists)):
-        with open(lists[i],"r",encoding="utf-8") as R:
-            for line in R:
-                e = line.strip()
-                if e:
-                    result.add(e)
-    result = sorted(result)
-    filepath = os.path.join(output_dir, filename + ".txt")
-    with open(filepath,"w",encoding="utf-8") as W:
-        for line in result:
-            W.write(line + "\n")
-    return filepath
-    
-
-def convert_site(tmp: str) -> str:
-    domain_suffix_list = []
-    with open(tmp,"r",encoding="utf-8") as lines:
-        for line in lines:
-            domain_suffix_list.append(line.strip())
+# JSON 输出
+def save_to_json(DOMAIN, DOMAIN_SUFFIX, output_filepath):
     result = {
-        "version": 1,
-        "rules": [
-            {
-                "domain_suffix": []
-            }
-        ]
+        "DOMAIN": DOMAIN,
+        "DOMAIN_SUFFIX": DOMAIN_SUFFIX
     }
-    result["rules"][0]["domain_suffix"] = domain_suffix_list
-    filename = tmp.split("/")[-1]
-    filepath = os.path.join(output_dir, filename.rsplit(".",1)[0] + ".json")
-    with open(filepath, "w") as f:
-        f.write(json.dumps(result, indent=4))
-    return filepath
+    os.makedirs(os.path.dirname(output_filepath), exist_ok=True)  # 创建目录
+    with open(output_filepath, 'w') as json_file:
+        json.dump(result, json_file, indent=4)
 
-
-CNSITE_ALL = merge_domains("CNSITE_ALL", *[files[0], files[1], files[2]])
-files.append(CNSITE_ALL)
-
-os.mkdir(output_dir)
-for url in proxylist:
-    filepath = convert_dnsmasq(url)
-    files.append(filepath)
-
-
-def convert_gfwlist(url: str) -> str:
-    r = requests.get(url)
-    domain_suffix_list = []
-    prefix = str()
-    if r.status_code == 200:
-        lines = r.text.splitlines()
-        for line in lines:
-            if not line.startswith("#"):
-                domain = re.match(r"server=\/(.*)\/(.*)", line)
-                if domain:
-                    domain_suffix_list.append(domain.group(1))
-    result = domain_suffix_list
-    filename = url.split("/")[-1]
-    if "-" in filename:
-        prefix = filename.split("-")[0]
-    else:
-        prefix = filename.split(".")[0]
-    filepath = os.path.join(output_dir, "cn_" + prefix + ".txt")
-    with open(filepath, "w") as f:
-        f.write("\n".join(result))
-    return filepath
-
-
-def convert_chnroutes2(url: str) -> str:
-    r = requests.get(url)
-    ip_cidr_list = []
-    prefix = str()
-    if r.status_code == 200:
-        lines = r.text.splitlines()
-        for line in lines:
-            if not line.startswith("#"):
-                ip_cidr_list.append(line)
-    result = ip_cidr_list
-    filename = url.split("/")[-1]
-    if "-" in filename:
-        prefix = "GeoIP2CN"
-    else:
-        prefix = filename.split(".")[-2]
-    filepath = os.path.join(output_dir, prefix + ".txt")
-    with open(filepath, "w") as f:
-        f.write("\n".join(result))
-    return filepath
-
-
+# 主函数
 def main():
-    os.mkdir(output_dir)
-    global files
-    for url in dnsmasq_china_list:
-        filepath = convert_dnsmasq(url)
-        files.append(filepath)
-    for url in chnroutes2:
-        filepath = convert_chnroutes2(url)
-        files.append(filepath)
-    for url in iwik:
-        filepath = convert_iwik(url)
-        files.append(filepath)
-    for url in apnic:
-        filepath = convert_apnic(url, "CN", "ipv4")
-        files.append(filepath)
-        filepath = convert_apnic(url, "CN", "ipv6")
-        files.append(filepath)
-    for url in maxmind:
-        filepath = convert_maxmind(url, "CN", "ipv4")
-        files.append(filepath)
-        filepath = convert_maxmind(url, "CN", "ipv6")
-        files.append(filepath)
+    url_file = 'blacklist.txt'  # 输入的 URL 文件
+    domain_file = 'excludecustomlist.txt'  # 存放需比较的域名列表文件
+    output_directory = 'release'  # 输出目录
+    output_file = os.path.join(output_directory, 'blacklist.json')  # 输出的 JSON 文件
     
-    # files[0] = os.path.join(output_dir, accelerated-domains.china.txt)
-    # files[1] = os.path.join(output_dir, apple.china.txt)
-    # files[2] = os.path.join(output_dir, google.china.txt)
-    # files[3] = os.path.join(output_dir, chnroutes.txt)
-    # files[4] = os.path.join(output_dir, GeoIP2CN.txt)
-    # files[5] = os.path.join(output_dir, iwik_ipv4.txt)
-    # files[6] = os.path.join(output_dir, iwik_ipv6.txt)
-    # files[7] = os.path.join(output_dir, apnic_ipv4.txt)
-    # files[8] = os.path.join(output_dir, apnic_ipv6.txt)
-    # files[9] = os.path.join(output_dir, maxmind_ipv4.txt)
-    # files[10] = os.path.join(output_dir, maxmind_ipv6.txt)
-    
-    CNSITE_ALL = merge_domains("CNSITE_ALL", *[files[0], files[1], files[2]])
-    files.append(CNSITE_ALL)
-     
-    #CNIPV4_ALL = merge_cidr("CNIPV4_ALL", *[files[3], files[4], files[5], files[7], files[9]])
-    #files.append(CNIPV4_ALL)
-    
-    #CNIPV6_ALL = merge_cidr("CNIPV6_ALL", *[files[6], files[8], files[10]])
-    #files.append(CNIPV6_ALL)
-    
-    # files[11] = os.path.join(output_dir, CNSITE_ALL.txt)
-    # files[12] = os.path.join(output_dir, CNIPV4_ALL.txt)
-    # files[13] = os.path.join(output_dir, CNIPV6_ALL.txt)
-    
-    return files
+    # 检查输入文件是否存在
+    if not os.path.exists(url_file):
+        print(f"Error: The file '{url_file}' does not exist.")
+        return
+    if not os.path.exists(domain_file):
+        print(f"Error: The file '{domain_file}' does not exist.")
+        return
 
+    # 读取域名列表
+    with open(domain_file, 'r') as file:
+        domain_list = file.read().splitlines()
+
+    # 读取 URL 链接
+    urls = read_urls_from_file(url_file)
+
+    # 获取内容并去重
+    deduplicated_content = fetch_and_deduplicate_content(urls)
+
+    # 处理内容并过滤
+    new_list = process_and_filter_content(deduplicated_content, domain_list)
+
+    # 分类汇总
+    DOMAIN, DOMAIN_SUFFIX = classify_content(new_list)
+
+    # 输出到 JSON 文件
+    save_to_json(DOMAIN, DOMAIN_SUFFIX, output_file)
+    print(f"Output successfully saved to '{output_file}'.")
 
 if __name__ == "__main__":
-    files = main()
+    main()
