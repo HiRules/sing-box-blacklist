@@ -104,12 +104,12 @@ def main():
 
     # 分类汇总
     DOMAIN, DOMAIN_SUFFIX = classify_content(b_list)
-    DOMAIN, DOMAIN_SUFFIX = classify_content(e_list)
+    DOMAIN1, DOMAIN_SUFFIX1 = classify_content(e_list)
 
     # 输出到 JSON 文件
     b_filepath = save_to_json(DOMAIN, DOMAIN_SUFFIX, blacklist)
     files.append(b_filepath)
-    e_filepath = save_to_json(DOMAIN, DOMAIN_SUFFIX, excludelist)
+    e_filepath = save_to_json(DOMAIN1, DOMAIN_SUFFIX1, excludelist)
     files.append(e_filepath)
     
     # 转换 JSON 为 SRS 文件
