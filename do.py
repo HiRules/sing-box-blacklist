@@ -2,11 +2,12 @@ import os
 import requests
 import json
 
-files = []
 output_dir = "./release"
 blacklist = 'blacklist.txt'
 excludelist = 'excludelist.txt'
-domain_file = 'excludecustomlist.txt'
+blocklist = 'blocklist.txt'
+custom_excludelist = 'custom_excludelist.txt'
+files = []
 
 # 获取文件名
 def pull_filename(url):
@@ -47,13 +48,7 @@ def process_and_filter_content(content_list, domain_list):
     return new_list
 
 
-def set_default(obj):
-    if isinstance(obj, set):
-        return list(obj)
-    raise TypeError
-
-
-# 分类汇总
+# 新的 json 文件生成
 def classify_content(new_list, url):
     data = []
     domain = []
@@ -82,38 +77,33 @@ def convert_json_to_srs(json_file):
     srs_file = json_file.replace(".json", ".srs")
     try:
         os.system("sing-box rule-set compile --output " + srs_file + " " + json_file)
+        return json_file, srs_file
         print(f"Successfully converted JSON to {srs_file}.")
     except subprocess.CalledProcessError as e:
         print(f"Error converting JSON to SRS: {e}")
+
+def result(lists, ce):
+
+    # 读取域名列表
+    with open(ce, 'r') as file:
+        ce = file.read().splitlines()
+    
+    for list in lists:
+        e = read_urls_from_file(list)
+        e = fetch_and_deduplicate_content(e)
+        e = process_and_filter_content(e, ce)
+        e = classify_content(e, list)
+        e = convert_json_to_srs(e)
+    return e
 
 
 # 主函数
 def main():
     os.mkdir(output_dir)
 
-    # 读取域名列表
-    with open(domain_file, 'r') as file:
-        domain_list = file.read().splitlines()
-
-    # 读取 URL 链接
-    b_file = read_urls_from_file(blacklist)
-    e_file = read_urls_from_file(excludelist)
-
-    # 获取内容并去重
-    b_file = fetch_and_deduplicate_content(b_file)
-    e_file = fetch_and_deduplicate_content(e_file)
-
-    # 处理内容并过滤
-    b_list = process_and_filter_content(b_file, domain_list)
-    e_list = process_and_filter_content(e_file, domain_list)
-
-    # 分类汇总
-    b_filepath = classify_content(b_list, blacklist)
-    e_filepath = classify_content(e_list, excludelist)
+    files = [blacklist, excludelist, blocklist]
     
-    # 转换 JSON 为 SRS 文件
-    convert_json_to_srs(b_filepath)
-    convert_json_to_srs(e_filepath)
+    result(files, custom_excludelist)
 
 if __name__ == "__main__":
     main()
