@@ -9,7 +9,6 @@ excludelist = 'https://raw.githubusercontent.com/HiRules/sing-box-blacklist/hidd
 blocklist = 'https://raw.githubusercontent.com/HiRules/sing-box-blacklist/hidden/blocklist.txt'
 
 custom_excludelist = 'https://raw.githubusercontent.com/HiRules/sing-box-blacklist/hidden/custom_excludelist.txt'
-#custom_excludelist = '/custom_excludelist.txt'
 
 files = []
 
