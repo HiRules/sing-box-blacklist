@@ -90,7 +90,7 @@ def main():
         domain_list = file.read().splitlines()
 
     # 读取 URL 链接
-    urls = read_urls_from_file(url_file)
+    urls = read_urls_from_file(b_file)
 
     # 获取内容并去重
     deduplicated_content = fetch_and_deduplicate_content(urls)
