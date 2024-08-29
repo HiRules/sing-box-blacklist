@@ -34,6 +34,7 @@ def fetch_and_deduplicate_content(urls):
                         content_set.add(e)
         except Exception as e:
             print(f"Error fetching {url}: {e}")
+    content_set.sort()
     return list(content_set)
 
 # 处理去重内容，并与域名对比
@@ -54,17 +55,17 @@ def set_default(obj):
 # 分类汇总
 def classify_content(new_list, url):
     data = []
-    DOMAIN = []
-    DOMAIN_SUFFIX = []
+    domain = []
+    domain_suffix = []
     for item in new_list:
         if item.startswith('.'):
-            DOMAIN_SUFFIX.append(item)
+            domain_suffix.append(item)
         else:
-            DOMAIN.append(item)
-    if DOMAIN:
-        data.append({"DOMAIN": DOMAIN})
-    if DOMAIN_SUFFIX:
-        data.append({"DOMAIN_SUFFIX": DOMAIN_SUFFIX})
+            domain.append(item)
+    if domain:
+        data.append({"domain": domain})
+    if domain_suffix:
+        data.append({"domain_suffix": domain_suffix})
     result = {
         "version": 1,
         "rules": data
