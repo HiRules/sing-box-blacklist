@@ -1,6 +1,7 @@
 import os
 import requests
 import json
+import subprocess
 
 # 读取文本文件，返回 URL 列表
 def read_urls_from_file(filepath):
@@ -48,8 +49,19 @@ def save_to_json(DOMAIN, DOMAIN_SUFFIX, output_filepath):
     with open(output_filepath, 'w') as json_file:
         json.dump(result, json_file, indent=4)
 
+# 使用sing-box将JSON转换为.srs格式
+def convert_json_to_srs(srs_file, json_file):
+    # sing-box的命令需要根据您的使用情况来调整
+    try:
+        subprocess.run(['sing-box rule-set compile --output ', srs_file, ' ', json_file], check=True)
+        print(f"Successfully converted JSON to {srs_file}.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error converting JSON to SRS: {e}")
+
+
 # 主函数
 def main():
+    files = []
     url_file = 'blacklist.txt'  # 输入的 URL 文件
     domain_file = 'excludecustomlist.txt'  # 存放需比较的域名列表文件
     output_directory = 'release'  # 输出目录
@@ -82,6 +94,9 @@ def main():
     # 输出到 JSON 文件
     save_to_json(DOMAIN, DOMAIN_SUFFIX, output_file)
     print(f"Output successfully saved to '{output_file}'.")
+    
+    # 转换 JSON 到 SRS 文件
+    convert_json_to_srs(srs_file, json_file)
 
 if __name__ == "__main__":
     main()
