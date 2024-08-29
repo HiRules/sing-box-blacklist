@@ -62,9 +62,9 @@ def classify_content(new_list, url):
         else:
             DOMAIN.append(item)
     if DOMAIN:
-        data["DOMAIN"] = DOMAIN
+        data.append({"DOMAIN": DOMAIN})
     if DOMAIN_SUFFIX:
-        data["DOMAIN_SUFFIX"] = DOMAIN_SUFFIX
+        data.append({"DOMAIN_SUFFIX": DOMAIN_SUFFIX})
     result = {
         "version": 1,
         "rules": data
