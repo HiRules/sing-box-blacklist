@@ -67,7 +67,6 @@ def save_to_json(DOMAIN, DOMAIN_SUFFIX, url):
         ]
     }
     filepath = os.path.join(output_dir, pull_filename(url) + ".json")
-    # os.makedirs(os.path.dirname(output_filepath), exist_ok=True)  # 创建目录
     with open(filepath, 'w') as f:
         f.write(json.dumps(result, indent=4))
     return filepath
@@ -103,7 +102,7 @@ def main():
     DOMAIN, DOMAIN_SUFFIX = classify_content(new_list)
 
     # 输出到 JSON 文件
-    filepath = save_to_json(DOMAIN, DOMAIN_SUFFIX, 'b_file')
+    filepath = save_to_json(DOMAIN, DOMAIN_SUFFIX, b_file)
     files.append(filepath)
     
     # 转换 JSON 为 SRS 文件
