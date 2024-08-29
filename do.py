@@ -2,29 +2,6 @@ import os
 import requests
 import json
 
-
-import subprocess
-
-def get_hidden_branch_file_path():
-    try:
-        # 切换到 hidden 分支
-        subprocess.run(['git', 'checkout', 'hidden'], check=True)
-        
-        # 获取 list.txt 文件的路径
-        file_path = 'blacklist.txt'
-        
-        return file_path
-    except subprocess.CalledProcessError as e:
-        print(f"Error occurred: {e}")
-        return None
-
-path = get_hidden_branch_file_path()
-if path:
-    print(path)
-else:
-    print("Failed to switch to hidden branch.")
-
-
 output_dir = "./release"
 
 blacklist = 'https://raw.githubusercontent.com/HiRules/sing-box-blacklist/hidden/blacklist.txt'
@@ -36,13 +13,13 @@ custom_excludelist = 'https://raw.githubusercontent.com/HiRules/sing-box-blackli
 
 files = []
 
-# 获取文件名
+
 def pull_filename(url):
     filename = os.path.basename(url)
     filename = os.path.splitext(filename)[0]
     return filename
 
-# 读取文本文件，返回 URL 列表
+
 def read_urls_from_file(filepath):
     respone = requests.get(filepath)
     respone = respone.text.splitlines()
@@ -50,7 +27,7 @@ def read_urls_from_file(filepath):
     #    urls = file.read().splitlines()
     return respone
 
-# 获取 URL 内容，并返回去重结果
+
 def fetch_and_deduplicate_content(urls):
     content_set = set()
     for url in urls:
@@ -68,7 +45,7 @@ def fetch_and_deduplicate_content(urls):
     content_set.sort()
     return content_set
 
-# 处理去重内容，并与域名对比
+
 def process_and_filter_content(content_list, domain_list):
     new_list = []
     for content in content_list:
@@ -77,7 +54,6 @@ def process_and_filter_content(content_list, domain_list):
     return new_list
 
 
-# 新的 json 文件生成
 def classify_content(new_list, url):
     data = []
     domain = []
@@ -101,7 +77,7 @@ def classify_content(new_list, url):
         print(f"Successfully generated JSON file {filepath}.")
     return filepath
 
-# 使用sing-box将JSON转换为.srs格式
+
 def convert_json_to_srs(json_file):
     srs_file = json_file.replace(".json", ".srs")
     try:
@@ -112,12 +88,8 @@ def convert_json_to_srs(json_file):
         print(f"Error converting JSON to SRS: {e}")
 
 def result(lists, ce):
-
-    # 读取域名列表
     ce = requests.get(ce)
     ce = ce.text.splitlines()
-    #with open(ce, 'r') as file:
-    #    ce = file.read().splitlines()
     
     for list in lists:
         e = read_urls_from_file(list)
@@ -128,7 +100,6 @@ def result(lists, ce):
     return e
 
 
-# 主函数
 def main():
     os.mkdir(output_dir)
 
