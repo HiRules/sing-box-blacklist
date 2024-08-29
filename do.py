@@ -46,7 +46,7 @@ def process_and_filter_content(content_list, domain_list):
 
 # 分类汇总
 def classify_content(new_list, url):
-    str = []
+    str = ''
     DOMAIN = []
     DOMAIN_SUFFIX = []
     for item in new_list:
@@ -55,10 +55,10 @@ def classify_content(new_list, url):
         else:
             DOMAIN.append(item)
     if not DOMAIN:
-        str = list('"DOMAIN_SUFFIX": ') + DOMAIN_SUFFIX
+        str = '"DOMAIN_SUFFIX": '.join(DOMAIN_SUFFIX)
     else:
-        str = list('"DOMAIN": ') + DOMAIN + list(', \
-                "DOMAIN_SUFFIX": ') + DOMAIN_SUFFIX
+        str = '"DOMAIN": '.join(DOMAIN) + ', \
+                "DOMAIN_SUFFIX": '.join(DOMAIN_SUFFIX)
     result = {
         "version": 1,
         "rules": [
