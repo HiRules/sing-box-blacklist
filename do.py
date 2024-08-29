@@ -2,6 +2,18 @@ import os
 import requests
 import json
 
+files = []
+output_dir = "./release"
+b_file = 'blacklist.txt'
+e_file = 'excludelist.txt'
+domain_file = 'excludecustomlist.txt'
+
+# 获取文件名
+def pull_filename(url):
+    filename = os.path.basename(url)
+    filename = os.path.splitext(filename)[0]
+    return filename
+
 # 读取文本文件，返回 URL 列表
 def read_urls_from_file(filepath):
     with open(filepath, 'r') as file:
@@ -44,7 +56,7 @@ def classify_content(new_list):
     return DOMAIN, DOMAIN_SUFFIX
 
 # JSON 输出
-def save_to_json(DOMAIN, DOMAIN_SUFFIX, output_filepath):
+def save_to_json(DOMAIN, DOMAIN_SUFFIX, url):
     result = {
         "version": 1,
         "rules": [
@@ -54,15 +66,16 @@ def save_to_json(DOMAIN, DOMAIN_SUFFIX, output_filepath):
             }
         ]
     }
-    os.makedirs(os.path.dirname(output_filepath), exist_ok=True)  # 创建目录
-    with open(output_filepath, 'w') as json_file:
+    filepath = os.path.join(output_dir, pull_filename(url) + ".json")
+    # os.makedirs(os.path.dirname(output_filepath), exist_ok=True)  # 创建目录
+    with open(filepath, 'w') as json_file:
         json.dump(result, json_file, indent=4)
 
 # 使用sing-box将JSON转换为.srs格式
-def convert_json_to_srs(srs_file, json_file):
-    # sing-box的命令需要根据您的使用情况来调整
+def convert_json_to_srs(json_file):
+    srs_file = json_file.replace(".json", ".srs")
     try:
-        subprocess.run(['sing-box rule-set compile --output ', srs_file, ' ', json_file], check=True)
+        os.system("sing-box rule-set compile --output " + srs_file + " " + json_file)
         print(f"Successfully converted JSON to {srs_file}.")
     except subprocess.CalledProcessError as e:
         print(f"Error converting JSON to SRS: {e}")
@@ -70,20 +83,7 @@ def convert_json_to_srs(srs_file, json_file):
 
 # 主函数
 def main():
-    files = []
-    url_file = 'blacklist.txt'  # 输入的 URL 文件
-    domain_file = 'excludecustomlist.txt'  # 存放需比较的域名列表文件
-    output_directory = 'release'  # 输出目录
-    output_file_JSON = os.path.join(output_directory, 'blacklist.json')  # 输出的 JSON 文件
-    output_file_SRS = os.path.join(output_directory, 'blacklist.srs')  # 输出的 SRS 文件
-    
-    # 检查输入文件是否存在
-    if not os.path.exists(url_file):
-        print(f"Error: The file '{url_file}' does not exist.")
-        return
-    if not os.path.exists(domain_file):
-        print(f"Error: The file '{domain_file}' does not exist.")
-        return
+    os.mkdir(output_dir)
 
     # 读取域名列表
     with open(domain_file, 'r') as file:
@@ -102,13 +102,11 @@ def main():
     DOMAIN, DOMAIN_SUFFIX = classify_content(new_list)
 
     # 输出到 JSON 文件
-    save_to_json(DOMAIN, DOMAIN_SUFFIX, output_file_JSON)
-    print(f"Output successfully saved to '{output_file_JSON}'.")
+    filepath = save_to_json(DOMAIN, DOMAIN_SUFFIX, 'b_file')
+    files.append(filepath)
     
-    # 转换 JSON 到 SRS 文件
-    output_file_SRS = output_file_JSON.replace(".json", ".srs")
-    os.system("sing-box rule-set compile --output " + output_file_SRS + " " + output_file_JSON)
-    print(f"Output successfully saved to '{output_file_SRS}'.")
+    # 转换 JSON 为 SRS 文件
+    convert_json_to_srs(filepath)
 
 if __name__ == "__main__":
     main()
