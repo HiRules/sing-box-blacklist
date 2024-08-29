@@ -11,7 +11,7 @@ blocklist = 'https://raw.githubusercontent.com/HiRules/sing-box-blacklist/hidden
 custom_excludelist = 'https://raw.githubusercontent.com/HiRules/sing-box-blacklist/hidden/custom_excludelist.txt'
 
 files = []
-
+git branch -r
 # 获取文件名
 def pull_filename(url):
     filename = os.path.basename(url)
