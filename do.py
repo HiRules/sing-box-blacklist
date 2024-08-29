@@ -8,7 +8,7 @@ blacklist = '/hidden/blacklist.txt'
 excludelist = '/hidden/excludelist.txt'
 blocklist = '/hidden/blocklist.txt'
 
-custom_excludelist = '/hidden/custom_excludelist.txt'
+custom_excludelist = 'custom_excludelist.txt'
 
 files = []
 
