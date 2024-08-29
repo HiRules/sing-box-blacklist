@@ -6,7 +6,6 @@ import json
 def read_urls_from_file(filepath):
     with open(filepath, 'r') as file:
         urls = file.read().splitlines()
-        print(urls)
     return urls
 
 # 获取 URL 内容，并返回去重结果
@@ -15,8 +14,12 @@ def fetch_and_deduplicate_content(urls):
     for url in urls:
         try:
             response = requests.get(url)
-            cleaned_content = response.text.strip().replace('\n', ' ')
-            content_set.add(cleaned_content)
+            if response.status_code == 200:
+                lines = response.text.splitlines()
+                for line in lines:
+                    e = line.strip()
+                    if e:
+                        content_set.add(e)
         except Exception as e:
             print(f"Error fetching {url}: {e}")
     return list(content_set)
@@ -26,7 +29,7 @@ def process_and_filter_content(content_list, domain_list):
     new_list = []
     for content in content_list:
         if not any(content.startswith(domain) for domain in domain_list):
-            new_list.append(content)
+            new_list.append(content + "\n")
     return new_list
 
 # 分类汇总
