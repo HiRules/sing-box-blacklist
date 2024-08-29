@@ -1,26 +1,24 @@
-name: "test"
+name: CI
 
-on:
-  workflow_dispatch:
+on: [push]
 
 jobs:
-  update-rule-set:
-    name: "test"
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+
     steps:
-      - name: "Setup python venv"
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
         run: |
-            set -Eeuo pipefail
-            python3 -m venv venv
-            source venv/bin/activate
-            
-      - name: "Update test"
+          pip install curl
+
+      - name: Run tests
         run: |
-            set -Eeuo pipefail
-            source venv/bin/activate
-            python3 test.py
-      - name: "Commit and push"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          python -m test.py
