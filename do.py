@@ -59,7 +59,7 @@ def classify_content(new_list):
 def save_to_json(DOMAIN, DOMAIN_SUFFIX, url):
     e = []
     if not DOMAIN:
-        e = "DOMAIN_SUFFIX": DOMAIN_SUFFIX
+        e = ["DOMAIN_SUFFIX": DOMAIN_SUFFIX]
     else:
         e = [
             "DOMAIN": DOMAIN,
