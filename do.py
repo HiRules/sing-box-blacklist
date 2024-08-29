@@ -58,7 +58,7 @@ def classify_content(new_list, url):
         str = list('"DOMAIN_SUFFIX": ') + DOMAIN_SUFFIX
     else:
         str = list('"DOMAIN": ') + DOMAIN + list(', \
-                "DOMAIN_SUFFIX"\: ') + DOMAIN_SUFFIX
+                "DOMAIN_SUFFIX": ') + DOMAIN_SUFFIX
     result = {
         "version": 1,
         "rules": [
