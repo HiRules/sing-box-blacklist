@@ -76,7 +76,7 @@ def classify_content(new_list, url):
     }
     filepath = os.path.join(output_dir, pull_filename(url) + ".json")
     with open(filepath, 'w') as f:
-        f.write(json.dumps(result, indent=4))
+        f.write(json.dumps(result, indent=4, default=set_default ))
         print(f"Successfully generated JSON file {filepath}.")
     return filepath
 
