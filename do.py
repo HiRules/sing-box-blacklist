@@ -4,11 +4,11 @@ import json
 
 output_dir = "./release"
 
-blacklist = '/hidden/blacklist.txt'
-excludelist = '/hidden/excludelist.txt'
-blocklist = '/hidden/blocklist.txt'
+blacklist = './hidden/blacklist.txt'
+excludelist = './hidden/excludelist.txt'
+blocklist = './hidden/blocklist.txt'
 
-custom_excludelist = 'custom_excludelist.txt'
+custom_excludelist = './custom_excludelist.txt'
 
 files = []
 
