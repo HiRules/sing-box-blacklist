@@ -26,6 +26,7 @@ jobs:
             set -Eeuo pipefail
             python3 -m venv venv
             source venv/bin/activate
+            pip3 install requests
       - name: "Update rule-set"
         run: |
             set -Eeuo pipefail
