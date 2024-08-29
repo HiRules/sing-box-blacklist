@@ -44,6 +44,13 @@ def process_and_filter_content(content_list, domain_list):
             new_list.append(content)
     return new_list
 
+
+def set_default(obj):
+    if isinstance(obj, set):
+        return list(obj)
+    raise TypeError
+
+
 # 分类汇总
 def classify_content(new_list, url):
     str = ''
@@ -69,7 +76,7 @@ def classify_content(new_list, url):
     }
     filepath = os.path.join(output_dir, pull_filename(url) + ".json")
     with open(filepath, 'w') as f:
-        f.write(json.dumps(result, indent=4))
+        f.write(json.dumps(result, indent=4, default=set_default))
         print(f"Successfully generated JSON file {filepath}.")
     return filepath
 
