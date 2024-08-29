@@ -46,6 +46,7 @@ def process_and_filter_content(content_list, domain_list):
 
 # 分类汇总
 def classify_content(new_list):
+    list = []
     DOMAIN = []
     DOMAIN_SUFFIX = []
     for item in new_list:
@@ -53,20 +54,13 @@ def classify_content(new_list):
             DOMAIN_SUFFIX.append(item)
         else:
             DOMAIN.append(item)
-    return DOMAIN, DOMAIN_SUFFIX
-
-# JSON 输出
-def save_to_json(DOMAIN, DOMAIN_SUFFIX, url):
-    e = ''
-    if not DOMAIN:
-        e = '"DOMAIN_SUFFIX": DOMAIN_SUFFIX'
-    else:
-        e = '"DOMAIN": DOMAIN,"DOMAIN_SUFFIX": DOMAIN_SUFFIX'
+    #return DOMAIN, DOMAIN_SUFFIX
+    list = DOMAIN + DOMAIN_SUFFIX
     result = {
         "version": 1,
         "rules": [
             {
-                e
+                list
             }
         ]
     }
