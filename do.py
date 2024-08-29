@@ -91,23 +91,30 @@ def main():
         domain_list = file.read().splitlines()
 
     # 读取 URL 链接
-    urls = read_urls_from_file(b_file)
+    b_file = read_urls_from_file(b_file)
+    e_file = read_urls_from_file(e_file)
 
     # 获取内容并去重
-    deduplicated_content = fetch_and_deduplicate_content(urls)
+    b_file = fetch_and_deduplicate_content(b_file)
+    e_file = fetch_and_deduplicate_content(e_file)
 
     # 处理内容并过滤
-    new_list = process_and_filter_content(deduplicated_content, domain_list)
+    b_list = process_and_filter_content(b_file, domain_list)
+    e_list = process_and_filter_content(e_file, domain_list)
 
     # 分类汇总
-    DOMAIN, DOMAIN_SUFFIX = classify_content(new_list)
+    DOMAIN, DOMAIN_SUFFIX = classify_content(b_list)
+    DOMAIN, DOMAIN_SUFFIX = classify_content(e_list)
 
     # 输出到 JSON 文件
-    filepath = save_to_json(DOMAIN, DOMAIN_SUFFIX, b_file)
-    files.append(filepath)
+    b_filepath = save_to_json(DOMAIN, DOMAIN_SUFFIX, b_file)
+    files.append(b_filepath)
+    e_filepath = save_to_json(DOMAIN, DOMAIN_SUFFIX, e_file)
+    files.append(e_filepath)
     
     # 转换 JSON 为 SRS 文件
-    convert_json_to_srs(filepath)
+    convert_json_to_srs(b_filepath)
+    convert_json_to_srs(e_filepath)
 
 if __name__ == "__main__":
     main()
