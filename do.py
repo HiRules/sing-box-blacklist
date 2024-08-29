@@ -90,8 +90,9 @@ def result(lists, ce):
 
     # 读取域名列表
     ce = requests.get(ce)
-    with open(ce, 'r') as file:
-        ce = file.read().splitlines()
+    ce = ce.text.splitlines()
+    #with open(ce, 'r') as file:
+    #    ce = file.read().splitlines()
     
     for list in lists:
         e = read_urls_from_file(list)
