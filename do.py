@@ -61,10 +61,7 @@ def save_to_json(DOMAIN, DOMAIN_SUFFIX, url):
     if not DOMAIN:
         e = '"DOMAIN_SUFFIX": DOMAIN_SUFFIX'
     else:
-        e = '
-            "DOMAIN": DOMAIN,
-            "DOMAIN_SUFFIX": DOMAIN_SUFFIX
-        '
+        e = '"DOMAIN": DOMAIN,"DOMAIN_SUFFIX": DOMAIN_SUFFIX'
     result = {
         "version": 1,
         "rules": [
