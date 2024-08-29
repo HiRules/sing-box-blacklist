@@ -46,7 +46,7 @@ def process_and_filter_content(content_list, domain_list):
 
 # 分类汇总
 def classify_content(new_list, url):
-    str = ''
+    str = []
     DOMAIN = []
     DOMAIN_SUFFIX = []
     for item in new_list:
