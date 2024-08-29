@@ -3,10 +3,13 @@ import requests
 import json
 
 output_dir = "./release"
-blacklist = 'blacklist.txt'
-excludelist = 'excludelist.txt'
-blocklist = 'blocklist.txt'
-custom_excludelist = 'custom_excludelist.txt'
+
+blacklist = './hidden/blacklist.txt'
+excludelist = './hidden/excludelist.txt'
+blocklist = './hidden/blocklist.txt'
+
+custom_excludelist = './hidden/custom_excludelist.txt'
+
 files = []
 
 # 获取文件名
