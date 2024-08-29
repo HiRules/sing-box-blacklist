@@ -39,5 +39,7 @@ jobs:
             git init
             git config --local user.name "github-actions[bot]"
             git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add .
+            git commit --allow-empty-message --no-edit
             git remote add origin https://github-action:$GITHUB_TOKEN@github.com/HiRules/sing-box-blacklist.git
             git push -u origin --force
