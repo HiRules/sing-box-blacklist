@@ -7,7 +7,7 @@ def read_urls_from_file(filepath):
     with open(filepath, 'r') as file:
         urls = file.read().splitlines()
     return urls
-print(urls)
+    print(urls)
 
 # 获取 URL 内容，并返回去重结果
 def fetch_and_deduplicate_content(urls):
