@@ -19,7 +19,6 @@ def fetch_and_deduplicate_content(urls):
             content_set.add(cleaned_content)
         except Exception as e:
             print(f"Error fetching {url}: {e}")
-        print(list(content_set))
     return list(content_set)
 
 # 处理去重内容，并与域名对比
@@ -44,7 +43,7 @@ def classify_content(new_list):
 # JSON 输出
 def save_to_json(DOMAIN, DOMAIN_SUFFIX, output_filepath):
     result = {
-        "version": 1,  # 添加版本号
+        "version": 1,
         "rules": [
             {
                 "DOMAIN": DOMAIN,
