@@ -53,7 +53,7 @@ def set_default(obj):
 
 # 分类汇总
 def classify_content(new_list, url):
-    str = ''
+    data = []
     DOMAIN = []
     DOMAIN_SUFFIX = []
     for item in new_list:
@@ -61,22 +61,17 @@ def classify_content(new_list, url):
             DOMAIN_SUFFIX.append(item)
         else:
             DOMAIN.append(item)
-    if not DOMAIN:
-        str = '"DOMAIN_SUFFIX": ' + ''.join(DOMAIN_SUFFIX)
-    else:
-        str = '"DOMAIN": ' + ''.join(DOMAIN) + ', \
-                "DOMAIN_SUFFIX": ' + ''.join(DOMAIN_SUFFIX)
+    if DOMAIN:
+        data.append(DOMAIN)
+    if DOMAIN_SUFFIX:
+        data.append(DOMAIN_SUFFIX)
     result = {
         "version": 1,
-        "rules": [
-            {
-                str
-            }
-        ]
+        "rules": data
     }
     filepath = os.path.join(output_dir, pull_filename(url) + ".json")
     with open(filepath, 'w') as f:
-        f.write(json.dumps(result, indent=4, default=set_default ))
+        f.write(json.dumps(result, indent=4))
         print(f"Successfully generated JSON file {filepath}.")
     return filepath
 
