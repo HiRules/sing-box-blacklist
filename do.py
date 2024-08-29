@@ -68,8 +68,9 @@ def save_to_json(DOMAIN, DOMAIN_SUFFIX, url):
     }
     filepath = os.path.join(output_dir, pull_filename(url) + ".json")
     # os.makedirs(os.path.dirname(output_filepath), exist_ok=True)  # 创建目录
-    with open(filepath, 'w') as json_file:
-        json.dump(result, json_file, indent=4)
+    with open(filepath, 'w') as f:
+        f.write(json.dumps(result, indent=4))
+    return filepath
 
 # 使用sing-box将JSON转换为.srs格式
 def convert_json_to_srs(json_file):
