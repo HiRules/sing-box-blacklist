@@ -4,8 +4,8 @@ import json
 
 files = []
 output_dir = "./release"
-b_file = 'blacklist.txt'
-e_file = 'excludelist.txt'
+blacklist = 'blacklist.txt'
+excludelist = 'excludelist.txt'
 domain_file = 'excludecustomlist.txt'
 
 # 获取文件名
@@ -91,8 +91,8 @@ def main():
         domain_list = file.read().splitlines()
 
     # 读取 URL 链接
-    b_file = read_urls_from_file(b_file)
-    e_file = read_urls_from_file(e_file)
+    b_file = read_urls_from_file(blacklist)
+    e_file = read_urls_from_file(excludelist)
 
     # 获取内容并去重
     b_file = fetch_and_deduplicate_content(b_file)
@@ -107,9 +107,9 @@ def main():
     DOMAIN, DOMAIN_SUFFIX = classify_content(e_list)
 
     # 输出到 JSON 文件
-    b_filepath = save_to_json(DOMAIN, DOMAIN_SUFFIX, b_file)
+    b_filepath = save_to_json(DOMAIN, DOMAIN_SUFFIX, blacklist)
     files.append(b_filepath)
-    e_filepath = save_to_json(DOMAIN, DOMAIN_SUFFIX, e_file)
+    e_filepath = save_to_json(DOMAIN, DOMAIN_SUFFIX, excludelist)
     files.append(e_filepath)
     
     # 转换 JSON 为 SRS 文件
