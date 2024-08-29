@@ -12,11 +12,6 @@ jobs:
     permissions:
       contents: write
     steps:
-
-      - name: Checkout the "hidden" branch of this repo
-        uses: actions/checkout@v4
-        with:
-          ref: hidden
           
       - name: "Checkout"
         uses: actions/checkout@v4
