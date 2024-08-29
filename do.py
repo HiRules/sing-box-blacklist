@@ -4,9 +4,9 @@ import json
 
 output_dir = "./release"
 
-blacklist = '/blacklist.txt'
-excludelist = '/excludelist.txt'
-blocklist = '/blocklist.txt'
+blacklist = 'https://raw.githubusercontent.com/HiRules/sing-box-blacklist/hidden/blacklist.txt'
+excludelist = 'https://raw.githubusercontent.com/HiRules/sing-box-blacklist/hidden/excludelist.txt'
+blocklist = 'https://raw.githubusercontent.com/HiRules/sing-box-blacklist/hidden/blocklist.txt'
 
 custom_excludelist = 'https://raw.githubusercontent.com/HiRules/sing-box-blacklist/hidden/custom_excludelist.txt'
 #custom_excludelist = '/custom_excludelist.txt'
@@ -21,9 +21,11 @@ def pull_filename(url):
 
 # 读取文本文件，返回 URL 列表
 def read_urls_from_file(filepath):
-    with open(filepath, 'r') as file:
-        urls = file.read().splitlines()
-    return urls
+    respone = requests.get(filepath)
+    respone = respone.text.splitlines()
+    #with open(filepath, 'r') as file:
+    #    urls = file.read().splitlines()
+    return respone
 
 # 获取 URL 内容，并返回去重结果
 def fetch_and_deduplicate_content(urls):
