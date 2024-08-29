@@ -62,10 +62,10 @@ def classify_content(new_list, url):
         else:
             DOMAIN.append(item)
     if not DOMAIN:
-        str = '"DOMAIN_SUFFIX": '.join(DOMAIN_SUFFIX)
+        str = '"DOMAIN_SUFFIX": ' + str(DOMAIN_SUFFIX)
     else:
-        str = '"DOMAIN": '.join(DOMAIN) + ', \
-                "DOMAIN_SUFFIX": '.join(DOMAIN_SUFFIX)
+        str = '"DOMAIN": ' + str(DOMAIN) + ', \
+                "DOMAIN_SUFFIX": ' + str(DOMAIN_SUFFIX)
     result = {
         "version": 1,
         "rules": [
@@ -76,7 +76,7 @@ def classify_content(new_list, url):
     }
     filepath = os.path.join(output_dir, pull_filename(url) + ".json")
     with open(filepath, 'w') as f:
-        f.write(json.dumps(result, indent=4, default=set_default))
+        f.write(json.dumps(result, indent=4))
         print(f"Successfully generated JSON file {filepath}.")
     return filepath
 
