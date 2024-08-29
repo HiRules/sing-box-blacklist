@@ -12,11 +12,6 @@ jobs:
     permissions:
       contents: write
     steps:
-
-      - name: Checkout the "hidden" branch of this repo
-        uses: actions/checkout@v4
-        with:
-          ref: hidden
           
       - name: "Checkout"
         uses: actions/checkout@v4
@@ -37,12 +32,6 @@ jobs:
         run: |
             set -Eeuo pipefail
             source venv/bin/activate
-            
-            blacklist = './blacklist.txt'
-            excludelist = './excludelist.txt'
-            blocklist = './blocklist.txt'
-            
-            custom_excludelist = './custom_excludelist.txt'
             python3 do.py
       - name: "Commit and push"
         env:
