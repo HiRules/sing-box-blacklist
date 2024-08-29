@@ -1,8 +1,6 @@
 name: "Run Script Every 7 Days"
 
 on:
-  push:
-    branches: [ main ]
   schedule:
     - cron: '0 0 * * 0'  # 每周日的 0:00 AM 运行
   workflow_dispatch:
@@ -14,6 +12,12 @@ jobs:
     permissions:
       contents: write
     steps:
+
+      - name: Checkout the "hidden" branch of this repo
+        uses: actions/checkout@v4
+        with:
+          ref: hidden
+          
       - name: "Checkout"
         uses: actions/checkout@v4
       - name: "Setup sing-box"
