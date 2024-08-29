@@ -1,7 +1,6 @@
 import os
 import requests
 import json
-import subprocess
 
 # 读取文本文件，返回 URL 列表
 def read_urls_from_file(filepath):
