@@ -35,9 +35,9 @@ def fetch_and_deduplicate_content(urls):
         except Exception as e:
             print(f"Error fetching {url}: {e}")
     content_set = list(content_set)
-    content_set = content_set.sort()
     print(type(content_set))
     print(content_set)
+    content_set = content_set.sort()
     return content_set
 
 # 处理去重内容，并与域名对比
