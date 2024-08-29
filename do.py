@@ -46,7 +46,7 @@ def process_and_filter_content(content_list, domain_list):
 
 # 分类汇总
 def classify_content(new_list, url):
-    list = []
+    str = ''
     DOMAIN = []
     DOMAIN_SUFFIX = []
     for item in new_list:
@@ -54,13 +54,16 @@ def classify_content(new_list, url):
             DOMAIN_SUFFIX.append(item)
         else:
             DOMAIN.append(item)
-    #return DOMAIN, DOMAIN_SUFFIX
-    list = DOMAIN.append(DOMAIN_SUFFIX)
+    if not DOMAIN:
+        str = '"DOMAIN_SUFFIX": ' + DOMAIN_SUFFIX
+    else:
+        str = '"DOMAIN": ' + DOMAIN + ', \
+                "DOMAIN_SUFFIX": ' + DOMAIN_SUFFIX
     result = {
         "version": 1,
         "rules": [
             {
-                list
+                str
             }
         ]
     }
@@ -103,12 +106,6 @@ def main():
     # 分类汇总
     b_filepath = classify_content(b_list, blacklist)
     e_filepath = classify_content(e_list, excludelist)
-
-    # 输出到 JSON 文件
-    #b_filepath = save_to_json(DOMAIN, DOMAIN_SUFFIX, blacklist)
-    #files.append(b_filepath)
-    #e_filepath = save_to_json(DOMAIN1, DOMAIN_SUFFIX1, excludelist)
-    #files.append(e_filepath)
     
     # 转换 JSON 为 SRS 文件
     convert_json_to_srs(b_filepath)
