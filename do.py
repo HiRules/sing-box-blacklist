@@ -64,7 +64,7 @@ def main():
     files = []
     url_file = 'blacklist.txt'  # 输入的 URL 文件
     domain_file = 'excludecustomlist.txt'  # 存放需比较的域名列表文件
-    output_directory = 'release'  # 输出目录
+    output_directory = './release'  # 输出目录
     output_file_JSON = os.path.join(output_directory, 'blacklist.json')  # 输出的 JSON 文件
     output_file_SRS = os.path.join(output_directory, 'blacklist.srs')  # 输出的 SRS 文件
     
