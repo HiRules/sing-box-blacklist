@@ -53,7 +53,7 @@ def set_default(obj):
 
 # 分类汇总
 def classify_content(new_list, url):
-    data = {}
+    data = []
     DOMAIN = []
     DOMAIN_SUFFIX = []
     for item in new_list:
