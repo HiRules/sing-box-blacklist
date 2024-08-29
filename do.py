@@ -45,7 +45,7 @@ def process_and_filter_content(content_list, domain_list):
     return new_list
 
 # 分类汇总
-def classify_content(new_list):
+def classify_content(new_list, url):
     list = []
     DOMAIN = []
     DOMAIN_SUFFIX = []
@@ -101,14 +101,14 @@ def main():
     e_list = process_and_filter_content(e_file, domain_list)
 
     # 分类汇总
-    DOMAIN, DOMAIN_SUFFIX = classify_content(b_list)
-    DOMAIN1, DOMAIN_SUFFIX1 = classify_content(e_list)
+    b_filepath = classify_content(b_list, blacklist)
+    e_filepath = classify_content(e_list, excludelist)
 
     # 输出到 JSON 文件
-    b_filepath = save_to_json(DOMAIN, DOMAIN_SUFFIX, blacklist)
-    files.append(b_filepath)
-    e_filepath = save_to_json(DOMAIN1, DOMAIN_SUFFIX1, excludelist)
-    files.append(e_filepath)
+    #b_filepath = save_to_json(DOMAIN, DOMAIN_SUFFIX, blacklist)
+    #files.append(b_filepath)
+    #e_filepath = save_to_json(DOMAIN1, DOMAIN_SUFFIX1, excludelist)
+    #files.append(e_filepath)
     
     # 转换 JSON 为 SRS 文件
     convert_json_to_srs(b_filepath)
