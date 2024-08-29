@@ -55,10 +55,10 @@ def classify_content(new_list, url):
         else:
             DOMAIN.append(item)
     if not DOMAIN:
-        str = ["DOMAIN_SUFFIX"\: ] + DOMAIN_SUFFIX
+        str = list('"DOMAIN_SUFFIX": ') + DOMAIN_SUFFIX
     else:
-        str = ["DOMAIN"\: ] + DOMAIN + [, \
-                "DOMAIN_SUFFIX"\: ] + DOMAIN_SUFFIX
+        str = list('"DOMAIN": ') + DOMAIN + list(', \
+                "DOMAIN_SUFFIX"\: ') + DOMAIN_SUFFIX
     result = {
         "version": 1,
         "rules": [
