@@ -4,6 +4,12 @@ import json
 
 output_dir = "./release"
 
+blacklist = '/blacklist.txt'
+excludelist = '/excludelist.txt'
+blocklist = '/blocklist.txt'
+
+custom_excludelist = 'https://raw.githubusercontent.com/HiRules/sing-box-blacklist/hidden/custom_excludelist.txt'
+#custom_excludelist = '/custom_excludelist.txt'
 
 files = []
 
@@ -83,6 +89,7 @@ def convert_json_to_srs(json_file):
 def result(lists, ce):
 
     # 读取域名列表
+    ce = requests.get(ce)
     with open(ce, 'r') as file:
         ce = file.read().splitlines()
     
