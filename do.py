@@ -14,7 +14,8 @@ def fetch_and_deduplicate_content(urls):
     for url in urls:
         try:
             response = requests.get(url)
-            content_set.add(response.text.strip())
+            cleaned_content = response.text.strip().replace('\n', ' ')
+            content_set.add(cleaned_content)
         except Exception as e:
             print(f"Error fetching {url}: {e}")
     return list(content_set)
@@ -41,8 +42,13 @@ def classify_content(new_list):
 # JSON 输出
 def save_to_json(DOMAIN, DOMAIN_SUFFIX, output_filepath):
     result = {
-        "DOMAIN": DOMAIN,
-        "DOMAIN_SUFFIX": DOMAIN_SUFFIX
+        "version": 1,  # 添加版本号
+        "rules": [
+            {
+                "DOMAIN": DOMAIN,
+                "DOMAIN_SUFFIX": DOMAIN_SUFFIX
+            }
+        ]
     }
     os.makedirs(os.path.dirname(output_filepath), exist_ok=True)  # 创建目录
     with open(output_filepath, 'w') as json_file:
@@ -63,7 +69,7 @@ def main():
     files = []
     url_file = 'blacklist.txt'  # 输入的 URL 文件
     domain_file = 'excludecustomlist.txt'  # 存放需比较的域名列表文件
-    output_directory = './release'  # 输出目录
+    output_directory = 'release'  # 输出目录
     output_file_JSON = os.path.join(output_directory, 'blacklist.json')  # 输出的 JSON 文件
     output_file_SRS = os.path.join(output_directory, 'blacklist.srs')  # 输出的 SRS 文件
     
