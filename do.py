@@ -8,7 +8,7 @@ blacklist = '/hidden/blacklist.txt'
 excludelist = '/hidden/excludelist.txt'
 blocklist = '/hidden/blocklist.txt'
 
-custom_excludelist = 'sing-box-blacklist/branch/hidden/custom_excludelist.txt'
+custom_excludelist = 'sing-box-blacklist/hidden/custom_excludelist.txt'
 
 files = []
 
