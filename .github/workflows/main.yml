@@ -1,6 +1,8 @@
 name: "Run Script Every 7 Days"
 
 on:
+  push:
+    branches: [ main ]
   schedule:
     - cron: '0 0 * * 0'  # 每周日的 0:00 AM 运行
   workflow_dispatch:
@@ -42,6 +44,4 @@ jobs:
             git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add .
             git commit --allow-empty-message --no-edit
-            git branch -M main
             git remote add origin https://github-action:$GITHUB_TOKEN@github.com/HiRules/sing-box-blacklist.git
-            git push -u origin main --force
