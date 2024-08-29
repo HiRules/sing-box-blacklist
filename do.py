@@ -29,7 +29,7 @@ def process_and_filter_content(content_list, domain_list):
     new_list = []
     for content in content_list:
         if not any(content.startswith(domain) for domain in domain_list):
-            new_list.append(content + "\n")
+            new_list.append(content)
     return new_list
 
 # 分类汇总
