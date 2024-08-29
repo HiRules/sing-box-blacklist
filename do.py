@@ -4,14 +4,14 @@ import json
 
 output_dir = "./release"
 
-blacklist = 'https://raw.githubusercontent.com/HiRules/sing-box-blacklist/hidden/blacklist.txt'
-excludelist = 'https://raw.githubusercontent.com/HiRules/sing-box-blacklist/hidden/excludelist.txt'
-blocklist = 'https://raw.githubusercontent.com/HiRules/sing-box-blacklist/hidden/blocklist.txt'
+blacklist = '/hidden/blacklist.txt'
+excludelist = '/hidden/excludelist.txt'
+blocklist = '/hidden/blocklist.txt'
 
-custom_excludelist = 'https://raw.githubusercontent.com/HiRules/sing-box-blacklist/hidden/custom_excludelist.txt'
+custom_excludelist = '/hidden/custom_excludelist.txt'
 
 files = []
-git branch -r
+
 # 获取文件名
 def pull_filename(url):
     filename = os.path.basename(url)
