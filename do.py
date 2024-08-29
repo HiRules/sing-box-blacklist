@@ -65,7 +65,8 @@ def main():
     url_file = 'blacklist.txt'  # 输入的 URL 文件
     domain_file = 'excludecustomlist.txt'  # 存放需比较的域名列表文件
     output_directory = 'release'  # 输出目录
-    output_file = os.path.join(output_directory, 'blacklist.json')  # 输出的 JSON 文件
+    output_file_JSON = os.path.join(output_directory, 'blacklist.json')  # 输出的 JSON 文件
+    output_file_SRS = os.path.join(output_directory, 'blacklist.srs')  # 输出的 SRS 文件
     
     # 检查输入文件是否存在
     if not os.path.exists(url_file):
@@ -92,11 +93,12 @@ def main():
     DOMAIN, DOMAIN_SUFFIX = classify_content(new_list)
 
     # 输出到 JSON 文件
-    save_to_json(DOMAIN, DOMAIN_SUFFIX, output_file)
-    print(f"Output successfully saved to '{output_file}'.")
+    save_to_json(DOMAIN, DOMAIN_SUFFIX, output_file_JSON)
+    print(f"Output successfully saved to '{output_file_JSON}'.")
     
     # 转换 JSON 到 SRS 文件
-    convert_json_to_srs(srs_file, json_file)
+    convert_json_to_srs(output_file_SRS, output_file_JSON)
+    print(f"Output successfully saved to '{output_file_SRS}'.")
 
 if __name__ == "__main__":
     main()
