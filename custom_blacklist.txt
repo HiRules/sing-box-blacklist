@@ -2,3 +2,4 @@
 shuzijumin.com
 .shuzijumin.com
 lala.im
+github.com
