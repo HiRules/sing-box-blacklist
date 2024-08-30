@@ -22,8 +22,6 @@ def pull_filename(url):
 def read_urls_from_file(filepath):
     respone = requests.get(filepath)
     respone = respone.text.splitlines()
-    #with open(filepath, 'r') as file:
-    #    urls = file.read().splitlines()
     return respone
 
 
@@ -62,6 +60,7 @@ def classify_content(new_list, url):
             domain_keyword.append(item)
         else:
             domain.append(item)
+    print(domain_keyword)
     if domain:
         data.append({"domain": domain})
     if domain_suffix:
