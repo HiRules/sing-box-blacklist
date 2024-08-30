@@ -60,7 +60,8 @@ def classify_content(new_list, url):
             domain.append(item)
         else:
             domain_keyword.append(item)
-    
+    print(domain)
+    print(domain_keyword)
     if domain:
         data.append({"domain": domain})
     if domain_keyword:
