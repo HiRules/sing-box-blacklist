@@ -56,14 +56,8 @@ def classify_content(new_list, url):
     for item in new_list:
         if item.startswith('.'):
             domain_suffix.append(item)
-        elif item.find('.') != -1:
-            domain.append(item)
         else:
             domain_keyword.append(item)
-    print(domain)
-    print(domain_keyword)
-    if domain:
-        data.append({"domain": domain})
     if domain_keyword:
         data.append({"domain_keyword": domain_keyword})
     if domain_suffix:
