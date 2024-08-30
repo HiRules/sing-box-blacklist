@@ -18,3 +18,4 @@ recaptcha
 youtube
 pincong.rocks
 linux.do
+.linux.do
