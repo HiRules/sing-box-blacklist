@@ -52,12 +52,19 @@ def process_and_filter_content(content_list, domain_list):
 
 
 def classify_content(new_list, url):
-    data = domain = domain_suffix = domain_keyword = []
+    data = []
+    domain = []
+    domain_suffix = []
+    domain_keyword = []
     for item in new_list:
         if item.startswith('.'):
             domain_suffix.append(item)
-        else:
+        elif '.' not in item:
             domain_keyword.append(item)
+        else:
+            domain.append(item)
+    if domain:
+        data.append({"domain": domain})
     if domain_keyword:
         data.append({"domain_keyword": domain_keyword})
     if domain_suffix:
