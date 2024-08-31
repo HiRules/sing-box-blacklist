@@ -19,3 +19,4 @@ youtube
 pincong.rocks
 linux.do
 .linux.do
+t.me
