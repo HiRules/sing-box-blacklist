@@ -1,9 +1,6 @@
 wizcase.com
-.wizcase.com
 shuzijumin.com
-.shuzijumin.com
 apkpure.com
-.apkpure.com
 lala.im
 github.com
 sspanel.net
@@ -18,5 +15,3 @@ recaptcha
 youtube
 pincong.rocks
 linux.do
-.linux.do
-t.me
