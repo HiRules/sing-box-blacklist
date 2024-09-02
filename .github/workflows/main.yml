@@ -15,7 +15,7 @@ jobs:
       - name: Checkout main branch
         uses: actions/checkout@v2
         with:
-          ref: main
+          ref: hidden
           
       - name: "Checkout"
         uses: actions/checkout@v4
