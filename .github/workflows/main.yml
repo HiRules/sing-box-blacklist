@@ -12,9 +12,10 @@ jobs:
     permissions:
       contents: write
     steps:
-          
-      - name: "Checkout"
+      - name: Checkout hidden branch
         uses: actions/checkout@v4
+        with:
+          ref: hidden
         
       - name: "Setup sing-box"
         env:
