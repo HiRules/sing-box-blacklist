@@ -32,7 +32,7 @@ def read_domain_from_excludelist(file):
 
 
 def fetch_and_deduplicate_content(urls):
-    content_set = set()
+    result = set()
     for url in urls:
         try:
             response = requests.get(url)
@@ -41,13 +41,12 @@ def fetch_and_deduplicate_content(urls):
                 for line in lines:
                     e = line.strip()
                     if e:
-                        content_set.add(e)
+                        result.add(e)
         except Exception as e:
             print(f"Error fetching {url}: {e}")
-    content_set = list(content_set)
-    content_set.sort()
-    print(content_set)
-    return content_set
+    result = list(result)
+    result.sort()
+    return result
 
 
 def process_and_filter_content(content_list, domain_list):
@@ -55,6 +54,7 @@ def process_and_filter_content(content_list, domain_list):
     for content in content_list:
         if not any(content.startswith(domain) for domain in domain_list):
             new_list.append(content)
+    print(new_list)
     return new_list
 
 
