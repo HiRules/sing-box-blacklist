@@ -54,11 +54,11 @@ def process_and_filter_content(content_list, domain_list):
     for content in content_list:
         if not any(content.startswith(domain) for domain in domain_list):
             new_list.append(content)
+    print(new_list)
     return new_list
 
 
 def classify_content(new_list, file):
-    print(new_list)
     data = []
     domain = []
     domain_suffix = []
