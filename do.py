@@ -29,8 +29,8 @@ def pull_filename(url):
 def read_urls_from_file(file):
     with open(file, 'r') as f:
         lines = f.readlines()
-        print(lines[1])
-        return lines[1]
+        print(lines[0][:-1])
+        return lines[0][:-1]
     #respone = requests.get(filepath)
     #respone = respone.text.splitlines()
     #return respone
@@ -58,8 +58,8 @@ def read_and_process_excludelist(excludelist):
     try:
         with open(excludelist, 'r') as file:
             lines = file.readlines()
-            print(lines[1])
-            return lines[1]
+            print(lines[0][:-1])
+            return lines[0][:-1]
     except FileNotFoundError:
         print(f"File not found: {excludelist}")
         return []
