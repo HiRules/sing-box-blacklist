@@ -19,11 +19,11 @@ def read_urls_from_file(file):
     subprocess.run(['git', 'checkout', 'hidden'], check=True)
     with open(file, 'r') as f:
         lines = f.read().splitlines()
+        print(lines)
         return lines
 
 
 def read_domain_from_excludelist(file):
-    subprocess.run(['git', 'checkout', 'hidden'], check=True)
     try:
         with open(file, 'r') as f:
             lines = f.read().splitlines()
