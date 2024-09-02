@@ -18,7 +18,7 @@ jobs:
           ref: main
 
       - name: Checkout hidden branch
-        run: git checkout /hidden
+        run: git checkout ../hidden
           
       - name: "Checkout"
         uses: actions/checkout@v4
