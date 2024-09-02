@@ -104,7 +104,7 @@ def result(lists, ce):
 
 
 def read_list_file():
-    file_path = '../custom_blacklist.txt'
+    file_path = 'custom_blacklist.txt'
 
     try:
         with open(file_path, 'r') as file:
