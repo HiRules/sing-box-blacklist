@@ -121,13 +121,13 @@ def get_list_from_hidden_branch():
     
     return content
 
-# 使用函数
-list_content = get_list_from_hidden_branch()
-print(list_content)
-
 
 def main():
     os.mkdir(output_dir)
+
+    # 使用函数
+    list_content = get_list_from_hidden_branch()
+    print(list_content)
 
     files = [blacklist, excludelist, blocklist]
     
