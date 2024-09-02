@@ -71,6 +71,7 @@ def classify_content(new_list, file):
             domain_keyword.append(item)
     if domain:
         data.append({"domain": domain})
+    print(domain_suffix)
     if domain_suffix:
         data.append({"domain_suffix": domain_suffix})
     if domain_keyword:
