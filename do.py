@@ -99,11 +99,10 @@ def convert_json_to_srs(json_file):
 
 
 def result(lists, ce):
-    read_domain_from_excludelist(ce)
     for list in lists:
         e = read_urls_from_file(list)
         e = fetch_and_deduplicate_content(e)
-        e = process_and_filter_content(e, ce)
+        e = process_and_filter_content(e, read_domain_from_excludelist(ce))
         e = classify_content(e, list)
         e = convert_json_to_srs(e)
     return e
