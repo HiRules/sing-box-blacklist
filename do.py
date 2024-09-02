@@ -103,26 +103,18 @@ def result(lists, ce):
     return e
 
 
-# 切换到 hidden 分支并获取 list.txt 文件
-def get_list_from_hidden_branch():
-    # 检查当前分支
-    current_branch = subprocess.check_output(['git', 'rev-parse', '--abbrev-ref', 'HEAD']).strip().decode('utf-8')
-    
-    if current_branch != 'hidden':
-        # 检出 hidden 分支
-        subprocess.run(['git', 'checkout', 'hidden'], check=True)
-    
-    # 读取 list.txt 文件
-    with open('custom_blacklist.txt', 'r') as file:
-        content = file.readlines()
-    
-    # 切换回 main 分支
-    subprocess.run(['git', 'checkout', 'main'], check=True)
-    
-    return content
+def read_list_file():
+    file_path = '../custom_blacklist.txt'
 
-# 使用函数
-list_content = get_list_from_hidden_branch()
+    try:
+        with open(file_path, 'r') as file:
+            content = file.readlines()
+            return content
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+        return []
+
+list_content = read_list_file()
 print(list_content)
 
 
