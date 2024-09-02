@@ -35,7 +35,6 @@ def fetch_and_deduplicate_content(urls):
     content_set = set()
     for url in urls:
         try:
-            print(url)
             response = requests.get(url)
             if response.status_code == 200:
                 lines = response.text.splitlines()
@@ -45,6 +44,7 @@ def fetch_and_deduplicate_content(urls):
                         content_set.add(e)
         except Exception as e:
             print(f"Error fetching {url}: {e}")
+    print(content_set)
     content_set = list(content_set)
     content_set.sort()
     return content_set
