@@ -3,37 +3,32 @@ import requests
 import json
 import subprocess
 
-output_dir = "./release"
 
-subprocess.run(['git', 'checkout', 'hidden'], check=True)
+files = []
+output_dir = "./release"
 blacklist = 'blacklist.txt'
 excludelist = 'excludelist.txt'
 blocklist = 'blocklist.txt'
 custom_excludelist = 'custom_excludelist.txt'
 
-# blacklist = 'https://raw.githubusercontent.com/HiRules/sing-box-blacklist/hidden/blacklist.txt'
-# excludelist = 'https://raw.githubusercontent.com/HiRules/sing-box-blacklist/hidden/excludelist.txt'
-# blocklist = 'https://raw.githubusercontent.com/HiRules/sing-box-blacklist/hidden/blocklist.txt'
 
-# custom_excludelist = 'https://raw.githubusercontent.com/HiRules/sing-box-blacklist/hidden/custom_excludelist.txt'
-
-files = []
-
-
-def pull_filename(url):
-    filename = os.path.basename(url)
-    filename = os.path.splitext(filename)[0]
-    return filename
+subprocess.run(['git', 'checkout', 'hidden'], check=True)
 
 
 def read_urls_from_file(file):
     with open(file, 'r') as f:
         lines = f.read().splitlines()
-        print(lines)
         return lines
-    #respone = requests.get(filepath)
-    #respone = respone.text.splitlines()
-    #return respone
+
+
+def read_domain_from_excludelist(file):
+    try:
+        with open(file, 'r') as f:
+            lines = f.read().splitlines()
+            return lines
+    except FileNotFoundError:
+        print(f"File not found: {excludelist}")
+        return []
 
 
 def fetch_and_deduplicate_content(urls):
@@ -52,17 +47,6 @@ def fetch_and_deduplicate_content(urls):
     content_set = list(content_set)
     content_set.sort()
     return content_set
-
-
-def read_and_process_excludelist(excludelist):
-    try:
-        with open(excludelist, 'r') as file:
-            lines = file.read().splitlines()
-            print(lines)
-            return lines
-    except FileNotFoundError:
-        print(f"File not found: {excludelist}")
-        return []
 
 
 def process_and_filter_content(content_list, domain_list):
@@ -111,11 +95,9 @@ def convert_json_to_srs(json_file):
     except subprocess.CalledProcessError as e:
         print(f"Error converting JSON to SRS: {e}")
 
+
 def result(lists, ce):
-    #ce = requests.get(ce)
-    #ce = ce.text.splitlines()
-    read_and_process_excludelist(ce)
-    
+    read_domain_from_excludelist(ce)
     for list in lists:
         e = read_urls_from_file(list)
         e = fetch_and_deduplicate_content(e)
@@ -127,10 +109,9 @@ def result(lists, ce):
 
 def main():
     os.mkdir(output_dir)
-
     files = [blacklist, excludelist, blocklist]
-    
     result(files, custom_excludelist)
+
 
 if __name__ == "__main__":
     main()
