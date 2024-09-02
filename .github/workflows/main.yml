@@ -12,10 +12,6 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout main branch
-        uses: actions/checkout@v2
-        with:
-          ref: hidden
           
       - name: "Checkout"
         uses: actions/checkout@v4
