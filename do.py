@@ -113,7 +113,7 @@ def get_list_from_hidden_branch():
         subprocess.run(['git', 'checkout', 'hidden'], check=True)
     
     # 读取 list.txt 文件
-    with open('custom_excludelist.txt', 'r') as file:
+    with open('custom_blacklist.txt', 'r') as file:
         content = file.readlines()
     
     # 切换回 main 分支
@@ -121,13 +121,13 @@ def get_list_from_hidden_branch():
     
     return content
 
+# 使用函数
+list_content = get_list_from_hidden_branch()
+print(list_content)
+
 
 def main():
     os.mkdir(output_dir)
-
-    # 使用函数
-    list_content = get_list_from_hidden_branch()
-    print(list_content)
 
     files = [blacklist, excludelist, blocklist]
     
