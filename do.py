@@ -34,7 +34,7 @@ def fetch_and_deduplicate_content(urls):
                 lines = response.text.splitlines()
                 for line in lines:
                     e = line.strip()
-                    if e.startwith('.'):
+                    if e.startswith('.'):
                         e = e.lstrip('.')
                     if e:
                         content_set.add(e)
