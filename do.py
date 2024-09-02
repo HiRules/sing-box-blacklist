@@ -104,7 +104,6 @@ def result(lists, ce):
 
 
 def read_list_file():
-    subprocess.run(['git', 'fetch', 'hidden'], check=True)
     subprocess.run(['git', 'checkout', 'hidden'], check=True)
     file_path = 'custom_blacklist.txt'
 
