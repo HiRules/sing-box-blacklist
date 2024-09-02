@@ -12,14 +12,9 @@ blocklist = 'blocklist.txt'
 custom_excludelist = 'custom_excludelist.txt'
 
 
-
-
-
 def read_urls_from_file(file):
-    subprocess.run(['git', 'checkout', 'hidden'], check=True)
     with open(file, 'r') as f:
         lines = f.read().splitlines()
-        print(lines)
         return lines
 
 
@@ -110,6 +105,7 @@ def result(lists, ce):
 
 def main():
     os.mkdir(output_dir)
+    subprocess.run(['git', 'checkout', 'hidden'], check=True)
     files = [blacklist, excludelist, blocklist]
     result(files, custom_excludelist)
 
