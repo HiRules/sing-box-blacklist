@@ -1,6 +1,7 @@
 import os
 import requests
 import json
+import subprocess
 
 output_dir = "./release"
 
@@ -100,6 +101,29 @@ def result(lists, ce):
         e = classify_content(e, list)
         e = convert_json_to_srs(e)
     return e
+
+
+# 切换到 hidden 分支并获取 list.txt 文件
+def get_list_from_hidden_branch():
+    # 检查当前分支
+    current_branch = subprocess.check_output(['git', 'rev-parse', '--abbrev-ref', 'HEAD']).strip().decode('utf-8')
+    
+    if current_branch != 'hidden':
+        # 检出 hidden 分支
+        subprocess.run(['git', 'checkout', 'hidden'], check=True)
+    
+    # 读取 list.txt 文件
+    with open('custom_excludelist.txt', 'r') as file:
+        content = file.readlines()
+    
+    # 切换回 main 分支
+    subprocess.run(['git', 'checkout', 'main'], check=True)
+    
+    return content
+
+# 使用函数
+list_content = get_list_from_hidden_branch()
+print(list_content)
 
 
 def main():
