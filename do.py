@@ -110,7 +110,10 @@ def result(lists, ce):
 def main():
     os.mkdir(output_dir)
     files = [blacklist, excludelist, blocklist]
-    print(custom_excludelist)
+    with open(custom_excludelist, 'r') as f:
+        lines = f.read().splitlines()
+        return lines
+    print(lines)
     result(files, custom_excludelist)
 
 
