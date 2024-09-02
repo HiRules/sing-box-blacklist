@@ -35,6 +35,7 @@ def fetch_and_deduplicate_content(urls):
     content_set = set()
     for url in urls:
         try:
+            print(url)
             response = requests.get(url)
             if response.status_code == 200:
                 lines = response.text.splitlines()
@@ -54,7 +55,6 @@ def process_and_filter_content(content_list, domain_list):
     for content in content_list:
         if not any(content.startswith(domain) for domain in domain_list):
             new_list.append(content)
-    print(new_list)
     return new_list
 
 
