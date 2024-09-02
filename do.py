@@ -54,7 +54,6 @@ def process_and_filter_content(content_list, domain_list):
     for content in content_list:
         if not any(content.startswith(domain) for domain in domain_list):
             new_list.append(content)
-    print(new_list)
     return new_list
 
 
@@ -111,6 +110,7 @@ def result(lists, ce):
 def main():
     os.mkdir(output_dir)
     files = [blacklist, excludelist, blocklist]
+    print(custom_excludelist)
     result(files, custom_excludelist)
 
 
