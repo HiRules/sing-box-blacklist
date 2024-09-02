@@ -44,9 +44,9 @@ def fetch_and_deduplicate_content(urls):
                         content_set.add(e)
         except Exception as e:
             print(f"Error fetching {url}: {e}")
-    print(content_set)
     content_set = list(content_set)
     content_set.sort()
+    print(content_set)
     return content_set
 
 
