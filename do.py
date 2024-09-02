@@ -5,7 +5,7 @@ import subprocess
 
 
 files = []
-output_dir = "/release"
+output_dir = "release"
 blacklist = 'blacklist.txt'
 excludelist = 'excludelist.txt'
 blocklist = 'blocklist.txt'
