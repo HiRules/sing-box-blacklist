@@ -34,8 +34,6 @@ def fetch_and_deduplicate_content(urls):
                 lines = response.text.splitlines()
                 for line in lines:
                     e = line.strip()
-                    if e.startswith('.'):
-                        e = e.lstrip('.')
                     if e:
                         content_set.add(e)
         except Exception as e:
@@ -55,13 +53,18 @@ def process_and_filter_content(content_list, domain_list):
 
 def classify_content(new_list, url):
     data = []
+    domain = []
     domain_suffix = []
     domain_keyword = []
     for item in new_list:
-        if item.count('.') > 0:
+        if item.startswith('.'):
             domain_suffix.append(item)
-        else:
+        elif '.' not in item:
             domain_keyword.append(item)
+        else:
+            domain.append(item)
+    if domain:
+        data.append({"domain": domain})
     if domain_suffix:
         data.append({"domain_suffix": domain_suffix})
     if domain_keyword:
