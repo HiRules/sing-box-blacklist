@@ -23,3 +23,5 @@ ipaspot.app
 ioshaven.co
 .ipaspot.app
 .tgstat.com
+signal.org
+.signal.org
