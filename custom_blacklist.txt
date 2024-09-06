@@ -25,3 +25,5 @@ ioshaven.co
 .tgstat.com
 signal.org
 .signal.org
+imgur.com
+.imgur.com
