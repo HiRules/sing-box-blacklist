@@ -28,3 +28,4 @@ signal.org
 imgur.com
 .imgur.com
 twitter.com
+x.com
