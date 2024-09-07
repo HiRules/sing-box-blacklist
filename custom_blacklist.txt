@@ -27,3 +27,4 @@ signal.org
 .signal.org
 imgur.com
 .imgur.com
+twitter.com
