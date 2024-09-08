@@ -9,6 +9,7 @@ output_dir = "release"
 blacklist = 'blacklist.txt'
 excludelist = 'excludelist.txt'
 blocklist = 'blocklist.txt'
+geosite_cn = 'geosite_cn.txt'
 geoip_cn = 'geoip_cn.txt'
 custom_excludelist = 'custom_excludelist.txt'
 
@@ -40,6 +41,25 @@ def fetch_and_deduplicate_content(urls):
                     e = line.strip()
                     if e:
                         result.add(e)
+        except Exception as e:
+            print(f"Error fetching {url}: {e}")
+    result = list(result)
+    result.sort()
+    return result
+
+
+def fetch_and_deduplicate_cn_domain(urls):
+    result = set()
+    for url in urls:
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                lines = response.text.splitlines()
+                for line in lines:
+                    if not line.startswith("#"):
+                        domain = re.match(r"server=\/(.*)\/(.*)", line)
+                        if domain:
+                            result.add(domain.group(1))
         except Exception as e:
             print(f"Error fetching {url}: {e}")
     result = list(result)
@@ -113,13 +133,21 @@ def convert_json_to_srs(json_file):
         print(f"Error converting JSON to SRS: {e}")
 
 
-def result_of_domain(lists, ce):
+def result_of_gfw_domain(lists, ce):
     for list in lists:
         e = read_urls_from_file(list)
         e = fetch_and_deduplicate_content(e)
         e = process_and_filter_content(e, read_domain_from_excludelist(ce))
         e = json_of_domain(e, list)
         e = convert_json_to_srs(e)
+    return e
+
+
+def result_of_cn_domain(list):
+    e = read_urls_from_file(list)
+    e = fetch_and_deduplicate_cn_domain(e)
+    e = json_of_domain(e, list)
+    e = convert_json_to_srs(e)
     return e
 
 
@@ -135,7 +163,8 @@ def main():
     os.mkdir(output_dir)
     subprocess.run(['git', 'checkout', 'hidden'], check=True)
     files = [blacklist, excludelist, blocklist]
-    result_of_domain(files, custom_excludelist)
+    result_of_gfw_domain(files, custom_excludelist)
+    result_of_cn_domain(geosite_cn)
     result_of_ip(geoip_cn)
 
 
