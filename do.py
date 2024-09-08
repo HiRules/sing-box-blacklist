@@ -116,7 +116,8 @@ def result_of_domain(lists, ce):
     for list in lists:
         e = read_urls_from_file(list)
         e = fetch_and_deduplicate_content(e)
-        e = json_to_domain(e, list)
+        e = process_and_filter_content(e, read_domain_from_excludelist(ce))
+        e = json_of_domain(e, list)
         e = convert_json_to_srs(e)
     return e
 
@@ -124,8 +125,7 @@ def result_of_domain(lists, ce):
 def result_of_ip(list):
     e = read_urls_from_file(list)
     e = fetch_and_deduplicate_content(e)
-    e = process_and_filter_content(e, read_domain_from_excludelist(ce))
-    e = json_to_ip(e, list)
+    e = json_of_ip(e, list)
     e = convert_json_to_srs(e)
     return e
 
