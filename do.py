@@ -55,7 +55,7 @@ def process_and_filter_content(content_list, domain_list):
     return new_list
 
 
-def json_to_domain(new_list, file):
+def json_of_domain(new_list, file):
     data = []
     domain = []
     domain_suffix = []
@@ -84,7 +84,7 @@ def json_to_domain(new_list, file):
     return filepath
 
 
-def json_to_ip(new_list, file):
+def json_of_ip(new_list, file):
     data = []
     ip_cidr = []
     for item in new_list:
@@ -112,7 +112,7 @@ def convert_json_to_srs(json_file):
         print(f"Error converting JSON to SRS: {e}")
 
 
-def result_to_domain(lists, ce):
+def result_of_domain(lists, ce):
     for list in lists:
         e = read_urls_from_file(list)
         e = fetch_and_deduplicate_content(e)
@@ -121,7 +121,7 @@ def result_to_domain(lists, ce):
     return e
 
 
-def result_to_ip(list):
+def result_of_ip(list):
     e = read_urls_from_file(list)
     e = fetch_and_deduplicate_content(e)
     e = process_and_filter_content(e, read_domain_from_excludelist(ce))
@@ -134,8 +134,8 @@ def main():
     os.mkdir(output_dir)
     subprocess.run(['git', 'checkout', 'hidden'], check=True)
     files = [blacklist, excludelist, blocklist]
-    result_to_domain(files, custom_excludelist)
-    result_to_ip(geoip_cn)
+    result_of_domain(files, custom_excludelist)
+    result_of_ip(geoip_cn)
 
 
 if __name__ == "__main__":
