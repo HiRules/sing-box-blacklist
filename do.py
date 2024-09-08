@@ -90,7 +90,8 @@ def json_of_ip(new_list, file):
     for item in new_list:
         if not item.startswith("#"):
             ip_cidr.append(item)
-    data = ip_cidr
+    if ip_cidr:
+        data.append({"ip_cidr": ip_cidr})
     result = {
         "version": 1,
         "rules": data
