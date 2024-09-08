@@ -59,8 +59,12 @@ def fetch_and_deduplicate_cn_domain(urls):
                 for line in lines:
                     if not line.startswith("#"):
                         domain = re.match(r"server=\/(.*)\/(.*)", line)
-                        if domain:
-                            result.add(domain.group(1))
+                        domain = domain.group(1)
+                        if domain.count('.') > 0:
+                            domain = '.' + domain
+                            result.add(domain)
+                        else:
+                            result.add(domain)
         except Exception as e:
             print(f"Error fetching {url}: {e}")
     result = list(result)
