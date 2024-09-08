@@ -9,6 +9,7 @@ output_dir = "release"
 blacklist = 'blacklist.txt'
 excludelist = 'excludelist.txt'
 blocklist = 'blocklist.txt'
+geoip_cn = 'geoip_cn.txt'
 custom_excludelist = 'custom_excludelist.txt'
 
 
@@ -54,7 +55,7 @@ def process_and_filter_content(content_list, domain_list):
     return new_list
 
 
-def classify_content(new_list, file):
+def json_to_domain(new_list, file):
     data = []
     domain = []
     domain_suffix = []
@@ -83,6 +84,24 @@ def classify_content(new_list, file):
     return filepath
 
 
+def json_to_ip(new_list, file):
+    data = []
+    ip_cidr = []
+    for item in new_list:
+        if not item.startswith("#"):
+            ip_cidr.append(item)
+    data = ip_cidr
+    result = {
+        "version": 1,
+        "rules": data
+    }
+    filepath = os.path.join(output_dir, file.split('.')[0] + ".json")
+    with open(filepath, 'w') as f:
+        f.write(json.dumps(result, indent=4))
+        print(f"Successfully generated JSON file {filepath}.")
+    return filepath
+
+
 def convert_json_to_srs(json_file):
     srs_file = json_file.replace(".json", ".srs")
     try:
@@ -93,13 +112,21 @@ def convert_json_to_srs(json_file):
         print(f"Error converting JSON to SRS: {e}")
 
 
-def result(lists, ce):
+def result_to_domain(lists, ce):
     for list in lists:
         e = read_urls_from_file(list)
         e = fetch_and_deduplicate_content(e)
-        e = process_and_filter_content(e, read_domain_from_excludelist(ce))
-        e = classify_content(e, list)
+        e = json_to_domain(e, list)
         e = convert_json_to_srs(e)
+    return e
+
+
+def result_to_ip(list):
+    e = read_urls_from_file(list)
+    e = fetch_and_deduplicate_content(e)
+    e = process_and_filter_content(e, read_domain_from_excludelist(ce))
+    e = json_to_ip(e, list)
+    e = convert_json_to_srs(e)
     return e
 
 
@@ -107,7 +134,8 @@ def main():
     os.mkdir(output_dir)
     subprocess.run(['git', 'checkout', 'hidden'], check=True)
     files = [blacklist, excludelist, blocklist]
-    result(files, custom_excludelist)
+    result_to_domain(files, custom_excludelist)
+    result_to_ip(geoip_cn)
 
 
 if __name__ == "__main__":
