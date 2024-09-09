@@ -20,23 +20,11 @@ def read_urls_from_file(file):
         return lines
 
 
-def process_and_filter_content(content_list, domain_list):
-    new_list = []
-    for content in content_list:
-        if not any(content.startswith(domain) for domain in domain_list):
-            new_list.append(content)
-    return new_list
-
-
 def remove_matching_rows(a, b):
-    # 创建一个新列表，用于存放修改后的a列表内容
     new_a = []
-    # 遍历列表a
     for row_a in a:
-        # 如果row_a不在列表b中，则添加到新列表中
         if row_a not in b:
             new_a.append(row_a)
-    # 返回修改后的列表a
     return new_a
 
 
@@ -59,10 +47,7 @@ def json_of_proxy_list(file, cel):
                     merged_file.add(e)
     merged_file = list(merged_file)
     merged_file.sort()
-
-    
     excluded_file = remove_matching_rows(merged_file, cel)
-    
     for line in excluded_file:
         if line.startswith('.'):
             domain_suffix.append(line.lstrip('.'))
@@ -124,13 +109,18 @@ def fetch_and_deduplicate_cn_domain(urls):
 
 def json_of_domain(new_list, file):
     data = []
+    domain = []
     domain_suffix = []
     domain_keyword = []
-    for item in new_list:
-        if item.count('.') > 0:
-            domain_suffix.append(item)
+    for line in new_list:
+        if line.startswith('.'):
+            domain_suffix.append(line.lstrip('.'))
+        elif line.count('.') > 0:
+            domain.append(line)
         else:
-            domain_keyword.append(item)
+            domain_keyword.append(line)
+    if domain:
+        data.append({"domain": domain})
     if domain_suffix:
         data.append({"domain_suffix": domain_suffix})
     if domain_keyword:
