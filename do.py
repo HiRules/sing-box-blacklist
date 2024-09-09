@@ -47,9 +47,10 @@ def json_of_proxy_list(file, cel):
                     merged_file.add(e)
     merged_file = list(merged_file)
     merged_file.sort()
-    
+
+    print(merged_file)
     excluded_file = process_and_filter_content(merged_file, cel)
-    print(excluded_file)
+    
     for line in excluded_file:
         if line.startswith('.'):
             domain_suffix.append(line.lstrip('.'))
