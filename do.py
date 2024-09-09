@@ -113,8 +113,6 @@ def json_of_cn_domain(new_list, file):
     domain_keyword = []
     for line in new_list:
         if line.count('.') > 0:
-            print('.' + line)
-            print("." + line)
             domain_suffix.append('.' + line)
         else:
             domain_keyword.append(line)
