@@ -104,7 +104,7 @@ def json_of_domain(new_list, file):
     domain_suffix = []
     domain_keyword = []
     for item in new_list:
-        elif item.count('.') > 0:
+        if item.count('.') > 0:
             domain_suffix.append(item)
         else:
             domain_keyword.append(item)
