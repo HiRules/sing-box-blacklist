@@ -203,7 +203,9 @@ def result_of_ip(file):
 def main():
     os.mkdir(output_dir)
     subprocess.run(['git', 'checkout', 'hidden'], check=True)
-    result_of_gfw_domain(proxy_list, custom_exclude_list)
+    #result_of_gfw_domain(proxy_list, custom_exclude_list)
+
+    json_of_proxy_list(proxy_list, custom_exclude_list)
     result_of_exclude_proxy_domain(exclude_proxy_list)
     result_of_reject_domain(reject_list)
     result_of_cn_domain(geosite_cn)
