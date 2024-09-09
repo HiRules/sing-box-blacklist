@@ -28,8 +28,6 @@ def process_and_filter_content(content_list, domain_list):
     return new_list
 
 
-
- 
 def remove_matching_rows(a, b):
     # 创建一个新列表，用于存放修改后的a列表内容
     new_a = []
