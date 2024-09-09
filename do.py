@@ -28,6 +28,20 @@ def process_and_filter_content(content_list, domain_list):
     return new_list
 
 
+
+ 
+def remove_matching_rows(a, b):
+    # 创建一个新列表，用于存放修改后的a列表内容
+    new_a = []
+    # 遍历列表a
+    for row_a in a:
+        # 如果row_a不在列表b中，则添加到新列表中
+        if row_a not in b:
+            new_a.append(row_a)
+    # 返回修改后的列表a
+    return new_a
+
+
 def json_of_proxy_list(file, cel):
     merged_file = set()
     excluded_file = []
@@ -48,9 +62,9 @@ def json_of_proxy_list(file, cel):
     merged_file = list(merged_file)
     merged_file.sort()
 
-    print(merged_file)
-    excluded_file = process_and_filter_content(merged_file, cel)
     
+    excluded_file = remove_matching_rows(merged_file, cel)
+    print(excluded_file)
     for line in excluded_file:
         if line.startswith('.'):
             domain_suffix.append(line.lstrip('.'))
