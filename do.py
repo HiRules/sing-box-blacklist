@@ -28,7 +28,7 @@ def process_and_filter_content(content_list, domain_list):
     return new_list
 
 
-def json_of_proxy_list(file, custom_exclude_list):
+def json_of_proxy_list(file, cel):
     merged_file = set()
     excluded_file = []
     data = []
@@ -48,7 +48,7 @@ def json_of_proxy_list(file, custom_exclude_list):
     merged_file = list(merged_file)
     merged_file.sort()
     
-    excluded_file = process_and_filter_content(merged_file, custom_exclude_list)
+    excluded_file = process_and_filter_content(merged_file, cel)
     print(excluded_file)
     for line in excluded_file:
         if line.startswith('.'):
