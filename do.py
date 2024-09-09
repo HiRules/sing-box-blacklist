@@ -44,6 +44,7 @@ def json_of_proxy_list(file, custom_exclude_list):
             excluded_file.append(line)
     for line in excluded_file:
         if line.startswith('.'):
+            print(line.lstrip('.'))
             domain_suffix.append(line.lstrip('.'))
         elif line.count('.') > 0:
             domain.append(line)
