@@ -50,7 +50,7 @@ def json_of_proxy_list(file, cel):
     excluded_file = remove_matching_rows(merged_file, cel)
     for line in excluded_file:
         if line.startswith('.'):
-            domain_suffix.append(line)
+            domain_suffix.append(line.lstrip('.'))
         elif line.count('.') > 0:
             domain.append(line)
         else:
@@ -113,7 +113,7 @@ def json_of_cn_domain(new_list, file):
     domain_keyword = []
     for line in new_list:
         if line.count('.') > 0:
-            domain_suffix.append('.' + line)
+            domain_suffix.append(line)
         else:
             domain_keyword.append(line)
     if domain_suffix:
@@ -138,7 +138,7 @@ def json_of_domain(new_list, file):
     domain_keyword = []
     for line in new_list:
         if line.startswith('.'):
-            domain_suffix.append(line)
+            domain_suffix.append(line.lstrip('.'))
         elif line.count('.') > 0:
             domain.append(line)
         else:
