@@ -20,6 +20,14 @@ def read_urls_from_file(file):
         return lines
 
 
+def process_and_filter_content(content_list, domain_list):
+    new_list = []
+    for content in content_list:
+        if not any(content.startswith(domain) for domain in domain_list):
+            new_list.append(content)
+    return new_list
+
+
 def json_of_proxy_list(file, custom_exclude_list):
     merged_file = set()
     excluded_file = []
@@ -40,10 +48,8 @@ def json_of_proxy_list(file, custom_exclude_list):
     merged_file = list(merged_file)
     merged_file.sort()
     
-    print(merged_file)
-    for line in merged_file:
-        if not any(line.startswith(domain) for domain in custom_exclude_list):
-            excluded_file.append(line)
+    excluded_file = process_and_filter_content(merged_file, custom_exclude_list)
+    print(excluded_file)
     for line in excluded_file:
         if line.startswith('.'):
             domain_suffix.append(line.lstrip('.'))
