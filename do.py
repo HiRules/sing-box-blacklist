@@ -20,7 +20,7 @@ def read_urls_from_file(file):
         return lines
 
 
-def proxy_list(file, custom_exclude_list):
+def json_of_proxy_list(file, custom_exclude_list):
     merged_file = set()
     excluded_file = []
     data = []
@@ -153,7 +153,7 @@ def convert_json_to_srs(json_file):
 
 
 def result_of_gfw_domain(file, custom_exclude_list):
-    e = proxy_list(file, custom_exclude_list)
+    e = json_of_proxy_list(file, custom_exclude_list)
     e = convert_json_to_srs(e)
     return e
 
