@@ -92,7 +92,7 @@ def fetch_and_deduplicate_cn_domain(urls):
                 if not line.startswith("#"):
                     domain = re.match(r"server=\/(.*)\/(.*)", line)
                     domain = domain.group(1)
-                    if domain:
+                    if domain.count('.') > 0:
                         result.add(domain)
     result = list(result)
     result.sort()
