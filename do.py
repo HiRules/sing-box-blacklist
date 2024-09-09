@@ -90,7 +90,7 @@ def fetch_and_deduplicate_cn_domain(urls):
             if response.status_code == 200:
                 lines = response.text.splitlines()
                 for line in lines:
-                    if not line.startswith("#"):
+                    if not len(line) or line.startswith('#'):
                         domain = re.match(r"server=\/(.*)\/(.*)", line)
                         domain = domain.group(1)
                         if domain:
