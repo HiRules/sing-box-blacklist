@@ -175,8 +175,8 @@ def convert_json_to_srs(json_file):
         print(f"Error converting JSON to SRS: {e}")
 
 
-def result_of_gfw_domain(file, custom_exclude_list):
-    e = json_of_proxy_list(file, custom_exclude_list)
+def result_of_gfw_domain(file, cel):
+    e = json_of_proxy_list(file, cel)
     e = convert_json_to_srs(e)
     return e
 
@@ -216,9 +216,7 @@ def result_of_ip(file):
 def main():
     os.mkdir(output_dir)
     subprocess.run(['git', 'checkout', 'hidden'], check=True)
-    #result_of_gfw_domain(proxy_list, custom_exclude_list)
-
-    json_of_proxy_list(proxy_list, custom_exclude_list)
+    result_of_gfw_domain(proxy_list, custom_exclude_list)
     result_of_exclude_proxy_domain(exclude_proxy_list)
     result_of_reject_domain(reject_list)
     result_of_cn_domain(geosite_cn)
