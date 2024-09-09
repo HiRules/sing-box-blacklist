@@ -107,6 +107,30 @@ def fetch_and_deduplicate_cn_domain(urls):
     return result
 
 
+def json_of_cn_domain(new_list, file):
+    data = []
+    domain_suffix = []
+    domain_keyword = []
+    for line in new_list:
+        if line.count('.') > 0:
+            domain_suffix.append(line)
+        else:
+            domain_keyword.append(line)
+    if domain_suffix:
+        data.append({"domain_suffix": domain_suffix})
+    if domain_keyword:
+        data.append({"domain_keyword": domain_keyword})
+    result = {
+        "version": 1,
+        "rules": data
+    }
+    filepath = os.path.join(output_dir, file.split('.')[0] + ".json")
+    with open(filepath, 'w') as f:
+        f.write(json.dumps(result, indent=4))
+        print(f"Successfully generated JSON file {filepath}.")
+    return filepath
+
+
 def json_of_domain(new_list, file):
     data = []
     domain = []
@@ -190,7 +214,7 @@ def result_of_reject_domain(file):
 def result_of_cn_domain(file):
     e = read_urls_from_file(file)
     e = fetch_and_deduplicate_cn_domain(e)
-    e = json_of_domain(e, file)
+    e = json_of_cn_domain(e, file)
     e = convert_json_to_srs(e)
     return e
 
