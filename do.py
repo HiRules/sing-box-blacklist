@@ -109,17 +109,18 @@ def fetch_and_deduplicate_cn_domain(urls):
 
 def json_of_cn_domain(new_list, file):
     data = []
+    domain = []
     domain_suffix = []
-    domain_keyword = []
     for line in new_list:
         if line.count('.') > 0:
-            domain_suffix.append(line)
+            domain.append(line)
+            domain_suffix.append('.' + line)
         else:
-            domain_keyword.append(line)
+            domain_suffix.append('.' + line)
+    if domain:
+        data.append({"domain": domain})
     if domain_suffix:
         data.append({"domain_suffix": domain_suffix})
-    if domain_keyword:
-        data.append({"domain_keyword": domain_keyword})
     result = {
         "version": 1,
         "rules": data
