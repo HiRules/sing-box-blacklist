@@ -112,6 +112,7 @@ def json_of_cn_domain(new_list, file):
     data = []
     domain = []
     domain_suffix = []
+    domain_keyword = []
     for line in new_list:
         if line.count('.') > 0:
             domain.append(line)
@@ -140,7 +141,8 @@ def json_of_domain(new_list, file):
     domain_keyword = []
     for line in new_list:
         if line.startswith('.'):
-            domain_suffix.append(line.lstrip('.'))
+            domain_suffix.append(line)
+            domain.append(line.lstrip('.'))
         elif line.count('.') > 0:
             domain.append(line)
         else:
