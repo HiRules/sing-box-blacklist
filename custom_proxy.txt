@@ -1,10 +1,6 @@
 wizcase.com
-.wizcase.com
 shuzijumin.com
-.shuzijumin.com
 apkpure.com
-lala.im
-github.com
 sspanel.net
 1drv
 onedrive
@@ -22,11 +18,4 @@ lalawe.com
 tgstat.com
 ipaspot.app
 ioshaven.co
-.ipaspot.app
-.tgstat.com
 signal.org
-.signal.org
-imgur.com
-.imgur.com
-twitter.com
-x.com
