@@ -31,10 +31,17 @@ def fffremove_matching_rows(a, b):
 
 
 def remove_matching_rows(a, b):
-    b = list(b)
-    print(b)
-    test = [line for line in a if line not in b]
-    return test
+    result = []
+    response = requests.get(b)
+    if response.status_code == 200:
+        lines = response.text.splitlines()
+        for line in lines:
+            e = line.strip()
+            if e:
+                result.append(e)
+    print(result)
+    result = [line for line in a if line not in result]
+    return result
 
 
 def json_of_proxy_list(file, cel):
