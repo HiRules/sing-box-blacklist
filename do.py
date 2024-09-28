@@ -31,6 +31,8 @@ def fffremove_matching_rows(a, b):
 
 
 def remove_matching_rows(a, b):
+    print(type(a))
+    print(type(b))
     return [line for line in a if line not in list(b)]
 
 
