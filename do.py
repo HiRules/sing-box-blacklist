@@ -20,22 +20,12 @@ def read_urls_from_file(file):
         return lines
 
 
-def fffremove_matching_rows(a, b):
-    new_a = []
-    b = list(b)
-    for row_a in a:
-        if row_a not in b:
-            new_a.append(row_a)
-    print(new_a)
-    return new_a
-
-
 def remove_matching_rows(a, b):
     with open(b, 'r') as f:
-        lines = f.read().splitlines()
-    print(lines)
-    lines = [line for line in a if line not in lines]
-    return lines
+        b = f.read().splitlines()
+    print(b)
+    list = [line for line in a if line not in b]
+    return list
 
 
 def json_of_proxy_list(file, cel):
