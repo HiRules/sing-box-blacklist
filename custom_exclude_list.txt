@@ -1,2 +1,2 @@
-mynetname.net
-mikrotik.com
+.mynetname.net
+.mikrotik.com
