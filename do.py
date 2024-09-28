@@ -23,7 +23,6 @@ def read_urls_from_file(file):
 def remove_matching_rows(a, b):
     with open(b, 'r') as f:
         b = f.read().splitlines()
-    print(b)
     list = [line for line in a if line not in b]
     return list
 
