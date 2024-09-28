@@ -1,1 +1,1 @@
-cloud.mikrotik.com
+mikrotik.com
