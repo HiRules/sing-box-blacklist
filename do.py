@@ -33,7 +33,6 @@ def fffremove_matching_rows(a, b):
 def remove_matching_rows(a, b):
     with open(b, 'r') as f:
         lines = f.read().splitlines()
-        return lines
     print(lines)
     lines = [line for line in a if line not in lines]
     return lines
