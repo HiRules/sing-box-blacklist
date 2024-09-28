@@ -31,7 +31,7 @@ def fffremove_matching_rows(a, b):
 
 
 def remove_matching_rows(a, b):
-    return [line for line in a if line not in b]
+    return [line for line in a if line not in list(b)]
 
 
 def json_of_proxy_list(file, cel):
