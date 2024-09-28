@@ -1,1 +1,2 @@
 .mynetname.net
+cloud.mikrotik.com
