@@ -25,6 +25,7 @@ def remove_matching_rows(a, b):
     for row_a in a:
         if row_a not in b:
             new_a.append(row_a)
+    print(new_a)
     return new_a
 
 
