@@ -1,2 +1,2 @@
-mynetname.net
-mikrotik.com
+server=/mynetname.net/114.114.114.114
+server=/mikrotik.com/114.114.114.114
