@@ -2,7 +2,6 @@ import os
 import requests
 import json
 import subprocess
-from collections import defaultdict
 
 
 output_dir = "dev"
