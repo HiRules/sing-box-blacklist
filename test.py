@@ -29,13 +29,14 @@ def merge_json(file):
     
     # 文件列表
     urls = read_urls_from_file(file)
-    print(urls)
+    
     
     # 处理每个文件
     for url in urls:
         try:
             response = requests.get(url)
             data = response.json()
+            print(data)
                 
             # 检查并匹配四个键
             for key in required_keys:
