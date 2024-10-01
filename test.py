@@ -46,7 +46,7 @@ def merge_json(file):
             print(f"File {file_name} not found.")
         except json.JSONDecodeError:
             print(f"File {file_name} is not a valid JSON.")
-    print(unique_rules[domain])
+    print(unique_rules)
     # 将集合转换回列表，并进行排序
     for key in unique_rules:
         unique_rules[key] = sorted(list(unique_rules[key]))
