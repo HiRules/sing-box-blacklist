@@ -46,28 +46,29 @@ def merge_json(file):
                 
             # 检查并匹配四个键
             for key in required_keys:
-                # 尝试访问嵌套的键
-                if 'rules' in data and isinstance(data['rules'], list):
-                    for rule in data['rules']:
-                        if key in rule:
-                            unique_rules[key].update([rule[key]])
-                        else:
-                            # 尝试转换键名的大小写
-                            alternate_key = key.replace('_', '').title()
-                            if alternate_key in rule:
-                                unique_rules[key].update([rule[alternate_key]])
-                            else:
-                                print(f"Key '{key}' not found in file {url}")
-        except requests.exceptions.HTTPError as http_err:
-            print(f"HTTP error occurred: {http_err}")
-        except requests.exceptions.ConnectionError as conn_err:
-            print(f"Error connecting: {conn_err}")
-        except requests.exceptions.Timeout as timeout_err:
-            print(f"Timeout error: {timeout_err}")
-        except requests.exceptions.RequestException as req_err:
-            print(f"An error occurred: {req_err}")
-        except json.JSONDecodeError as json_err:
-            print(f"JSON decode error: {json_err}")
+                if key in data:
+                    # 如果值是列表，则遍历列表中的每个元素
+                    if isinstance(data[key], list):
+                        for item in data[key]:
+                            unique_rules[key].add(item)
+                    else:
+                        # 如果值不是列表，直接添加到集合中
+                        unique_rules[key].add(data[key])
+                else:
+                    # 如果键不存在，则尝试在嵌套的 'rules' 键中查找
+                    if 'rules' in data and isinstance(data['rules'], list):
+                        for rule in data['rules']:
+                            if key in rule:
+                                if isinstance(rule[key], list):
+                                    for item in rule[key]:
+                                        unique_rules[key].add(item)
+                                else:
+                                    unique_rules[key].add(rule[key])
+    
+        except requests.exceptions.RequestException as e:
+            print(f"Error fetching file {file_name}: {e}")
+        except json.JSONDecodeError as e:
+            print(f"Error decoding JSON in file {file_name}: {e}")
     print(unique_rules)
     # 将集合转换回列表，并进行排序
     for key in unique_rules:
