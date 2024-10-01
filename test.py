@@ -46,16 +46,18 @@ def merge_json(file):
                 
             # 检查并匹配四个键
             for key in required_keys:
-                # 尝试直接访问键
-                if key in data:
-                    unique_rules[key].update(data[key])
-                else:
-                    # 尝试访问嵌套的键
-                    nested_key = key.replace('_', '').title()
-                    if nested_key in data:
-                        unique_rules[key].update(data[nested_key])
-                    else:
-                        print(f"Key '{key}' not found in file {url}")
+                # 尝试访问嵌套的键
+                if 'rules' in data and isinstance(data['rules'], list):
+                    for rule in data['rules']:
+                        if key in rule:
+                            unique_rules[key].update([rule[key]])
+                        else:
+                            # 尝试转换键名的大小写
+                            alternate_key = key.replace('_', '').title()
+                            if alternate_key in rule:
+                                unique_rules[key].update([rule[alternate_key]])
+                            else:
+                                print(f"Key '{key}' not found in file {url}")
         except requests.exceptions.HTTPError as http_err:
             print(f"HTTP error occurred: {http_err}")
         except requests.exceptions.ConnectionError as conn_err:
