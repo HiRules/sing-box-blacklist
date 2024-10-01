@@ -29,6 +29,7 @@ def merge_json(file):
     
     # 文件列表
     urls = read_urls_from_file(file)
+    print(urls)
     
     # 处理每个文件
     for url in urls:
