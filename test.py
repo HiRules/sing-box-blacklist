@@ -39,7 +39,7 @@ def merge_json(file):
             data = json.loads(response.text)
         
             # 打印每个文件的数据以供调试
-            print(f"Processing file: {file_url}")
+            print(f"Processing file: {url}")
             print(data)
             print("-" * 40)
             
