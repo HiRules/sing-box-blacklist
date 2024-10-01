@@ -39,7 +39,7 @@ jobs:
         run: |
             set -Eeuo pipefail
             source venv/bin/activate
-            python3 do.py
+            python3 test.py
             
       - name: "Commit and push"
         env:
