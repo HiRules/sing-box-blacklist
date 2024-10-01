@@ -46,11 +46,15 @@ def merge_json(file):
                 
             # 检查并匹配四个键
             for rule in data['rules']:
-                if key in rule:
+                if key not in rule:
+                    continue
+                else:
                     # 如果值是列表，则遍历列表中的每个元素
                     if isinstance(rule[key], list):
                         for item in rule[key]:
                             unique_rules[key].add(item)
+                    else:
+                        unique_rules[key].add(rule[key])
     
         except requests.exceptions.RequestException as e:
             print(f"Error fetching file {file_name}: {e}")
