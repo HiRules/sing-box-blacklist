@@ -22,24 +22,24 @@ def read_urls_from_file(file):
 
 
 def merge_json(file):
+    data = []
     # 初始化结果字典
     result = {
         "version": 1,
         "rules": {}
     }
-    datas = []
 
     urls = read_urls_from_file(file)
     for url in urls:
         response = requests.get(url)
         if response.status_code == 200:
-            dsfdfg.append(response.json())
-    # 遍历模拟数据
-    for data in dsfdfg:
-        # 确保每个数据项是字典并且包含 'rules' 键
-        if isinstance(data, dict) and 'rules' in data:
+            data.append(response.json())
+    # 遍历数据
+    for content in data:
+        # 确保每个数据项是字典并且包含 'rules'
+        if isinstance(content, dict) and 'rules' in content:
             # 遍历 rules
-            for rule in data['rules']:
+            for rule in content['rules']:
                 # 确保每个规则是字典
                 if isinstance(rule, dict):
                     for key, values in rule.items():
