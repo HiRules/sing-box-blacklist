@@ -35,7 +35,8 @@ def merge_json(file):
     for url in urls:
         try:
             response = requests.get(url)
-            data = response.json()
+            response.raise_for_status()  # 确保请求成功
+            data = json.loads(response.text)
             
                 
             # 检查并匹配四个键
