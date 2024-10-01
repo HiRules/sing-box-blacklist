@@ -30,15 +30,20 @@ def merge_json(file):
     
     # 遍历模拟数据
     for data in read_urls_from_file(file):
-        # 遍历 rules
-        rules = data.get("rules") or []
-        for rule in rules:
-            for key, values in rule.items():
-                if values:  # 只处理非空值
-                    if key in result["rules"]:
-                        result["rules"][key].update(values)
-                    else:
-                        result["rules"][key] = set(values)
+        # 确保每个数据项是字典并且包含 'rules' 键
+        if isinstance(data, dict) and 'rules' in data:
+            # 遍历 rules
+            for rule in data['rules']:
+                # 确保每个规则是字典
+                if isinstance(rule, dict):
+                    for key, values in rule.items():
+                        # 确保值是列表
+                        if isinstance(values, list):
+                            # 去重并排序
+                            unique_values = sorted(set(values))
+                            # 只有当 unique_values 不为空时才添加到结果中
+                            if unique_values:
+                                result["rules"].setdefault(key, set()).update(unique_values)
     
     # 将集合转换为排序后的列表
     for key in result["rules"]:
