@@ -29,8 +29,9 @@ def merge_json(file):
         "rules": {}
     }
     
+    
     # 遍历数据
-    for url in file:
+    for url in read_urls_from_file(file):
         response = requests.get(url)
         response.raise_for_status()  # 确保请求成功
         data = json.loads(response.text)
