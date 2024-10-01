@@ -35,8 +35,8 @@ def merge_json(file):
         response = requests.get(url)
         response.raise_for_status()  # 确保请求成功
         data = json.loads(response.text)
-        #all_keys.update(data.keys())# 初始化结果字典
-        print(data)
+        all_keys.update(data.keys())# 初始化结果字典
+        
         # 遍历 rules
         for rule in data.get("rules", []):
             for key, values in rule.items():
@@ -45,7 +45,7 @@ def merge_json(file):
                         result["rules"][key].update(values)
                     else:
                         result["rules"][key] = set(values)
-    
+    print(result)
     # 将集合转换为排序后的列表
     for key in result["rules"]:
         result["rules"][key] = sorted(result["rules"][key])
