@@ -55,7 +55,7 @@ def merge_json(file):
                     if nested_key in data:
                         unique_rules[key].update(data[nested_key])
                     else:
-                    print(f"Key '{key}' not found in file {url}")
+                        print(f"Key '{key}' not found in file {url}")
         except requests.exceptions.HTTPError as http_err:
             print(f"HTTP error occurred: {http_err}")
         except requests.exceptions.ConnectionError as conn_err:
