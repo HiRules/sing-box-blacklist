@@ -22,35 +22,27 @@ def read_urls_from_file(file):
 
 
 def merge_json(file):
-    all_keys = set()
+    # 初始化结果字典
     result = {
         "version": 1,
-        "source_urls": set(),
         "rules": {}
     }
     
-    
-    # 遍历数据
-    for url in read_urls_from_file(file):
-        response = requests.get(url)
-        response.raise_for_status()  # 确保请求成功
-        data = json.loads(response.text)
-        all_keys.update(data.keys())# 初始化结果字典
-        
+    # 遍历模拟数据
+    for data in read_urls_from_file(file):
         # 遍历 rules
-        for rule in data.get("rules", []):
+        rules = data.get("rules") or []
+        for rule in rules:
             for key, values in rule.items():
                 if values:  # 只处理非空值
                     if key in result["rules"]:
                         result["rules"][key].update(values)
                     else:
                         result["rules"][key] = set(values)
-    print(result)
+    
     # 将集合转换为排序后的列表
     for key in result["rules"]:
         result["rules"][key] = sorted(result["rules"][key])
-    
-    result[url] = sorted(result[url])
     
     filepath = os.path.join(output_dir, file.split('.')[0] + ".json")
     with open(filepath, 'w') as f:
