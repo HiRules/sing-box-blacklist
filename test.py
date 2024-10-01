@@ -46,15 +46,6 @@ def merge_json(file):
                 
             # 检查并匹配四个键
             for key in required_keys:
-                # 检查键是否直接存在于 JSON 数据中
-                if key in data:
-                    # 如果值是列表，则遍历列表中的每个元素
-                    if isinstance(data[key], list):
-                        for item in data[key]:
-                            unique_rules[key].add(item)
-                    else:
-                        # 如果值不是列表，直接添加到集合中
-                        unique_rules[key].add(data[key])
                 # 检查 'rules' 中的每个字典是否包含所需的键
                 for rule in data['rules']:
                     if key in rule:
