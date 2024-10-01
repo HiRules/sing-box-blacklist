@@ -33,10 +33,9 @@ def merge_json(file):
     for url in urls:
         response = requests.get(url)
         if response.status_code == 200:
-            data = response.json()
-            datas.append(data)
+            response.append(response.json())
     # 遍历模拟数据
-    for data in datas:
+    for data in response:
         # 确保每个数据项是字典并且包含 'rules' 键
         if isinstance(data, dict) and 'rules' in data:
             # 遍历 rules
