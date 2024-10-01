@@ -11,7 +11,7 @@ reject_list = 'reject_list.txt'
 geosite_cn = 'geosite_cn.txt'
 geoip_cn = 'geoip_cn.txt'
 custom_exclude_list = 'custom_exclude_list.txt'
-meta_rules = 'geosite@cn.txt'
+meta_rules = 'geosite-at-cn.txt'
 
 
 def read_urls_from_file(file):
