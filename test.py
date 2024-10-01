@@ -46,9 +46,15 @@ def merge_json(file):
                 
             # 检查并匹配四个键
             for key in required_keys:
+                # 尝试直接访问键
                 if key in data:
                     unique_rules[key].update(data[key])
                 else:
+                    # 尝试访问嵌套的键
+                    nested_key = key.replace('_', '').title()
+                    if nested_key in data:
+                        unique_rules[key].update(data[nested_key])
+                    else:
                     print(f"Key '{key}' not found in file {url}")
         except requests.exceptions.HTTPError as http_err:
             print(f"HTTP error occurred: {http_err}")
