@@ -37,16 +37,29 @@ def merge_json(file):
             response = requests.get(url)
             response.raise_for_status()  # 确保请求成功
             data = json.loads(response.text)
+        
+            # 打印每个文件的数据以供调试
+            print(f"Processing file: {file_url}")
+            print(data)
+            print("-" * 40)
             
                 
             # 检查并匹配四个键
             for key in required_keys:
                 if key in data:
                     unique_rules[key].update(data[key])
-        except FileNotFoundError:
-            print(f"File {file_name} not found.")
-        except json.JSONDecodeError:
-            print(f"File {file_name} is not a valid JSON.")
+                else:
+                    print(f"Key '{key}' not found in file {url}")
+        except requests.exceptions.HTTPError as http_err:
+            print(f"HTTP error occurred: {http_err}")
+        except requests.exceptions.ConnectionError as conn_err:
+            print(f"Error connecting: {conn_err}")
+        except requests.exceptions.Timeout as timeout_err:
+            print(f"Timeout error: {timeout_err}")
+        except requests.exceptions.RequestException as req_err:
+            print(f"An error occurred: {req_err}")
+        except json.JSONDecodeError as json_err:
+            print(f"JSON decode error: {json_err}")
     print(unique_rules)
     # 将集合转换回列表，并进行排序
     for key in unique_rules:
