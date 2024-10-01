@@ -44,6 +44,7 @@ def merge_json(file):
                     for key, values in rule.items():
                         # 确保值是列表
                         if isinstance(values, list):
+                            print(values)
                             result["rules"].setdefault(key, set()).update(values)
                             # 去重并排序
                             # unique_values = sorted(set(values))
