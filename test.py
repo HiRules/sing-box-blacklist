@@ -32,7 +32,7 @@ def merge_json(file):
     for url in urls:
         response = requests.get(url)
         if response.status_code == 200:
-            data.append(response.json())
+            data.append(json.loads(response.text))
     # 遍历数据
     for content in data:
         # 确保每个数据项是字典并且包含 'rules'
@@ -44,13 +44,11 @@ def merge_json(file):
                     for key, values in rule.items():
                         # 确保值是列表
                         if isinstance(values, list):
-                            print(values)
-                            result["rules"].setdefault(key, set()).update(values)
                             # 去重并排序
-                            # unique_values = sorted(set(values))
+                            unique_values = sorted(set(values))
                             # 只有当 unique_values 不为空时才添加到结果中
-                            # if unique_values:
-                            #    result["rules"].setdefault(key, set()).update(unique_values)
+                            if unique_values:
+                                result["rules"].setdefault(key, set()).update(unique_values)
     
     # 将集合转换为排序后的列表
     for key in result["rules"]:
