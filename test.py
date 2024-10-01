@@ -27,9 +27,16 @@ def merge_json(file):
         "version": 1,
         "rules": {}
     }
-    
+    datas = []
+
+    urls = read_urls_from_file(file)
+    for url in urls:
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = response.json()
+            datas.append(data)
     # 遍历模拟数据
-    for data in read_urls_from_file(file):
+    for data in datas:
         # 确保每个数据项是字典并且包含 'rules' 键
         if isinstance(data, dict) and 'rules' in data:
             # 遍历 rules
