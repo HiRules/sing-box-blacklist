@@ -33,9 +33,9 @@ def merge_json(file):
     for url in urls:
         response = requests.get(url)
         if response.status_code == 200:
-            response.append(response.json())
+            dsfdfg.append(response.json())
     # 遍历模拟数据
-    for data in response:
+    for data in dsfdfg:
         # 确保每个数据项是字典并且包含 'rules' 键
         if isinstance(data, dict) and 'rules' in data:
             # 遍历 rules
