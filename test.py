@@ -2,6 +2,7 @@ import os
 import requests
 import json
 import subprocess
+from collections import defaultdict
 
 
 output_dir = "dev"
@@ -21,56 +22,35 @@ def read_urls_from_file(file):
 
 
 def merge_json(file):
-    # 定义需要处理的键
-    required_keys = ['domain', 'domain_suffix', 'domain_keyword', 'domain_regex']
-    
-    # 初始化字典以存储唯一值
-    unique_rules = {key: set() for key in required_keys}
-    
-    # 文件列表
-    urls = read_urls_from_file(file)
-    
-    
-    # 处理每个文件
-    for url in urls:
-        try:
-            response = requests.get(url)
-            response.raise_for_status()  # 确保请求成功
-            data = json.loads(response.text)
-        
-            # 打印每个文件的数据以供调试
-            print(f"Processing file: {url}")
-            print(data)
-            print("-" * 40)
-            
-                
-            # 检查并匹配四个键
-            for key in required_keys:
-                # 检查 'rules' 中的每个字典是否包含所需的键
-                for rule in data['rules']:
-                    if key not in rule:
-                        continue
-                    else:
-                        # 如果值是列表，则遍历列表中的每个元素
-                        if isinstance(rule[key], list):
-                            for item in rule[key]:
-                                unique_rules[key].add(item)
-                        else:
-                            unique_rules[key].add(rule[key])
-    
-        except requests.exceptions.RequestException as e:
-            print(f"Error fetching file {file_name}: {e}")
-        except json.JSONDecodeError as e:
-            print(f"Error decoding JSON in file {file_name}: {e}")
-    print(unique_rules)
-    # 将集合转换回列表，并进行排序
-    for key in unique_rules:
-        unique_rules[key] = sorted(list(unique_rules[key]))
-    
+    all_keys = set()
     result = {
         "version": 1,
-        "rules": unique_rules
+        "source_urls": set(),
+        "rules": {}
     }
+    
+    # 遍历数据
+    for url in urls:
+        response = requests.get(url)
+        response.raise_for_status()  # 确保请求成功
+        data = json.loads(response.text)
+        #all_keys.update(data.keys())# 初始化结果字典
+        
+        # 遍历 rules
+        for rule in data.get("rules", []):
+            for key, values in rule.items():
+                if values:  # 只处理非空值
+                    if key in result["rules"]:
+                        result["rules"][key].update(values)
+                    else:
+                        result["rules"][key] = set(values)
+    
+    # 将集合转换为排序后的列表
+    for key in result["rules"]:
+        result["rules"][key] = sorted(result["rules"][key])
+    
+    result[url] = sorted(result[url])
+    
     filepath = os.path.join(output_dir, file.split('.')[0] + ".json")
     with open(filepath, 'w') as f:
         f.write(json.dumps(result, indent=4))
