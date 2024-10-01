@@ -30,7 +30,7 @@ def merge_json(file):
     }
     
     # 遍历数据
-    for url in urls:
+    for url in file:
         response = requests.get(url)
         response.raise_for_status()  # 确保请求成功
         data = json.loads(response.text)
