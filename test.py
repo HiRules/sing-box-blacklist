@@ -110,7 +110,7 @@ def result_of_ip(file):
 
 def main():
     os.mkdir(output_dir)
-    #subprocess.run(['git', 'checkout', 'hidden'], check=True)
+    subprocess.run(['git', 'checkout', 'hidden'], check=True)
     e = merge_json(meta_rules)
     convert_json_to_srs(e)
 
