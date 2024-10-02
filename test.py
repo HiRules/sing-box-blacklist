@@ -44,11 +44,16 @@ def merge_json_files_in_folder(folder_path):
                 data = json.load(file)
                 # 遍历json文件中的所有键
                 for key, value in data.items():
-                    # 如果键在merged_data中不存在，则创建一个新列表
-                    if key not in merged_data:
-                        merged_data[key] = []
-                    # 将当前文件中的值添加到合并后的列表中
-                    merged_data[key].extend(value)
+                    # 检查value是否是可迭代的（例如列表）
+                    if isinstance(value, list):
+                        # 如果键在merged_data中不存在，则创建一个新列表
+                        if key not in merged_data:
+                            merged_data[key] = []
+                        # 将当前文件中的值添加到合并后的列表中
+                        merged_data[key].extend(value)
+                    else:
+                        # 如果value不是列表，则直接赋值
+                        merged_data[key] = value
 
     return merged_data
 
