@@ -69,7 +69,7 @@ def get_category_file(categories):
     #     os.system("sing-box geosite export " + category)
     newcat = []
     for category in categories:
-        newcat = os.system("sing-box geosite export -f " + db_file + category)
+        newcat = os.system("sing-box geosite export -f " + db_file + " " + category)
     print(db_file)
     return newcat
 
@@ -135,9 +135,11 @@ def main():
     # with open(file_name, 'r') as f:
     #     lines = f.read().splitlines()
     #     print("3:" + lines)
+    print(db_file)
     if os.path.isfile(db_file):
         size = os.path.getsize(db_file)
         print(size)
+        
     
     get_category_file(categories)    
     # e = merge_json(meta_rules)
