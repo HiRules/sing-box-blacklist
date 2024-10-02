@@ -6,6 +6,7 @@ import subprocess
 
 
 output_dir = "dev"
+test_dir = "Meta"
 proxy_list = 'proxy_list.txt'
 exclude_proxy_list = 'exclude_proxy_list.txt'
 reject_list = 'reject_list.txt'
@@ -13,6 +14,7 @@ geosite_cn = 'geosite_cn.txt'
 geoip_cn = 'geoip_cn.txt'
 custom_exclude_list = 'custom_exclude_list.txt'
 meta_rules = 'geosite-at-cn.txt'
+test_json = 'at-cn.json'
 db_file = 'geosite.db'
 
 
@@ -61,8 +63,11 @@ def merge_json_files(folder_path):
     # 将合并后的规则添加到merged_data中
     for key, values in rules_dict.items():
         merged_data['rules'].append({key: values})
-
-    return merged_data
+    
+    filepath = os.path.join(test_dir, "at-cn.json")
+    with open(filepath, 'w') as f:
+        f.write(json.dumps(merged_data, indent=4))
+    return filepath
 
 
 
