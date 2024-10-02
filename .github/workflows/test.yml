@@ -21,12 +21,9 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
-  
-      - name: Install GitPython
-        run: pip install GitPython
 
-      - name: "Checkout"
-        uses: actions/checkout@v4
+      - name: Switch to hidden branch
+        run: git checkout hidden
         
       - name: "Setup sing-box"
         env:
