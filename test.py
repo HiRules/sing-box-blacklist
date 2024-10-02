@@ -19,7 +19,7 @@ branch_name = 'hidden'
 file_name = 'geosite.db'
 
 print("1:" + os.getcwd())
-testpath = os.path.join(os.getcwd(), repo_name, file_name)
+testpath = os.path.join(os.getcwd(), branch_name, file_name)
 print("2:" + testpath)
 if os.path.isfile(testpath):
     size = os.path.getsize(testpath)
