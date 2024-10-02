@@ -31,33 +31,37 @@ def get_category_file(categories):
 
 
 
-def merge_json_files_in_folder(folder_path):
+def merge_json_files(folder_path):
+    # 存储合并后的数据
     merged_data = {
         "version": 1,
         "rules": []
     }
 
+    # 遍历文件夹中的所有 JSON 文件
     for file_name in os.listdir(folder_path):
         if file_name.endswith('.json'):
             file_path = os.path.join(folder_path, file_name)
             with open(file_path, 'r', encoding='utf-8') as file:
+                # 读取 JSON 文件内容
                 data = json.load(file)
                 for rule in data.get('rules', []):
-                    # 查找现有规则以合并
+                    # 查找现有的规则以合并
                     existing_rule = next(
-                        (r for r in merged_data['rules'] if r['domain'] == rule['domain']),
+                        (r for r in merged_data['rules'] if r.get('domain') == rule.get('domain')),
                         None
                     )
                     if existing_rule:
-                        # 分别合并 'domain_suffix', 'domain_keyword', 'domain_regex'
+                        # 如果找到现有规则，则合并键
                         for key in ['domain_suffix', 'domain_keyword', 'domain_regex']:
                             if key in rule and isinstance(rule[key], list):
-                                if key in existing_rule:
-                                    existing_rule[key].extend(rule[key])
-                                else:
-                                    existing_rule[key] = rule[key]
+                                # 如果键在现有规则中不存在，则创建它
+                                if key not in existing_rule:
+                                    existing_rule[key] = []
+                                # 合并列表，同时确保唯一性
+                                existing_rule[key].extend(item for item in rule[key] if item not in existing_rule[key])
                     else:
-                        # 添加新规则
+                        # 如果没有找到现有规则，则添加新规则
                         merged_data['rules'].append(rule)
 
     return merged_data
