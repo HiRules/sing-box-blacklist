@@ -1,4 +1,3 @@
-import git
 import os
 import requests
 import json
@@ -19,10 +18,8 @@ repo_name = 'sing-box-blacklist'
 branch_name = 'hidden'
 file_name = 'geosite.db'
 
-repo = git.Repo(os.getcwd())
-repo.git.checkout('hidden')
 # print("1:" + os.getcwd())
-testpath = os.path.join(os.getcwd(), file_name)
+testpath = os.path.join(os.getcwd(), branch_name, file_name)
 print("2:" + testpath)
 if os.path.isfile(testpath):
     size = os.path.getsize(testpath)
