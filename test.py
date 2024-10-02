@@ -13,18 +13,22 @@ geoip_cn = 'geoip_cn.txt'
 custom_exclude_list = 'custom_exclude_list.txt'
 meta_rules = 'geosite-at-cn.txt'
 
-def read_urls_from_file(file):
-    with open(file, 'r') as f:
-        lines = f.read().splitlines()
-        return lines
+
 
 subprocess.run(['git', 'checkout', 'hidden'], check=True)
 print("1:" + os.getcwd())
-testpath = os.path.join(output_dir, "geosite.db")
+testpath = os.path.join('hidden', "geosite.db")
 print("2:" + testpath)
 if os.path.isfile(testpath):
     size = os.path.getsize(testpath)
     print(size)
+
+
+
+def read_urls_from_file(file):
+    with open(file, 'r') as f:
+        lines = f.read().splitlines()
+        return lines
     
 
 def merge_json(file):
