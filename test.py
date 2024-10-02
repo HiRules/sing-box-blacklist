@@ -153,10 +153,9 @@ def result_of_ip(file):
 
 def main():
     os.mkdir(output_dir)
-    os.mkdir(testdir)
     subprocess.run(['git', 'checkout', 'hidden'], check=True)
     
-    download_file(geosite, testdir)
+    # download_file(geosite, testdir)
 
     # if os.path.isfile(db_file):
     #     size = os.path.getsize(db_file)
