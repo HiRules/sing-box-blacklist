@@ -63,7 +63,7 @@ def merge_json_files(folder_path):
     for key, values in rules_dict.items():
         merged_data['rules'].append({key: values})
     
-    filepath = os.path.join(test_dir, test_dir + ".json")
+    filepath = os.path.join(output_dir, "at-cn.json")
     with open(filepath, 'w') as f:
         f.write(json.dumps(merged_data, indent=4))
     return filepath
