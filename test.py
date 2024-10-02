@@ -179,7 +179,7 @@ def main():
     
 
     # 假设hidden文件夹位于当前工作目录下
-    merged_json_data = merge_json_files_in_folder(output_dir)
+    merged_json_data = merge_json_files(output_dir)
     print(merged_json_data)
 
 
