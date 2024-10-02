@@ -25,7 +25,7 @@ def read_urls_from_file(file):
 
 def get_category_file(categories):    
     for category in categories:
-        os.system("sing-box geosite export --output " + output_dir + "/" + category + ".json " + category)
+        os.system("sing-box geosite export --output " + output_dir + category + ".json " + category)
         print(os.path.getsize(db_file))
 
 
