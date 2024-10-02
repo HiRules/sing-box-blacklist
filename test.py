@@ -5,7 +5,7 @@ import subprocess
 
 
 output_dir = "dev"
-testdir = "main"
+testdir = "hidden"
 proxy_list = 'proxy_list.txt'
 exclude_proxy_list = 'exclude_proxy_list.txt'
 reject_list = 'reject_list.txt'
