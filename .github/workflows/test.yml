@@ -30,7 +30,7 @@ jobs:
 
 
       - name: Set Python path
-        run: echo "::add-path::/home/runner/.local/lib/python3.8/site-packages"
+        run: echo "/home/runner/.local/lib/python3.8/site-packages" >> $GITHUB_PATH
 
       - name: Fetch all branches
         run: git fetch --all
