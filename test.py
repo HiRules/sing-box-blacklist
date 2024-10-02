@@ -25,8 +25,32 @@ def read_urls_from_file(file):
 
 def get_category_file(categories):    
     for category in categories:
-        os.system("sing-box geosite export --output " + output_dir + category + ".json " + category)
-        print(os.path.getsize(db_file))
+        flags = ""
+        os.system("sing-box geosite export --output " + output_dir + "/" + category + ".json " + category)
+        # print(os.path.getsize(db_file))
+
+
+
+def merge_json_files_in_folder(folder_path):
+    # 存储合并后的数据
+    merged_data = {}
+
+    # 遍历文件夹中的所有json文件
+    for file_name in os.listdir(folder_path):
+        if file_name.endswith('.json'):
+            file_path = os.path.join(folder_path, file_name)
+            with open(file_path, 'r', encoding='utf-8') as file:
+                # 读取json文件内容
+                data = json.load(file)
+                # 遍历json文件中的所有键
+                for key, value in data.items():
+                    # 如果键在merged_data中不存在，则创建一个新列表
+                    if key not in merged_data:
+                        merged_data[key] = []
+                    # 将当前文件中的值添加到合并后的列表中
+                    merged_data[key].extend(value)
+
+    return merged_data
 
 
 
@@ -137,7 +161,14 @@ def main():
         print(size)
         
     
-    get_category_file(categories)    
+    get_category_file(categories)
+    
+
+    # 假设hidden文件夹位于当前工作目录下
+    merged_json_data = merge_json_files_in_folder(output_dir)
+    print(merged_json_data)
+
+
     # e = merge_json(meta_rules)
     # convert_json_to_srs(e)
 
