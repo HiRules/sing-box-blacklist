@@ -64,9 +64,11 @@ def merge_json(file):
 
 
 def get_category_file(categories):
+    # for category in categories:
+    #     filename = "geosite-" + category + ".json"
+    #     os.system("sing-box geosite export " + category)
     for category in categories:
-        #filename = "geosite-" + category + ".json"
-        os.system("sing-box geosite export --output " + category)
+        os.system("sing-box geosite export -o hhh-" + category + ".json" + category)
 
 
 
@@ -134,10 +136,7 @@ def main():
         size = os.path.getsize(db_file)
         print(size)
     
-    for category in categories:
-        #filename = "geosite-" + category + ".json"
-        os.system("sing-box geosite export -f " + db_file + ' ' + category)
-        
+    get_category_file(categories)    
     # e = merge_json(meta_rules)
     # convert_json_to_srs(e)
 
