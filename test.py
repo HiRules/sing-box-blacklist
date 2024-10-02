@@ -67,8 +67,10 @@ def get_category_file(categories):
     # for category in categories:
     #     filename = "geosite-" + category + ".json"
     #     os.system("sing-box geosite export " + category)
+    newcat = []
     for category in categories:
-        os.system("sing-box geosite export -f " + db_file + category)
+        newcat = os.system("sing-box geosite export -f " + db_file + category)
+        return newcat
 
 
 
