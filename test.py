@@ -32,28 +32,28 @@ def get_category_file(categories):
 
 
 def merge_json_files_in_folder(folder_path):
-    # 存储合并后的数据
-    merged_data = {}
+    merged_data = {
+        "version": 1,
+        "rules": []
+    }
 
-    # 遍历文件夹中的所有json文件
     for file_name in os.listdir(folder_path):
         if file_name.endswith('.json'):
             file_path = os.path.join(folder_path, file_name)
             with open(file_path, 'r', encoding='utf-8') as file:
-                # 读取json文件内容
                 data = json.load(file)
-                # 遍历json文件中的所有键
-                for key, value in data.items():
-                    # 检查value是否是可迭代的（例如列表）
-                    if isinstance(value, list):
-                        # 如果键在merged_data中不存在，则创建一个新列表
-                        if key not in merged_data:
-                            merged_data[key] = []
-                        # 将当前文件中的值添加到合并后的列表中
-                        merged_data[key].extend(value)
+                # 合并规则
+                for rule in data.get('rules', []):
+                    # 查找现有规则以合并
+                    existing_rule = next((r for r in merged_data['rules'] if r['domain'] == rule['domain']), None)
+                    if existing_rule:
+                        # 合并 domain_suffix, domain_keyword, domain_regex
+                        existing_rule['domain_suffix'].extend(rule['domain_suffix'])
+                        existing_rule['domain_keyword'].extend(rule['domain_keyword'])
+                        existing_rule['domain_regex'].extend(rule['domain_regex'])
                     else:
-                        # 如果value不是列表，则直接赋值
-                        merged_data[key] = value
+                        # 添加新规则
+                        merged_data['rules'].append(rule)
 
     return merged_data
 
