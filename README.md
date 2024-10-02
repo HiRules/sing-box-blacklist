@@ -1,4 +1,4 @@
-## 直连规则：
+## 直连规则
 合并的分类包含：
 
 `*@cn`以及`geolocation-cn`、`google-cn`、`apple-cn`、`tld-cn`
