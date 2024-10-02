@@ -64,11 +64,13 @@ def merge_json_files(folder_path):
                                 existing_rule[key].extend(item for item in rule[key] if item not in existing_rule[key])
                     else:
                         # 如果没有找到现有规则，则添加新规则
-                        # 确保每个键的值是列表类型
-                        for key in ['domain_suffix', 'domain_keyword', 'domain_regex']:
-                            if key in rule and not isinstance(rule[key], list):
-                                rule[key] = [rule[key]]
                         merged_data['rules'].append(rule)
+
+    # 清除每个规则的重复值
+    for rule in merged_data['rules']:
+        for key in ['domain_suffix', 'domain_keyword', 'domain_regex']:
+            if key in rule:
+                rule[key] = list(set(rule[key]))
 
     return merged_data
 
