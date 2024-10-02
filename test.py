@@ -18,10 +18,10 @@ def read_urls_from_file(file):
         lines = f.read().splitlines()
         return lines
 
-
+subprocess.run(['git', 'checkout', 'hidden'], check=True)
 print("1:" + os.getcwd())
 testpath = os.path.join(output_dir, "geosite.db")
-print("2:" + read_urls_from_file(testpath))
+print("2:" + testpath)
 if os.path.isfile(testpath):
     size = os.path.getsize(testpath)
     print(size)
