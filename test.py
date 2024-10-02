@@ -32,44 +32,31 @@ def get_category_file(categories):
 
 
 def merge_json_files(folder_path):
-    # 存储合并后的数据
+    # 存储合并后的数据结构
     merged_data = {
         "version": 1,
         "rules": []
     }
 
-    # 遍历文件夹中的所有 JSON 文件
+    # 遍历文件夹中的所有json文件
     for file_name in os.listdir(folder_path):
         if file_name.endswith('.json'):
             file_path = os.path.join(folder_path, file_name)
             with open(file_path, 'r', encoding='utf-8') as file:
-                # 读取 JSON 文件内容
+                # 读取json文件内容
                 data = json.load(file)
-                for rule in data.get('rules', []):
-                    # 查找现有的规则以合并
-                    existing_rule = next(
-                        (r for r in merged_data['rules'] if r.get('domain') == rule.get('domain')),
-                        None
-                    )
-                    if existing_rule:
-                        # 如果找到现有规则，则合并键
-                        for key in ['domain_suffix', 'domain_keyword', 'domain_regex']:
-                            if key in rule:
-                                # 确保是列表类型
-                                rule[key] = rule[key] if isinstance(rule[key], list) else [rule[key]]
-                                if key not in existing_rule:
-                                    existing_rule[key] = []
-                                # 合并列表，同时确保唯一性
-                                existing_rule[key].add(item for item in rule[key] if item not in existing_rule[key])
-                    else:
-                        # 如果没有找到现有规则，则添加新规则
-                        merged_data['rules'].append(rule)
+                
+                # 遍历文件中的规则
+                for rule in data["rules"]:
+                    # 对于每个规则，检查四个键是否存在并合并
+                    for key in ["domain", "domain_suffix", "domain_keyword", "domain_regex"]:
+                        if key in rule:
+                            # 初始化merged_data中的对应键
+                            if not merged_data["rules"] or key not in merged_data["rules"][0]:
+                                merged_data["rules"][0][key] = []
 
-    # 清除每个规则的重复值
-    for rule in merged_data['rules']:
-        for key in ['domain_suffix', 'domain_keyword', 'domain_regex']:
-            if key in rule:
-                rule[key] = list(set(rule[key]))
+                            # 将当前文件中的值添加到合并后的列表中，同时确保唯一性
+                            merged_data["rules"][0][key].extend(x for x in rule[key] if x not in merged_data["rules"][0][key])
 
     return merged_data
 
