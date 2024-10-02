@@ -1,6 +1,9 @@
 name: "Run Script Every 0 Days"
 
 on:
+  push:
+    branches:
+      - main
   schedule:
     - cron: '0 0 * * 0'  # 每周日的 0:00 AM 运行
   workflow_dispatch:
