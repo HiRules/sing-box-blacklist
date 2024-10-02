@@ -31,6 +31,18 @@ def get_category_file(categories):
 
 
 
+def is_valid_domain(value):
+    # 使用正则表达式检查值是否看起来像有效的域名
+    domain_regex = re.compile(
+        r'^(?:https?://)?'  # http:// or https://
+        r'(?:www\.)?'       # www.
+        r'(?:(?:[a-zA-Z0-9-]{2,63}\.)+[a-zA-Z]{2,6}'  # domain name
+        r'|localhost|'      # localhost...
+        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or IP
+        r'(?::\d+)?'        # optional port
+        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+    return domain_regex.match(value) is not None
+
 def merge_json_files(folder_path):
     # 存储合并后的数据结构
     merged_data = {
@@ -60,8 +72,8 @@ def merge_json_files(folder_path):
                                 merged_data["rules"][0][key] = []
 
                             # 将当前文件中的值添加到合并后的列表中，同时确保唯一性
-                            # 这里不再检查值的类型，允许单字母或符号
-                            merged_data["rules"][0][key].extend(x for x in rule[key] if x not in merged_data["rules"][0][key])
+                            # 使用is_valid_domain函数来过滤掉无效的键值
+                            merged_data["rules"][0][key].extend(x for x in rule[key] if is_valid_domain(x) and x not in merged_data["rules"][0][key])
 
     return merged_data
 
