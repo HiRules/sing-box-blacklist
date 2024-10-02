@@ -25,7 +25,10 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Switch to hidden branch
+      - name: Fetch all branches
+        run: git fetch --all
+  
+      - name: Switch to main branch
         run: git checkout main
         
       - name: "Setup sing-box"
