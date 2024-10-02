@@ -42,15 +42,20 @@ def merge_json_files_in_folder(folder_path):
             file_path = os.path.join(folder_path, file_name)
             with open(file_path, 'r', encoding='utf-8') as file:
                 data = json.load(file)
-                # 合并规则
                 for rule in data.get('rules', []):
                     # 查找现有规则以合并
-                    existing_rule = next((r for r in merged_data['rules'] if r['domain'] == rule['domain']), None)
+                    existing_rule = next(
+                        (r for r in merged_data['rules'] if r['domain'] == rule['domain']),
+                        None
+                    )
                     if existing_rule:
-                        # 合并 domain_suffix, domain_keyword, domain_regex
-                        existing_rule['domain_suffix'].extend(rule['domain_suffix'])
-                        existing_rule['domain_keyword'].extend(rule['domain_keyword'])
-                        existing_rule['domain_regex'].extend(rule['domain_regex'])
+                        # 分别合并 'domain_suffix', 'domain_keyword', 'domain_regex'
+                        for key in ['domain_suffix', 'domain_keyword', 'domain_regex']:
+                            if key in rule and isinstance(rule[key], list):
+                                if key in existing_rule:
+                                    existing_rule[key].extend(rule[key])
+                                else:
+                                    existing_rule[key] = rule[key]
                     else:
                         # 添加新规则
                         merged_data['rules'].append(rule)
