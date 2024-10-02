@@ -20,7 +20,15 @@ def read_urls_from_file(file):
     with open(file, 'r') as f:
         lines = f.read().splitlines()
         return lines
-    
+
+
+
+def get_category_file(categories):    
+    for category in categories:
+        os.system("sing-box geosite export -f " + db_file + " " + category)
+        print(os.path.getsize(db_file))
+
+
 
 def merge_json(file):
     data = []
@@ -60,18 +68,6 @@ def merge_json(file):
     with open(filepath, 'w') as f:
         f.write(json.dumps(result, indent=4))
     return filepath
-
-
-
-def get_category_file(categories):
-    # for category in categories:
-    #     filename = "geosite-" + category + ".json"
-    #     os.system("sing-box geosite export " + category)
-    newcat = []
-    for category in categories:
-        newcat = os.system("sing-box geosite export -f " + db_file + " " + category)
-    print(db_file)
-    return newcat
 
 
 
