@@ -6,7 +6,7 @@ import subprocess
 
 
 output_dir = "dev"
-test_dir = "Meta"
+test_dir = "release"
 proxy_list = 'proxy_list.txt'
 exclude_proxy_list = 'exclude_proxy_list.txt'
 reject_list = 'reject_list.txt'
@@ -14,7 +14,6 @@ geosite_cn = 'geosite_cn.txt'
 geoip_cn = 'geoip_cn.txt'
 custom_exclude_list = 'custom_exclude_list.txt'
 meta_rules = 'geosite-at-cn.txt'
-test_json = 'at-cn.json'
 db_file = 'geosite.db'
 
 
