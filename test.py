@@ -136,7 +136,7 @@ def main():
     
     for category in categories:
         #filename = "geosite-" + category + ".json"
-        os.system("sing-box geosite export " + category)
+        os.system("sing-box geosite export -f " + db_file + ' ' + category)
         
     # e = merge_json(meta_rules)
     # convert_json_to_srs(e)
