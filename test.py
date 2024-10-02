@@ -21,6 +21,9 @@ file_name = 'geosite.db'
 # print("1:" + os.getcwd())
 testpath = os.path.join(os.getcwd(), branch_name, file_name)
 print("2:" + testpath)
+with open(testpath, 'r') as f:
+    lines = f.read().splitlines()
+    print("3:" + lines)
 if os.path.isfile(testpath):
     size = os.path.getsize(testpath)
     print(size)
