@@ -32,49 +32,32 @@ def get_category_file(categories):
 
 
 
-def is_valid_domain(value):
-    # 使用正则表达式检查值是否看起来像有效的域名
-    domain_regex = re.compile(
-        r'^(?:https?://)?'  # http:// or https://
-        r'(?:www\.)?'       # www.
-        r'(?:(?:[a-zA-Z0-9-]{2,63}\.)+[a-zA-Z]{2,6}'  # domain name
-        r'|localhost|'      # localhost...
-        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or IP
-        r'(?::\d+)?'        # optional port
-        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
-    return domain_regex.match(value) is not None
-
-def merge_json_files(folder_path):
-    # 存储合并后的数据结构
+def merge_json_files(directory):
+    # 存储合并后的数据
     merged_data = {
         "version": 1,
         "rules": []
     }
 
-    # 遍历文件夹中的所有json文件
-    for file_name in os.listdir(folder_path):
-        if file_name.endswith('.json'):
-            file_path = os.path.join(folder_path, file_name)
+    # 遍历目录中的所有json文件
+    for filename in os.listdir(directory):
+        if filename.endswith(".json"):
+            file_path = os.path.join(directory, filename)
             with open(file_path, 'r', encoding='utf-8') as file:
-                # 读取json文件内容
                 data = json.load(file)
-                
-                # 遍历文件中的规则
-                for rule in data["rules"]:
-                    # 对于每个规则，检查四个键是否存在并合并
-                    for key in ["domain", "domain_suffix", "domain_keyword", "domain_regex"]:
+
+                # 遍历文件中的rules
+                for rule in data['rules']:
+                    # 创建一个新的规则字典
+                    new_rule = {}
+
+                    # 检查每个键是否存在，如果存在则添加到新规则中
+                    for key in ['domain', 'domain_suffix', 'domain_keyword', 'domain_regex']:
                         if key in rule:
-                            # 检查merged_data中的rules是否为空，如果为空则添加一个空字典
-                            if not merged_data["rules"]:
-                                merged_data["rules"].append({})
+                            new_rule[key] = rule[key]
 
-                            # 检查merged_data中的对应键是否存在，如果不存在则初始化
-                            if key not in merged_data["rules"][0]:
-                                merged_data["rules"][0][key] = []
-
-                            # 将当前文件中的值添加到合并后的列表中，同时确保唯一性
-                            # 使用is_valid_domain函数来过滤掉无效的键值
-                            merged_data["rules"][0][key].extend(x for x in rule[key] if is_valid_domain(x) and x not in merged_data["rules"][0][key])
+                    # 将新规则添加到合并后的数据中
+                    merged_data['rules'].append(new_rule)
 
     return merged_data
 
