@@ -28,7 +28,8 @@ jobs:
           GEOSITE_URL: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/release/geosite.db"
         run: |
             set -Eeuo pipefail
-            curl -JLO $GEOSITE_URL -o hidden/geosite.db
+            curl -JLO $GEOSITE_URL
+            mv geosite.db hidden
             ls
         
       - name: "Setup sing-box"
