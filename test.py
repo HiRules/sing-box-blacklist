@@ -60,6 +60,7 @@ def merge_json_files(folder_path):
                                 merged_data["rules"][0][key] = []
 
                             # 将当前文件中的值添加到合并后的列表中，同时确保唯一性
+                            # 这里不再检查值的类型，允许单字母或符号
                             merged_data["rules"][0][key].extend(x for x in rule[key] if x not in merged_data["rules"][0][key])
 
     return merged_data
