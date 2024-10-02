@@ -48,20 +48,18 @@ def merge_json_files(folder_path):
             with open(file_path, 'r', encoding='utf-8') as file:
                 data = json.load(file)
                 for rule in data['rules']:
-                    # 获取当前规则的键集合
-                    keys = set(rule.keys())
                     # 遍历所有可能的键
                     for key in ['domain', 'domain_suffix', 'domain_keyword', 'domain_regex']:
-                        if key in keys:
+                        if key in rule:
                             # 如果键在rules_dict中不存在，则初始化
                             if key not in rules_dict:
-                                rules_dict[key] = []
-                            # 将当前规则中的值添加到rules_dict中
-                            rules_dict[key].extend(rule[key] if isinstance(rule[key], list) else [rule[key]])
+                                rules_dict[key] = set()
+                            # 将当前规则中的值添加到rules_dict中，并去重
+                            rules_dict[key].update(rule[key] if isinstance(rule[key], list) else [rule[key]])
 
-    # 将合并后的规则添加到merged_data中
+    # 将合并后的规则添加到merged_data中，并进行排序
     for key, values in rules_dict.items():
-        merged_data['rules'].append({key: values})
+        merged_data['rules'].append({key: sorted(list(values))})
     
     filepath = os.path.join(output_dir, "at-cn.json")
     with open(filepath, 'w') as f:
