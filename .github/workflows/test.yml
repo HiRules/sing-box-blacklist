@@ -28,6 +28,7 @@ jobs:
           GEOSITE_URL: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/release/geosite.db"
         run: |
             set -Eeuo pipefail
+            find / -name release
             curl -JLO $GEOSITE_URL
             ls
         
