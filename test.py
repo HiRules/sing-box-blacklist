@@ -27,19 +27,15 @@ def read_urls_from_file(file):
 
 def get_category_file(categories):    
     for category in categories:
-        flags = ""
         os.system("sing-box geosite export --output " + output_dir + "/" + category + ".json " + category)
-        # print(os.path.getsize(db_file))
 
 
 
 def merge_json_files(folder_path):
-    # 初始化合并后的数据结构
     merged_data = {
         "version": 1,
         "rules": []
     }
-    # 用于存储合并后的规则键值对
     rules_dict = {}
 
     for filename in os.listdir(folder_path):
@@ -48,16 +44,12 @@ def merge_json_files(folder_path):
             with open(file_path, 'r', encoding='utf-8') as file:
                 data = json.load(file)
                 for rule in data['rules']:
-                    # 遍历所有可能的键
                     for key in ['domain', 'domain_suffix', 'domain_keyword', 'domain_regex']:
                         if key in rule:
-                            # 如果键在rules_dict中不存在，则初始化
                             if key not in rules_dict:
                                 rules_dict[key] = set()
-                            # 将当前规则中的值添加到rules_dict中，并去重
                             rules_dict[key].update(rule[key] if isinstance(rule[key], list) else [rule[key]])
 
-    # 将合并后的规则添加到merged_data中，并进行排序
     for key, values in rules_dict.items():
         merged_data['rules'].append({key: sorted(list(values))})
     
@@ -71,7 +63,6 @@ def merge_json_files(folder_path):
 
 def merge_json(file):
     data = []
-    # 初始化结果字典
     result = {
         "version": 1,
         "rules": {}
@@ -82,24 +73,16 @@ def merge_json(file):
         response = requests.get(url)
         if response.status_code == 200:
             data.append(json.loads(response.text))
-    # 遍历数据
     for content in data:
-        # 确保每个数据项是字典并且包含 'rules'
         if isinstance(content, dict) and 'rules' in content:
-            # 遍历 rules
             for rule in content['rules']:
-                # 确保每个规则是字典
                 if isinstance(rule, dict):
                     for key, values in rule.items():
-                        # 确保值是列表
                         if isinstance(values, list):
-                            # 去重并排序
                             unique_values = sorted(set(values))
-                            # 只有当 unique_values 不为空时才添加到结果中
                             if unique_values:
                                 result["rules"].setdefault(key, set()).update(unique_values)
     
-    # 将集合转换为排序后的列表
     for key in result["rules"]:
         result["rules"][key] = sorted(result["rules"][key])
     
@@ -161,7 +144,7 @@ def result_of_ip(file):
 def main():
     os.mkdir(output_dir)
     subprocess.run(['git', 'checkout', 'hidden'], check=True)
-    categories = ["firebase@cn", "ubisoft@cn", "microsoft-pki@cn", "google-play@cn", "okaapps@cn", "thelinuxfoundation@cn", "amp@cn", "amd@cn", "kechuang@cn", "openjsfoundation@cn", "thetype@cn", "category-cryptocurrency@cn", "adobe@cn", "category-finance@cn", "muji@cn", "duolingo@cn", "asus@cn", "mapbox@cn", "bluearchive@cn", "aerogard@cn", "oreilly@cn", "test-ipv6@cn", "airwick@cn", "walmart@cn", "xbox@cn", "adidas@cn", "teamviewer@cn", "dell@cn", "pearson@cn", "starbucks@cn", "familymart@cn", "st@cn", "westerndigital@cn", "booking@cn", "reabble@cn", "fflogs@cn", "bluepoch-games@cn", "okx@cn", "mortein@cn", "acer@cn", "panasonic@cn", "movefree@cn", "epicgames@cn", "category-remote-control@cn", "gucci@cn", "hm@cn", "category-tech-media@cn", "calgoncarbon@cn", "youtube@cn", "hp@cn", "tvb@cn", "samsung@cn", "vanish@cn", "ifast@cn", "sslcom@cn", "tencent-dev@cn", "dettol@cn", "webex@cn", "vmware@cn", "bytedance@cn", "yahoo@cn", "shopee@cn", "finish@cn", "att@cn", "canon@cn", "jetbrains@cn", "swift@cn", "linkedin@cn", "verizon@cn", "clearasil@cn", "digicert@cn", "lysol@cn", "strepsils@cn", "kurogames@cn", "veet@cn", "meadjohnson@cn", "riot@cn", "bluepoch@cn", "woolite@cn", "category-social-media-!cn@cn", "msn@cn", "hketgroup@cn", "primevideo@cn", "nurofen@cn", "gigabyte@cn", "durex@cn", "razer@cn", "mcdonalds@cn", "farfetch@cn", "kindle@cn", "bestbuy@cn", "nvidia@cn", "miniso@cn", "bridgestone@cn", "qnap@cn", "intel@cn", "microsoft-dev@cn", "bmw@cn", "google-trust-services@cn", "cisco@cn", "apple-pki@cn", "category-media@cn", "apple-dev@cn", "ikea@cn", "tesla@cn", "gog@cn", "itunes@cn", "sectigo@cn", "category-enhance-gaming@cn", "globalsign@cn", "category-ntp-cn@cn", "icloud@cn", "mastercard@cn", "qualcomm@cn", "bilibili-game@cn", "bilibili@cn", "category-ntp@cn", "volvo@cn", "bing@cn", "beats@cn", "visa@cn", "akamai@cn", "category-dev@cn", "nintendo@cn", "paypal@cn", "mihoyo@cn", "mihoyo-cn@cn", "steam@cn", "cloudflare@cn", "cloudflare-cn@cn", "nike@cn", "category-entertainment-cn@cn", "aws@cn", "aws-cn@cn", "huawei-dev@cn", "huawei@cn", "category-cas@cn", "category-dev-cn@cn", "rb@cn", "ebay@cn", "amazon@cn", "azure@cn", "category-ecommerce@cn", "tencent-games@cn", "tencent@cn", "google@cn", "microsoft@cn", "category-games@cn", "category-entertainment@cn", "apple@cn", "geolocation-cn@cn", "category-companies@cn"]
+    categories = ["tld-cn", "geolocation-cn", "apple-cn", "google-cn", "firebase@cn", "ubisoft@cn", "microsoft-pki@cn", "google-play@cn", "okaapps@cn", "thelinuxfoundation@cn", "amp@cn", "amd@cn", "kechuang@cn", "openjsfoundation@cn", "thetype@cn", "category-cryptocurrency@cn", "adobe@cn", "category-finance@cn", "muji@cn", "duolingo@cn", "asus@cn", "mapbox@cn", "bluearchive@cn", "aerogard@cn", "oreilly@cn", "test-ipv6@cn", "airwick@cn", "walmart@cn", "xbox@cn", "adidas@cn", "teamviewer@cn", "dell@cn", "pearson@cn", "starbucks@cn", "familymart@cn", "st@cn", "westerndigital@cn", "booking@cn", "reabble@cn", "fflogs@cn", "bluepoch-games@cn", "okx@cn", "mortein@cn", "acer@cn", "panasonic@cn", "movefree@cn", "epicgames@cn", "category-remote-control@cn", "gucci@cn", "hm@cn", "category-tech-media@cn", "calgoncarbon@cn", "youtube@cn", "hp@cn", "tvb@cn", "samsung@cn", "vanish@cn", "ifast@cn", "sslcom@cn", "tencent-dev@cn", "dettol@cn", "webex@cn", "vmware@cn", "bytedance@cn", "yahoo@cn", "shopee@cn", "finish@cn", "att@cn", "canon@cn", "jetbrains@cn", "swift@cn", "linkedin@cn", "verizon@cn", "clearasil@cn", "digicert@cn", "lysol@cn", "strepsils@cn", "kurogames@cn", "veet@cn", "meadjohnson@cn", "riot@cn", "bluepoch@cn", "woolite@cn", "category-social-media-!cn@cn", "msn@cn", "hketgroup@cn", "primevideo@cn", "nurofen@cn", "gigabyte@cn", "durex@cn", "razer@cn", "mcdonalds@cn", "farfetch@cn", "kindle@cn", "bestbuy@cn", "nvidia@cn", "miniso@cn", "bridgestone@cn", "qnap@cn", "intel@cn", "microsoft-dev@cn", "bmw@cn", "google-trust-services@cn", "cisco@cn", "apple-pki@cn", "category-media@cn", "apple-dev@cn", "ikea@cn", "tesla@cn", "gog@cn", "itunes@cn", "sectigo@cn", "category-enhance-gaming@cn", "globalsign@cn", "category-ntp-cn@cn", "icloud@cn", "mastercard@cn", "qualcomm@cn", "bilibili-game@cn", "bilibili@cn", "category-ntp@cn", "volvo@cn", "bing@cn", "beats@cn", "visa@cn", "akamai@cn", "category-dev@cn", "nintendo@cn", "paypal@cn", "mihoyo@cn", "mihoyo-cn@cn", "steam@cn", "cloudflare@cn", "cloudflare-cn@cn", "nike@cn", "category-entertainment-cn@cn", "aws@cn", "aws-cn@cn", "huawei-dev@cn", "huawei@cn", "category-cas@cn", "category-dev-cn@cn", "rb@cn", "ebay@cn", "amazon@cn", "azure@cn", "category-ecommerce@cn", "tencent-games@cn", "tencent@cn", "google@cn", "microsoft@cn", "category-games@cn", "category-entertainment@cn", "apple@cn", "geolocation-cn@cn", "category-companies@cn"]
 
     
     # print("1:" + os.getcwd())
@@ -178,8 +161,6 @@ def main():
     
     get_category_file(categories)
     
-
-    # 假设hidden文件夹位于当前工作目录下
     merged_json_data = merge_json_files(output_dir)
     print(merged_json_data)
 
