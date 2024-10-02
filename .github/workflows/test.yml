@@ -20,18 +20,6 @@ jobs:
         with:
           ref: hidden
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
-      - name: Install GitPython
-        run: pip install GitPython
-
-
-      - name: Set Python path
-        run: echo "/home/runner/.local/lib/python3.8/site-packages" >> $GITHUB_PATH
-
       - name: Fetch all branches
         run: git fetch --all
   
