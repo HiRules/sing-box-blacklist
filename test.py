@@ -5,7 +5,7 @@ import subprocess
 
 
 output_dir = "dev"
-testdir = "hidden"
+testdir = "tmp"
 proxy_list = 'proxy_list.txt'
 exclude_proxy_list = 'exclude_proxy_list.txt'
 reject_list = 'reject_list.txt'
@@ -153,6 +153,7 @@ def result_of_ip(file):
 
 def main():
     os.mkdir(output_dir)
+    os.mkdir(testdir)
     subprocess.run(['git', 'checkout', 'hidden'], check=True)
     
     download_file(geosite, testdir)
