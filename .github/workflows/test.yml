@@ -28,6 +28,10 @@ jobs:
       - name: Install GitPython
         run: pip install GitPython
 
+
+      - name: Set Python path
+        run: echo "::add-path::/home/runner/.local/lib/python3.8/site-packages"
+
       - name: Fetch all branches
         run: git fetch --all
   
