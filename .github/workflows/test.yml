@@ -28,11 +28,10 @@ jobs:
           GEOSITE_URL: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/release/geosite.db"
         run: |
             set -Eeuo pipefail
-            find / -name release
             curl -JLO $GEOSITE_URL
             ls
         
-      - name: "Setup sing-box"
+      - name: "install sing-box"
         env:
           SING_BOX_DEB_URL: "https://github.com/SagerNet/sing-box/releases/download/v1.9.4/sing-box_1.9.4_linux_amd64.deb"
         run: |
@@ -47,7 +46,7 @@ jobs:
             source venv/bin/activate
             pip3 install requests
             
-      - name: "Update rule-set"
+      - name: "Update"
         run: |
             set -Eeuo pipefail
             source venv/bin/activate
