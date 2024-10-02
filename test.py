@@ -33,10 +33,13 @@ def get_category_file(categories):
 
 
 def merge_json_files(folder_path):
+    # 初始化合并后的数据结构
     merged_data = {
         "version": 1,
         "rules": []
     }
+    # 用于存储合并后的规则键值对
+    rules_dict = {}
 
     for filename in os.listdir(folder_path):
         if filename.endswith('.json'):
@@ -44,32 +47,23 @@ def merge_json_files(folder_path):
             with open(file_path, 'r', encoding='utf-8') as file:
                 data = json.load(file)
                 for rule in data['rules']:
-                    # 初始化一个新的规则字典
-                    new_rule = {}
+                    # 获取当前规则的键集合
+                    keys = set(rule.keys())
+                    # 遍历所有可能的键
                     for key in ['domain', 'domain_suffix', 'domain_keyword', 'domain_regex']:
-                        if key in rule:
-                            # 确保值为列表
-                            new_rule[key] = rule[key] if isinstance(rule[key], list) else [rule[key]]
-                    
-                    # 将新规则添加到合并数据中
-                    merged_data['rules'].append(new_rule)
+                        if key in keys:
+                            # 如果键在rules_dict中不存在，则初始化
+                            if key not in rules_dict:
+                                rules_dict[key] = []
+                            # 将当前规则中的值添加到rules_dict中
+                            rules_dict[key].extend(rule[key] if isinstance(rule[key], list) else [rule[key]])
 
-    # 合并相同键的列表
-    final_rules = []
-    for rule in merged_data['rules']:
-        if not final_rules:
-            final_rules.append(rule)
-        else:
-            # 查找是否有相同的键
-            existing_rule = next((r for r in final_rules if set(r.keys()) == set(rule.keys())), None)
-            if existing_rule:
-                for key in rule:
-                    existing_rule[key].extend(rule[key])
-            else:
-                final_rules.append(rule)
+    # 将合并后的规则添加到merged_data中
+    for key, values in rules_dict.items():
+        merged_data['rules'].append({key: values})
 
-    merged_data['rules'] = final_rules
     return merged_data
+
 
 
 
