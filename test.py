@@ -1,5 +1,5 @@
-import os
 import git
+import os
 import requests
 import json
 import subprocess
