@@ -51,8 +51,12 @@ def merge_json_files(folder_path):
                     # 对于每个规则，检查四个键是否存在并合并
                     for key in ["domain", "domain_suffix", "domain_keyword", "domain_regex"]:
                         if key in rule:
-                            # 初始化merged_data中的对应键
-                            if not merged_data["rules"] or key not in merged_data["rules"][0]:
+                            # 检查merged_data中的rules是否为空，如果为空则添加一个空字典
+                            if not merged_data["rules"]:
+                                merged_data["rules"].append({})
+
+                            # 检查merged_data中的对应键是否存在，如果不存在则初始化
+                            if key not in merged_data["rules"][0]:
                                 merged_data["rules"][0][key] = []
 
                             # 将当前文件中的值添加到合并后的列表中，同时确保唯一性
