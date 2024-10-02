@@ -1,5 +1,5 @@
 ## 直连规则
-合并的分类包含：
+包含的分类：
 
 `*@cn`以及`geolocation-cn`、`google-cn`、`apple-cn`、`tld-cn`
 
