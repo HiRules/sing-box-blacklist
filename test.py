@@ -13,11 +13,13 @@ geoip_cn = 'geoip_cn.txt'
 custom_exclude_list = 'custom_exclude_list.txt'
 meta_rules = 'geosite-at-cn.txt'
 
+repo_owner = 'HiRules'
+repo_name = 'sing-box-blacklist'
+branch_name = 'hidden'
+file_name = 'geosite.db'
 
-
-subprocess.run(['git', 'checkout', 'hidden'], check=True)
 print("1:" + os.getcwd())
-testpath = os.path.join('hidden', "geosite.db")
+testpath = os.path.join(os.getcwd(), repo_name, file_name)
 print("2:" + testpath)
 if os.path.isfile(testpath):
     size = os.path.getsize(testpath)
