@@ -13,17 +13,19 @@ geoip_cn = 'geoip_cn.txt'
 custom_exclude_list = 'custom_exclude_list.txt'
 meta_rules = 'geosite-at-cn.txt'
 
-print(os.getcwd())
-testpath = os.path.join(output_dir, "geosite.db")
-if os.path.isfile(testpath):
-    size = os.path.getsize(testpath)
-    print(size)
-
 def read_urls_from_file(file):
     with open(file, 'r') as f:
         lines = f.read().splitlines()
         return lines
 
+
+print("1:" + os.getcwd())
+testpath = os.path.join(output_dir, "geosite.db")
+print("2:" + read_urls_from_file(testpath))
+if os.path.isfile(testpath):
+    size = os.path.getsize(testpath)
+    print(size)
+    
 
 def merge_json(file):
     data = []
@@ -127,9 +129,9 @@ def main():
     categories = ["firebase@cn", "ubisoft@cn", "microsoft-pki@cn", "google-play@cn", "okaapps@cn", "thelinuxfoundation@cn", "amp@cn", "amd@cn", "kechuang@cn", "openjsfoundation@cn", "thetype@cn", "category-cryptocurrency@cn", "adobe@cn", "category-finance@cn", "muji@cn", "duolingo@cn", "asus@cn", "mapbox@cn", "bluearchive@cn", "aerogard@cn", "oreilly@cn", "test-ipv6@cn", "airwick@cn", "walmart@cn", "xbox@cn", "adidas@cn", "teamviewer@cn", "dell@cn", "pearson@cn", "starbucks@cn", "familymart@cn", "st@cn", "westerndigital@cn", "booking@cn", "reabble@cn", "fflogs@cn", "bluepoch-games@cn", "okx@cn", "mortein@cn", "acer@cn", "panasonic@cn", "movefree@cn", "epicgames@cn", "category-remote-control@cn", "gucci@cn", "hm@cn", "category-tech-media@cn", "calgoncarbon@cn", "youtube@cn", "hp@cn", "tvb@cn", "samsung@cn", "vanish@cn", "ifast@cn", "sslcom@cn", "tencent-dev@cn", "dettol@cn", "webex@cn", "vmware@cn", "bytedance@cn", "yahoo@cn", "shopee@cn", "finish@cn", "att@cn", "canon@cn", "jetbrains@cn", "swift@cn", "linkedin@cn", "verizon@cn", "clearasil@cn", "digicert@cn", "lysol@cn", "strepsils@cn", "kurogames@cn", "veet@cn", "meadjohnson@cn", "riot@cn", "bluepoch@cn", "woolite@cn", "category-social-media-!cn@cn", "msn@cn", "hketgroup@cn", "primevideo@cn", "nurofen@cn", "gigabyte@cn", "durex@cn", "razer@cn", "mcdonalds@cn", "farfetch@cn", "kindle@cn", "bestbuy@cn", "nvidia@cn", "miniso@cn", "bridgestone@cn", "qnap@cn", "intel@cn", "microsoft-dev@cn", "bmw@cn", "google-trust-services@cn", "cisco@cn", "apple-pki@cn", "category-media@cn", "apple-dev@cn", "ikea@cn", "tesla@cn", "gog@cn", "itunes@cn", "sectigo@cn", "category-enhance-gaming@cn", "globalsign@cn", "category-ntp-cn@cn", "icloud@cn", "mastercard@cn", "qualcomm@cn", "bilibili-game@cn", "bilibili@cn", "category-ntp@cn", "volvo@cn", "bing@cn", "beats@cn", "visa@cn", "akamai@cn", "category-dev@cn", "nintendo@cn", "paypal@cn", "mihoyo@cn", "mihoyo-cn@cn", "steam@cn", "cloudflare@cn", "cloudflare-cn@cn", "nike@cn", "category-entertainment-cn@cn", "aws@cn", "aws-cn@cn", "huawei-dev@cn", "huawei@cn", "category-cas@cn", "category-dev-cn@cn", "rb@cn", "ebay@cn", "amazon@cn", "azure@cn", "category-ecommerce@cn", "tencent-games@cn", "tencent@cn", "google@cn", "microsoft@cn", "category-games@cn", "category-entertainment@cn", "apple@cn", "geolocation-cn@cn", "category-companies@cn"]
 
     
-    for category in categories:
-        #filename = "geosite-" + category + ".json"
-        os.system("sing-box geosite export " + category)
+    # for category in categories:
+    #     #filename = "geosite-" + category + ".json"
+    #     os.system("sing-box geosite export " + category)
         
     e = merge_json(meta_rules)
     convert_json_to_srs(e)
