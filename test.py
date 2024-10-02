@@ -70,7 +70,8 @@ def get_category_file(categories):
     newcat = []
     for category in categories:
         newcat = os.system("sing-box geosite export -f " + db_file + category)
-        return newcat
+    print(db_file)
+    return newcat
 
 
 
