@@ -61,7 +61,7 @@ def merge_json_files(folder_path):
                                 if key not in existing_rule:
                                     existing_rule[key] = []
                                 # 合并列表，同时确保唯一性
-                                existing_rule[key].extend(item for item in rule[key] if item not in existing_rule[key])
+                                existing_rule[key].append(item for item in rule[key] if item not in existing_rule[key])
                     else:
                         # 如果没有找到现有规则，则添加新规则
                         merged_data['rules'].append(rule)
