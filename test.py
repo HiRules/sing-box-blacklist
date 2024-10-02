@@ -127,7 +127,7 @@ def main():
     
     # print("1:" + os.getcwd())
     # testpath = os.path.join(os.getcwd(), branch_name, file_name)
-    print("2:" + testpath)
+    # print("2:" + testpath)
     with open(file_name, 'r') as f:
         lines = f.read().splitlines()
         print("3:" + lines)
