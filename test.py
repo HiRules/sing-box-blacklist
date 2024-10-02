@@ -55,12 +55,19 @@ def merge_json_files(folder_path):
                         # 如果找到现有规则，则合并键
                         for key in ['domain_suffix', 'domain_keyword', 'domain_regex']:
                             if key in rule:
+                                # 确保是列表类型
+                                if not isinstance(rule[key], list):
+                                    rule[key] = [rule[key]]
                                 if key not in existing_rule:
                                     existing_rule[key] = []
                                 # 合并列表，同时确保唯一性
                                 existing_rule[key].extend(item for item in rule[key] if item not in existing_rule[key])
                     else:
                         # 如果没有找到现有规则，则添加新规则
+                        # 确保每个键的值是列表类型
+                        for key in ['domain_suffix', 'domain_keyword', 'domain_regex']:
+                            if key in rule and not isinstance(rule[key], list):
+                                rule[key] = [rule[key]]
                         merged_data['rules'].append(rule)
 
     return merged_data
