@@ -54,8 +54,7 @@ def merge_json_files(folder_path):
                     if existing_rule:
                         # 如果找到现有规则，则合并键
                         for key in ['domain_suffix', 'domain_keyword', 'domain_regex']:
-                            if key in rule and isinstance(rule[key], list):
-                                # 如果键在现有规则中不存在，则创建它
+                            if key in rule:
                                 if key not in existing_rule:
                                     existing_rule[key] = []
                                 # 合并列表，同时确保唯一性
