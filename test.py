@@ -48,16 +48,20 @@ def merge_json_files(directory):
 
                 # 遍历文件中的rules
                 for rule in data['rules']:
-                    # 创建一个新的规则字典
-                    new_rule = {}
-
-                    # 检查每个键是否存在，如果存在则添加到新规则中
-                    for key in ['domain', 'domain_suffix', 'domain_keyword', 'domain_regex']:
-                        if key in rule:
-                            new_rule[key] = rule[key]
-
-                    # 将新规则添加到合并后的数据中
-                    merged_data['rules'].append(new_rule)
+                    # 如果merged_data中的rules为空，则直接添加第一条规则
+                    if not merged_data['rules']:
+                        merged_data['rules'].append(rule)
+                    else:
+                        # 更新已存在的规则
+                        existing_rule = merged_data['rules'][-1]
+                        for key in ['domain', 'domain_suffix', 'domain_keyword', 'domain_regex']:
+                            if key in rule:
+                                # 如果键在现有规则中不存在，则添加它
+                                if key not in existing_rule:
+                                    existing_rule[key] = rule[key]
+                                else:
+                                    # 如果键存在，则合并列表
+                                    existing_rule[key].extend(rule[key])
 
     return merged_data
 
