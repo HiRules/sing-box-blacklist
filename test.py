@@ -32,37 +32,43 @@ def get_category_file(categories):
 
 
 
-def merge_json_files(directory):
-    # 存储合并后的数据
+def merge_json_files(folder_path):
     merged_data = {
         "version": 1,
         "rules": []
     }
 
-    # 遍历目录中的所有json文件
-    for filename in os.listdir(directory):
-        if filename.endswith(".json"):
-            file_path = os.path.join(directory, filename)
+    for filename in os.listdir(folder_path):
+        if filename.endswith('.json'):
+            file_path = os.path.join(folder_path, filename)
             with open(file_path, 'r', encoding='utf-8') as file:
                 data = json.load(file)
-
-                # 遍历文件中的rules
                 for rule in data['rules']:
-                    # 如果merged_data中的rules为空，则直接添加第一条规则
-                    if not merged_data['rules']:
-                        merged_data['rules'].append(rule)
-                    else:
-                        # 更新已存在的规则
-                        existing_rule = merged_data['rules'][-1]
-                        for key in ['domain', 'domain_suffix', 'domain_keyword', 'domain_regex']:
-                            if key in rule:
-                                # 如果键在现有规则中不存在，则添加它
-                                if key not in existing_rule:
-                                    existing_rule[key] = rule[key]
-                                else:
-                                    # 如果键存在，则合并列表
-                                    existing_rule[key].extend(rule[key])
+                    # 初始化一个新的规则字典
+                    new_rule = {}
+                    for key in ['domain', 'domain_suffix', 'domain_keyword', 'domain_regex']:
+                        if key in rule:
+                            # 确保值为列表
+                            new_rule[key] = rule[key] if isinstance(rule[key], list) else [rule[key]]
+                    
+                    # 将新规则添加到合并数据中
+                    merged_data['rules'].append(new_rule)
 
+    # 合并相同键的列表
+    final_rules = []
+    for rule in merged_data['rules']:
+        if not final_rules:
+            final_rules.append(rule)
+        else:
+            # 查找是否有相同的键
+            existing_rule = next((r for r in final_rules if set(r.keys()) == set(rule.keys())), None)
+            if existing_rule:
+                for key in rule:
+                    existing_rule[key].extend(rule[key])
+            else:
+                final_rules.append(rule)
+
+    merged_data['rules'] = final_rules
     return merged_data
 
 
