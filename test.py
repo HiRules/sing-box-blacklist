@@ -153,7 +153,8 @@ def main():
     os.mkdir(output_dir)
     # ingpath = 'test'
     # os.mkdir(ingpath)
-    subprocess.run(['git', 'checkout', 'dev001'], check=True)
+    # subprocess.run(['git', 'checkout', 'dev001'], check=True)
+    subprocess.run(['git', 'checkout', 'main'], check=True)
     # download_file(geosite, ingpath)
     # download_file(geosite, testdir)
 
@@ -168,7 +169,6 @@ def main():
         print(out)
         
     
-    subprocess.run(['git', 'checkout', 'main'], check=True)
     # get_category_file(categories)
     
     # merged_json_data = merge_json_files(ingpath)
