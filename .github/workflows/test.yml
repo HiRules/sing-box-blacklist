@@ -15,10 +15,8 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout hidden branch
+      - name: "Checkout"
         uses: actions/checkout@v4
-        with:
-          ref: hidden
         
       - name: "download geosite"
         env:
