@@ -150,7 +150,7 @@ def result_of_ip(file):
 
 
 def main():
-    os.mkdir(output_dir)
+    # os.mkdir(output_dir)
     # ingpath = 'test'
     # os.mkdir(ingpath)
     subprocess.run(['git', 'checkout', 'dev001'], check=True)
