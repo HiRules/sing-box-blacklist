@@ -4,7 +4,7 @@ import json
 import subprocess
 
 
-output_dir = "dev"
+output_dir = "dev001"
 proxy_list = 'proxy_list.txt'
 exclude_proxy_list = 'exclude_proxy_list.txt'
 reject_list = 'reject_list.txt'
@@ -150,9 +150,9 @@ def result_of_ip(file):
 
 def main():
     os.mkdir(output_dir)
-    subprocess.run(['git', 'checkout', 'hidden'], check=True)
     ingpath = 'test'
     os.mkdir(ingpath)
+    subprocess.run(['git', 'checkout', 'hidden'], check=True)
     download_file(geosite, ingpath)
     # download_file(geosite, testdir)
 
