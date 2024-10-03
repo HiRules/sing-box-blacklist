@@ -18,7 +18,7 @@ jobs:
       - name: Checkout hidden branch
         uses: actions/checkout@v4
         with:
-          ref: hidden
+          ref: dev001
 
       - name: "Checkout"
         uses: actions/checkout@v4
