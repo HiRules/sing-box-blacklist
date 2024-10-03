@@ -168,6 +168,7 @@ def main():
         print(out)
         
     
+    subprocess.run(['git', 'checkout', 'main'], check=True)
     # get_category_file(categories)
     
     # merged_json_data = merge_json_files(ingpath)
