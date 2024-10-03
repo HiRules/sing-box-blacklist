@@ -19,9 +19,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: hidden
-
-      - name: "Checkout"
-        uses: actions/checkout@v4
         
       - name: "download geosite"
         env:
