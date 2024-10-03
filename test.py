@@ -163,7 +163,7 @@ def main():
     
     get_category_file(categories)
     
-    merged_json_data = merge_json_files(output_dir)
+    merged_json_data = merge_json_files(ingpath)
     print(merged_json_data)
 
 
