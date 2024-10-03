@@ -151,7 +151,7 @@ def result_of_ip(file):
 def main():
     os.mkdir(output_dir)
     subprocess.run(['git', 'checkout', 'hidden'], check=True)
-    ingpath = '/hidden/folder_path'
+    ingpath = 'hidden/test'
     os.mkdir(ingpath)
     download_file(geosite, ingpath)
     # download_file(geosite, testdir)
