@@ -61,11 +61,6 @@ jobs:
             git branch -M dev002
             git push -u origin dev002 --force
             
-      - name: Checkout hidden branch
-        uses: actions/checkout@v4
-        with:
-          ref: dev001
-            
       - name: "Commit and push dev001"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -74,7 +69,8 @@ jobs:
             git init
             git config --local user.name "github-actions[bot]"
             git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git remote add origin https://github-action:$GITHUB_TOKEN@github.com/HiRules/sing-box-blacklist.git
             git add .
             git commit --allow-empty-message --no-edit
-            git remote add origin https://github-action:$GITHUB_TOKEN@github.com/HiRules/sing-box-blacklist.git
-            git push -u origin dev001 --force
+            git branch -M dev000
+            git push -u origin dev000 --force
