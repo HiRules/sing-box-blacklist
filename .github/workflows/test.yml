@@ -61,10 +61,10 @@ jobs:
             git branch -M dev002
             git push -u origin dev002 --force
             
-      - name: "Checkout dev001"
+      - name: Checkout hidden branch
         uses: actions/checkout@v4
-          with:
-            ref: dev001
+        with:
+          ref: dev001
             
       - name: "Commit and push dev001"
         env:
