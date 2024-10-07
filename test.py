@@ -152,6 +152,7 @@ def result_of_ip(file):
 
 
 def main():
+    os.mkdir(source_dir)
     os.mkdir(output_dir)
     # ingpath = 'test'
     # os.mkdir(ingpath)
@@ -159,15 +160,15 @@ def main():
     # download_file(geosite, ingpath)
     # download_file(geosite, testdir)
 
-    if os.path.isfile(db_file):
-        size = os.path.getsize(db_file)
-        print(size)
-    out = []
-    with open(db_file, 'r') as f:
-        for line in f:
-            line = line.strip()
-            out.append(line)
-        print(out)
+    # if os.path.isfile(db_file):
+    #     size = os.path.getsize(db_file)
+    #     print(size)
+    # out = []
+    # with open(db_file, 'r') as f:
+    #     for line in f:
+    #         line = line.strip()
+    #         out.append(line)
+    #     print(out)
         
     
     get_category_file(source_dir, categories)
