@@ -15,6 +15,9 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+        
       - name: "download geosite"
         env:
           GEOSITE_URL: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/release/geosite.db"
