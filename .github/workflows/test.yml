@@ -77,5 +77,6 @@ jobs:
             git remote set-url origin https://github-action:$GITHUB_TOKEN@github.com/HiRules/sing-box-blacklist.git
             git add .
             git commit --allow-empty-message --no-edit
-            git branch -M dev001
+            # git branch -M dev001
+            git branch -u origin/dev001
             git push -u origin dev001 --force
