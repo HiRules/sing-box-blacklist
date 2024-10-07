@@ -4,7 +4,9 @@ import json
 import subprocess
 
 
-output_dir = "dev"
+source_dir = "dev001"
+output_dir = "dev002"
+output_file = "cn.json"
 proxy_list = 'proxy_list.txt'
 exclude_proxy_list = 'exclude_proxy_list.txt'
 reject_list = 'reject_list.txt'
@@ -33,22 +35,22 @@ def download_file(url, folder_path):
 
 
 
-def get_category_file(categories):    
+def get_category_file(source_dir, categories):    
     for category in categories:
-        os.system("sing-box geosite export --output " + output_dir + "/" + category + ".json " + category)
+        os.system("sing-box geosite export --output " + source_dir + "/" + category + ".json " + category)
 
 
 
-def merge_json_files(folder_path):
+def merge_json_files(source_dir, output_dir, output_file):
     merged_data = {
         "version": 1,
         "rules": []
     }
     rules_dict = {}
 
-    for filename in os.listdir(folder_path):
+    for filename in os.listdir(source_dir):
         if filename.endswith('.json'):
-            file_path = os.path.join(folder_path, filename)
+            file_path = os.path.join(source_dir, filename)
             with open(file_path, 'r', encoding='utf-8') as file:
                 data = json.load(file)
                 for rule in data['rules']:
@@ -61,7 +63,7 @@ def merge_json_files(folder_path):
     for key, values in rules_dict.items():
         merged_data['rules'].append({key: sorted(list(values))})
     
-    filepath = os.path.join(output_dir, "at-cn.json")
+    filepath = os.path.join(output_dir, output_file)
     with open(filepath, 'w') as f:
         f.write(json.dumps(merged_data, indent=4))
     return filepath
@@ -153,7 +155,7 @@ def main():
     os.mkdir(output_dir)
     # ingpath = 'test'
     # os.mkdir(ingpath)
-    subprocess.run(['git', 'checkout', 'dev001'], check=True)
+    subprocess.run(['git', 'checkout', source_dir], check=True)
     # download_file(geosite, ingpath)
     # download_file(geosite, testdir)
 
@@ -168,10 +170,10 @@ def main():
         print(out)
         
     
-    # get_category_file(categories)
+    get_category_file(source_dir, categories)
     
-    # merged_json_data = merge_json_files(ingpath)
-    # print(merged_json_data)
+    merged_json_data = merge_json_files(source_dir, output_dir, output_file)
+    print(merged_json_data)
 
 
     # e = merge_json(meta_rules)
