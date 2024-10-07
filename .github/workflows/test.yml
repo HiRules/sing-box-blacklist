@@ -74,8 +74,8 @@ jobs:
             git init
             git config --local user.name "github-actions[bot]"
             git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git remote set-url origin https://github-action:$GITHUB_TOKEN@github.com/HiRules/sing-box-blacklist.git
+            git remote add github https://github-action:$GITHUB_TOKEN@github.com/HiRules/sing-box-blacklist.git
             git add .
             git commit --allow-empty-message --no-edit
             git branch -M dev001
-            git push -u github dev001 --force
+            git push -u origin dev001 --force
