@@ -37,8 +37,7 @@ def download_file(url, folder_path):
 
 def get_category_file(source_dir, categories):    
     for category in categories:
-        test = os.system("sing-box geosite export -o " + source_dir + "/" + category + ".json " + category)
-        print(test)
+        os.system("sing-box geosite export -o " + source_dir + "/" + category + ".json " + category)
 
 
 
@@ -174,6 +173,7 @@ def main():
     
     get_category_file(source_dir, categories)
     
+    subprocess.run(['git', 'switch', output_dir], check=True)
     merged_json_data = merge_json_files(source_dir, output_dir, output_file)
     print(merged_json_data)
 
