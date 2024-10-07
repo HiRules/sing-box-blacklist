@@ -174,6 +174,8 @@ def main():
     
     get_category_file(source_dir, categories)
     
+    subprocess.run(['git', 'switch', output_dir], check=True)
+    
     merged_json_data = merge_json_files(source_dir, output_dir, output_file)
     print(merged_json_data)
 
