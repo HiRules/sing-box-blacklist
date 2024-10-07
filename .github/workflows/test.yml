@@ -67,6 +67,7 @@ jobs:
             git remote add origin https://github-action:$GITHUB_TOKEN@github.com/HiRules/sing-box-blacklist.git
             git push -u origin dev001 --force
             
+            set -Eeuo pipefail
             cd dev002
             git init
             git config --local user.name "github-actions[bot]"
