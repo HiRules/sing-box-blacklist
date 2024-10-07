@@ -156,7 +156,7 @@ def main():
     os.mkdir(output_dir)
     # ingpath = 'test'
     # os.mkdir(ingpath)
-    subprocess.run(['git', 'switch', source_dir], check=True)
+    # subprocess.run(['git', 'switch', source_dir], check=True)
     # download_file(geosite, ingpath)
     # download_file(geosite, testdir)
 
