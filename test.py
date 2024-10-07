@@ -37,7 +37,8 @@ def download_file(url, folder_path):
 
 def get_category_file(source_dir, categories):    
     for category in categories:
-        os.system("sing-box geosite export --output " + source_dir + "/" + category + ".json " + category)
+        os.system("sing-box geosite export -o " + source_dir + "/" + category + ".json " + category)
+        print(category)
 
 
 
