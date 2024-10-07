@@ -46,6 +46,18 @@ jobs:
             source venv/bin/activate
             python3 test.py
             
+      - name: "Commit and push dev001"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            set -Eeuo pipefail
+            git init
+            git config --local user.name "github-actions[bot]"
+            git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git remote add origin https://github-action:$GITHUB_TOKEN@github.com/HiRules/sing-box-blacklist.git
+            git branch -M dev001
+            git push -u origin dev001 --force
+            
       - name: "Commit and push"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -60,17 +72,3 @@ jobs:
             git commit --allow-empty-message --no-edit
             git branch -M dev002
             git push -u origin dev002 --force
-            
-      - name: "Commit and push dev001"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-            set -Eeuo pipefail
-            git init
-            git config --local user.name "github-actions[bot]"
-            git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git remote add origin https://github-action:$GITHUB_TOKEN@github.com/HiRules/sing-box-blacklist.git
-            git add .
-            git commit --allow-empty-message --no-edit
-            git branch -M dev000
-            git push -u origin dev000 --force
