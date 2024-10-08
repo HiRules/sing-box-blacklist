@@ -54,8 +54,9 @@ jobs:
             cp geosite.db geosite
             echo "切换到geosite目录:"
             cd geosite
+            ls
             for ((i = 0; i < ${#list[@]}; i++)); do
-            	/usr/bin/sing-box geosite export ${list[i]} -o ./geosite/${list[i]}.json
+            	/usr/bin/sing-box geosite export ${list[i]} -o geosite/${list[i]}.json
             	# ./sing-box rule-set compile ./geosite/${list[i]}.json -o ./geosite/${list[i]}.srs
             done
             echo "列出目录内文件:"
