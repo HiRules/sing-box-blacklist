@@ -49,19 +49,23 @@ jobs:
       - name: "debug zone"
         run: |
             list=($(/usr/bin/sing-box geosite list | sed 's/ (.*)$//g'))
-            mkdir -p ./geosite/
-            ls
-            cp geosite.db geosite
-            echo "切换到geosite目录:"
-            cd geosite
-            ls -halt
+            # mkdir -p ./geosite/
+            # ls
+            # cp geosite.db geosite
+            # echo "切换到geosite目录:"
+            # cd geosite
+            # ls -halt
             # for ((i = 0; i < ${#list[@]}; i++)); do
             # 	/usr/bin/sing-box geosite export ${list[i]} -o ./geosite/${list[i]}.json
             # 	# ./sing-box rule-set compile ./geosite/${list[i]}.json -o ./geosite/${list[i]}.srs
             #   echo ${list[i]}
             # done
             # 创建puv目录，如果它不存在的话
-            mkdir -p ./puv/
+            mkdir -p ./geosite/
+            
+            # 打印数组list的所有元素
+            echo "Array elements:"
+            printf "%s\n" "${list[@]}"
             
             # 遍历数组list
             for ((i = 0; i < ${#list[@]}; i++)); do
@@ -71,15 +75,23 @@ jobs:
                 # 打印调试信息
                 echo "Processing ${list[i]} to${output_file}"
                 
-                # 执行命令
-                /usr/bin/sing-box geosite export "${list[i]}" -o "${output_file}"
-                
-                # 检查命令是否成功执行
-                if [ $? -ne 0 ]; then
-                    echo "Error occurred with file: ${output_file}"
-                    exit 1
+                # 检查文件名是否已经存在
+                if [ ! -e "${output_file}" ]; then
+                    # 执行命令
+                    /usr/bin/sing-box geosite export "${list[i]}" -o "${output_file}"
+                    
+                    # 检查命令是否成功执行
+                    if [ $? -ne 0 ]; then
+                        echo "Error occurred with file: ${output_file}"
+                        exit 1
+                    fi
+                else
+                    echo "File already exists: ${output_file}"
                 fi
             done
+
+
+            
             echo "列出目录内文件:"
             ls
             echo "查看远程分支:"
