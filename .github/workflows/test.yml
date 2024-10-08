@@ -94,7 +94,7 @@ jobs:
 
             
             
-            cd geosite
+            
             
             echo "列出目录内文件:"
             ls
