@@ -47,8 +47,6 @@ jobs:
             python3 test.py
             
       - name: "debug zone"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
             echo "查看远程分支:"
             git fetch --prune
@@ -62,7 +60,7 @@ jobs:
             echo "本地根目录列表:"
             ls -halt
             echo "本地类输出列表:"
-            cd source_dir
+            cd dev001a
             ls -halt
             
       - name: "Commit and push to branch_cat"
