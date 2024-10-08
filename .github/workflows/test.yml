@@ -46,11 +46,8 @@ jobs:
             source venv/bin/activate
             python3 test.py
             
-      - name: "Commit and push to dev1"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: "debug zone"
         run: |
-            set -Eeuo pipefail
             echo "查看远程分支:"
             git fetch --prune
             echo "查看本地分支:"
@@ -65,11 +62,17 @@ jobs:
             cd dev001a
             echo "本地类输出列表:"
             ls -halt
+            
+      - name: "Commit and push to dev1"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            set -Eeuo pipefail
             git init
             git config --local user.name "github-actions[bot]"
             git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git remote add origin https://github-action:$GITHUB_TOKEN@github.com/HiRules/sing-box-blacklist.git
-            git add .
+            # git add .
             git commit --allow-empty-message --no-edit
             git branch -M dev1
             git push -u origin dev1 --force
