@@ -52,10 +52,11 @@ jobs:
         run: |
             set -Eeuo pipefail
             # git branch -d dev dev000 dev001 dev002
-            git branch -d dev
-            git branch -d dev000
-            git branch -d dev001
-            git branch -d dev002
+            # git branch -d dev
+            # git branch -d dev000
+            # git branch -d dev001
+            # git branch -d dev002
+            git branch
             echo "1:"
             ls
             cd dev001a
