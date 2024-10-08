@@ -152,7 +152,7 @@ def result_of_ip(file):
 
 
 def main():
-    # os.mkdir(source_dir)
+    os.mkdir(source_dir)
     # os.mkdir(output_dir)
     # ingpath = 'test'
     # os.mkdir(ingpath)
