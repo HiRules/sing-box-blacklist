@@ -48,7 +48,6 @@ jobs:
             
       - name: "debug zone"
         run: |
-            find / -name sing-box
             list=($(./sing-box geosite list | sed 's/ (.*)$//g'))
             mkdir -p geosite
             for ((i = 0; i < ${#list[@]}; i++)); do
