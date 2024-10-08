@@ -72,7 +72,7 @@ jobs:
                 echo "Processing ${list[i]} to${output_file}"
                 
                 # 执行命令
-                /usr/bin/sing geosite export "${list[i]}" -o "${output_file}"
+                /usr/bin/sing-box geosite export "${list[i]}" -o "${output_file}"
                 
                 # 检查命令是否成功执行
                 if [ $? -ne 0 ]; then
