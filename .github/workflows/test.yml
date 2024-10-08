@@ -50,7 +50,7 @@ jobs:
         run: |
             list=($(/usr/bin/sing-box geosite list | sed 's/ (.*)$//g'))
             mkdir -p geosite
-            copy geosite.db geosite
+            cp geosite.db geosite
             echo "切换到geosite目录:"
             cd geosite
             for ((i = 0; i < ${#list[@]}; i++)); do
