@@ -62,35 +62,35 @@ jobs:
             echo "本地根目录列表:"
             ls -halt
             echo "本地类输出列表:"
-            cd dev001a
+            cd source_dir
             ls -halt
             
-      - name: "Commit and push to dev1"
+      - name: "Commit and push to branch_cat"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
             set -Eeuo pipefail
-            cd dev001a
+            cd source_dir
             git init
             git config --local user.name "github-actions[bot]"
             git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git remote add origin https://github-action:$GITHUB_TOKEN@github.com/HiRules/sing-box-blacklist.git
             git add .
             git commit --allow-empty-message --no-edit
-            git branch -M dev1
-            git push -u origin dev1 --force
+            git branch -M branch_cat
+            git push -u origin branch_cat --force
             
-      - name: "Commit and push to dev2"
+      - name: "Commit and push to branch_out"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
             set -Eeuo pipefail
-            cd dev002b
+            cd output_dir
             git init
             git config --local user.name "github-actions[bot]"
             git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git remote add origin https://github-action:$GITHUB_TOKEN@github.com/HiRules/sing-box-blacklist.git
             git add .
             git commit --allow-empty-message --no-edit
-            git branch -M dev2
-            git push -u origin dev2 --force
+            git branch -M branch_out
+            git push -u origin branch_out --force
