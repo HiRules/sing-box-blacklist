@@ -52,8 +52,8 @@ jobs:
         run: |
             set -Eeuo pipefail
             git fetch --prune
+            git branch -D -r origin/dev
             git branch -r
-            git branch -d -r dev dev000 dev001 dev002
             
             echo "1:"
             ls
