@@ -56,8 +56,8 @@ jobs:
             echo "local:"
             git branch -a
             echo "其它:"
-            git push origin :dev000
             git branch
+            git push origin :dev000
             git branch -D dev000
             echo "1:"
             ls
