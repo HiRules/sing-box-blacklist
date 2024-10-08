@@ -57,7 +57,9 @@ jobs:
             # git branch -d dev001
             # git branch -d dev002
             # git branch -D -r dev
-            git update-ref -d dev
+            # git update-ref -d dev
+            git branch -r
+            git branch -D dev
             echo "1:"
             ls
             cd dev001a
