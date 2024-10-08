@@ -4,8 +4,8 @@ import json
 import subprocess
 
 
-source_dir = "dev001"
-output_dir = "dev002"
+source_dir = "dev001a"
+output_dir = "dev002b"
 output_file = "cn.json"
 proxy_list = 'proxy_list.txt'
 exclude_proxy_list = 'exclude_proxy_list.txt'
@@ -153,7 +153,7 @@ def result_of_ip(file):
 
 def main():
     os.mkdir(source_dir)
-    # os.mkdir(output_dir)
+    os.mkdir(output_dir)
     # ingpath = 'test'
     # os.mkdir(ingpath)
     # subprocess.run(['git', 'switch', source_dir], check=True)
