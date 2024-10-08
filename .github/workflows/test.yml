@@ -24,6 +24,7 @@ jobs:
         run: |
             set -Eeuo pipefail
             curl -JLO $GEOSITE_URL
+            git branch -r
         
       - name: "install sing-box"
         env:
@@ -58,7 +59,6 @@ jobs:
             # git branch -d dev002
             # git branch -D -r dev
             # git update-ref -d dev
-            git branch -r
             git branch -D dev
             echo "1:"
             ls
