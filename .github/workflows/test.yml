@@ -55,11 +55,11 @@ jobs:
             git fetch --prune
             echo "查看本地分支:"
             git branch -a
-            echo "删除远程分支:"
-            git push origin :dev002
-            echo "查看执行结果:"
-            git fetch --prune
-            git branch -a
+            # echo "删除远程分支:"
+            # git push origin :dev002
+            # echo "查看执行结果:"
+            # git fetch --prune
+            # git branch -a
             echo "本地根目录列表:"
             ls -halt
             cd dev001a
