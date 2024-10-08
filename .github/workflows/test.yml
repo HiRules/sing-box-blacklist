@@ -48,6 +48,17 @@ jobs:
             
       - name: "debug zone"
         run: |
+            find / -name sing-box
+            list=($(./sing-box geosite list | sed 's/ (.*)$//g'))
+            mkdir -p geosite
+            for ((i = 0; i < ${#list[@]}; i++)); do
+            	./sing-box geosite export ${list[i]} -o ./geosite/${list[i]}.json
+            	# ./sing-box rule-set compile ./geosite/${list[i]}.json -o ./geosite/${list[i]}.srs
+            done
+            echo "切换到geosite目录"
+            cd geosite
+            echo "列出目录内文件"
+            ls
             echo "查看远程分支:"
             git fetch --prune
             echo "查看本地分支:"
