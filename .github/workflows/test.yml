@@ -24,6 +24,7 @@ jobs:
         run: |
             set -Eeuo pipefail
             curl -JLO $GEOSITE_URL
+            git fetch --prune
             git branch -r
         
       - name: "install sing-box"
