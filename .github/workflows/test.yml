@@ -56,7 +56,7 @@ jobs:
             # git branch -d dev000
             # git branch -d dev001
             # git branch -d dev002
-            git branch -D -r origin/dev
+            git branch -D -r dev
             echo "1:"
             ls
             cd dev001a
