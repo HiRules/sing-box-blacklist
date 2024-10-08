@@ -93,9 +93,9 @@ jobs:
 
 
             
-            echo "列出g目录内文件:"
+            
             cd geosite
-            ls -halt
+            
             echo "列出目录内文件:"
             ls
             echo "查看远程分支:"
