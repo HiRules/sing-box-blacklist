@@ -63,6 +63,7 @@ jobs:
             git fetch --prune
             git branch -D -r origin/dev
             git branch -r
+            git fetch --prune
             git add .
             git commit --allow-empty-message --no-edit
             git branch -M dev1
