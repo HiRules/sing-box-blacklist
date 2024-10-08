@@ -51,7 +51,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
             set -Eeuo pipefail
-            git branch
+            echo "remote:"
+            git fetch --prune
+            echo "local:"
+            git branch -a
+            echo "其它:"
             git branch -d dev
             git push --delete origin/dev
             echo "1:"
