@@ -57,7 +57,7 @@ jobs:
             git branch -a
             echo "其它:"
             git push origin :dev
-            git branch -d dev
+            git branch -D dev
             echo "1:"
             ls
             cd dev001a
