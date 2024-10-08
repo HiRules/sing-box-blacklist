@@ -24,8 +24,6 @@ jobs:
         run: |
             set -Eeuo pipefail
             curl -JLO $GEOSITE_URL
-            git fetch --prune
-            git branch -r
         
       - name: "install sing-box"
         env:
@@ -53,14 +51,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
             set -Eeuo pipefail
-            # git branch -d dev dev000 dev001 dev002
-            # git branch -d dev
-            # git branch -d dev000
-            # git branch -d dev001
-            # git branch -d dev002
-            # git branch -D -r dev
-            # git update-ref -d dev
-            git branch -D dev
+            git fetch --prune
+            git branch -r
+            git branch -D -r origin/dev origin/dev000 origin/dev001 origin/dev002
+            
             echo "1:"
             ls
             cd dev001a
