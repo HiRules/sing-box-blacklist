@@ -58,6 +58,7 @@ jobs:
             for ((i = 0; i < ${#list[@]}; i++)); do
             	/usr/bin/sing-box geosite export ${list[i]} -o ./geosite/${list[i]}.json
             	# ./sing-box rule-set compile ./geosite/${list[i]}.json -o ./geosite/${list[i]}.srs
+              echo ${list[i]}
             done
             echo "列出目录内文件:"
             ls
