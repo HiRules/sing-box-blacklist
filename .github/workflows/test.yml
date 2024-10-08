@@ -56,8 +56,8 @@ jobs:
             echo "local:"
             git branch -a
             echo "其它:"
-            git branch -d dev
-            git push --delete origin/dev
+            git branch -d remotes/origin/dev
+            git push origin --delete dev
             echo "1:"
             ls
             cd dev001a
