@@ -51,6 +51,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
             set -Eeuo pipefail
+            git branch -d dev dev000 dev001 dev002
             echo "1:"
             ls
             cd dev001a
