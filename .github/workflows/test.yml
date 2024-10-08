@@ -48,7 +48,7 @@ jobs:
             
       - name: "debug zone"
         run: |
-            list=($(/usr/bin/sing-box geosite list | sed 's/ (.*)$//g'))
+            # list=($(/usr/bin/sing-box geosite list | sed 's/ (.*)$//g'))
             # mkdir -p ./geosite/
             # ls
             # cp geosite.db geosite
@@ -60,12 +60,13 @@ jobs:
             # 	# ./sing-box rule-set compile ./geosite/${list[i]}.json -o ./geosite/${list[i]}.srs
             #   echo ${list[i]}
             # done
+            list=($(/usr/bin/sing-box geosite list | sed 's/ (.*)$//g'))
             # 创建puv目录，如果它不存在的话
             mkdir -p ./geosite/
             
             # 打印数组list的所有元素
-            echo "Array elements:"
-            printf "%s\n" "${list[@]}"
+            # echo "Array elements:"
+            # printf "%s\n" "${list[@]}"
             
             # 遍历数组list
             for ((i = 0; i < ${#list[@]}; i++)); do
