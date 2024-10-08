@@ -50,11 +50,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-            set -Eeuo pipefail
-            git fetch --prune
-            git branch -D -r origin/dev
-            git branch -r
-            
+            set -Eeuo pipefail            
             echo "1:"
             ls
             cd dev001a
@@ -64,6 +60,9 @@ jobs:
             git config --local user.name "github-actions[bot]"
             git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git remote add origin https://github-action:$GITHUB_TOKEN@github.com/HiRules/sing-box-blacklist.git
+            git fetch --prune
+            git branch -D -r origin/dev
+            git branch -r
             git add .
             git commit --allow-empty-message --no-edit
             git branch -M dev1
