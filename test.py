@@ -6,8 +6,6 @@ import subprocess
 
 source_dir = "d1"
 output_dir = "d2"
-branch_cat = "dev1"
-branch_out = "dev2"
 output_file = "cn.json"
 proxy_list = 'proxy_list.txt'
 exclude_proxy_list = 'exclude_proxy_list.txt'
