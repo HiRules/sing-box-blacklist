@@ -4,8 +4,8 @@ import json
 import subprocess
 
 
-source_dir = "dev001a"
-output_dir = "dev002b"
+source_dir = "d1"
+output_dir = "d2"
 branch_cat = "dev1"
 branch_out = "dev2"
 output_file = "cn.json"
