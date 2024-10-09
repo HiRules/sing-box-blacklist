@@ -1,7 +1,7 @@
 ## 直连规则
 包含的分类：
 
-`@cn`以及`cn`、`tld-cn`、`geolocation-cn`、`google-cn`、`apple-cn`
+`@cn`以及`cn`、`geolocation-cn`、`google-cn`、`apple-cn`
 
 其中`@cn`共有152个分类：
 ```
